@@ -17,8 +17,8 @@ namespace ScreenGrabber
         #region Components
         private byte[] bmp;
         private ImageFormat ext;
-        public DateTime Date;
-        public int AccountID;
+        private DateTime date;
+        private int accountID;
         #endregion
 
         // Constructor
@@ -26,8 +26,8 @@ namespace ScreenGrabber
         {
             this.ext = ext;
             this.bmp = ImageToByteArray(bmp, ext);
-            this.Date = Date;
-            this.AccountID = AccountID;
+            this.date = Date;
+            this.accountID = AccountID;
         }
 
         #region Properties
@@ -36,6 +36,10 @@ namespace ScreenGrabber
         public byte[] BmpAsByteArray { get { return bmp; } }
 
         public ImageFormat getImageFormat { get { return ext; } }
+
+        public DateTime Date { get { return date; } }
+
+        public int AccountID { get { return accountID; } }
         #endregion
 
         /// <summary>
@@ -89,20 +93,40 @@ namespace ScreenGrabber
         {
             var other = obj as Snap;
             if(bmp == other.bmp)
-                if(Date == other.Date)
-                    return AccountID == other.AccountID;
+                if(date == other.date)
+                    return accountID == other.accountID;
             return false;
         }
 
         public override int GetHashCode()
         {
-            return bmp.GetHashCode() + Date.GetHashCode() / 2 + AccountID;
+            return bmp.GetHashCode() + date.GetHashCode() / 2 + accountID;
         }
 
         public override string ToString()
         {
             Size size = BmpAsImage.Size;
-            return "Taked on: "+Date.ToShortDateString()+". Size: "+size.Width+"x"+size.Height+". Format: "+ext+".";
+            return "Taked on: "+date.ToShortDateString()+". Size: "+size.Width+"x"+size.Height+". Format: "+ext+".";
+        }
+
+        /// <summary>
+        /// Try to convert any Obect to Snap.
+        /// </summary>
+        /// <param name="Object">The Obect you want to convert.</param>
+        /// <param name="snap">Referance that will get the new Object if it can convert to Snap or null if doesnt.</param>
+        /// <returns>If Obect was converted to Snap.</returns>
+        public static bool tryConvert(object Object, out Snap snap)
+        {
+            try
+            {
+                snap = (Snap)Object;
+                return true;
+            }
+            catch
+            {
+                snap = null;
+                return false;
+            }
         }
     }
 }

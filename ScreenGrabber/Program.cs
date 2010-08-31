@@ -290,7 +290,12 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 bmp = new Bitmap(Surface.ToStream(surface, ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
 
                 using(Graphics g = Graphics.FromImage(bmp)){
-                    g.DrawString("This image rendered using DirectX.", new System.Drawing.Font(FontFamily.GenericSansSerif, 14), Brushes.Black, 10, 10);
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    GraphicsPath gp = new GraphicsPath();
+                    System.Drawing.Font font = new System.Drawing.Font(FontFamily.GenericSansSerif,18);                    
+                    gp.AddString("Rendered using DirectX.",font.FontFamily,(int)font.Style,font.Size,new Point(10,10),StringFormat.GenericDefault);
+                    g.DrawPath(new Pen(Brushes.Black,5),gp);
+                    g.FillPath(Brushes.White,gp);
                 }
 
                 snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID);
@@ -512,17 +517,22 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
 
         public static void SnapToDB(object Argument)
         {
-            try
+            Snap snap;
+            if(Snap.tryConvert(Argument, out snap))
             {
-                Snap snap = Argument as Snap;
                 if(snap != null)
                     lock(DatabaseLocker)
-                        tableAdapterManager.SnapsTableAdapter.InsertSnap(snap.BmpAsByteArray, snap.Date, snap.AccountID);
-            }
-            catch//(Exception Ex) // Same as above.. catching an Exception will interrupt the oparation.. lock and empty catch statement is the best choise.
-            {
-                //MessageBox.Show("There were a problem inserting Snaps to database.\n'" + Ex.Message + "'.\n\n" + Ex.StackTrace,
-                //    "Error adding snaps to database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    {
+                        try
+                        {
+                            tableAdapterManager.SnapsTableAdapter.InsertSnap(snap.BmpAsByteArray, snap.Date, snap.AccountID);
+                        }
+                        catch(Exception Ex)
+                        {
+                            MessageBox.Show("There were a problem inserting Snaps to database.\n'" + Ex.Message + "'.\n\n" + Ex.StackTrace,
+                                "Error adding snaps to database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
             }
         }
 
@@ -539,15 +549,18 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 return null;
             }
 
+            if(!isLegalExt(filePath))
+            {
+                MessageBox.Show("Currently supporting only '.png', '.bmp' or '.jpeg'.");
+                return null;
+            }
+
             if(!Directory.GetParent(filePath).Exists)
                 Directory.CreateDirectory(Directory.GetParent(filePath).FullName);
-            if(Settings.Default.Overwrite || !System.IO.File.Exists(filePath)) //If file does not exist - it will be saved normally
-            {
+            if(Settings.Default.Overwrite || !System.IO.File.Exists(filePath)) //If file does not exist - it will be saved normally            
                 if(performSave(filePath, currentSnap))
                     return filePath;
 
-                MessageBox.Show("Currently supporting only '.png', '.bmp' or '.jpg'.");
-            }
             else //Otherwise if does exist - it will be save with additional of [number] symbol to the filename
             {
                 if(System.IO.File.Exists(filePath)) //just another check if the file is exist to be sure
@@ -564,8 +577,6 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                         {
                             if(performSave(tempPath, currentSnap))
                                 return tempPath;
-
-                            MessageBox.Show("Currently supporting only '.png', '.bmp' or '.jpg'.");
                             break;
                         }
                     }
@@ -585,10 +596,12 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
             if(currentSnap == null)
                 return false;
 
-            Image img = currentSnap.BmpAsImage;
+            Image img;
 
             if(Settings.Default.SaveDate)
-                img = DrawDateOnImage(img, currentSnap.Date);
+                img = DrawDateOnImage(currentSnap.BmpAsImage, currentSnap.Date);
+            else
+                img = currentSnap.BmpAsImage;
 
             string ext = Path.GetExtension(filePath);
             switch(ext.ToUpper())
@@ -618,8 +631,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
         /// <returns>If the extension is compatible.</returns>
         static public bool isLegalExt(string path)
         {
-            string ext = Path.GetExtension(path);
-            switch(ext.ToUpper())
+            switch(Path.GetExtension(path).ToUpper())
             {
                 case ".PNG":
                 case ".BMP":
@@ -638,8 +650,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
         /// <returns>ImageFormat based on full path.</returns>
         static public ImageFormat GetExt(string path)
         {
-            string ext = Path.GetExtension(path);
-            switch(ext.ToUpper())
+            switch(Path.GetExtension(path).ToUpper())
             {
                 case ".PNG":
                     return ImageFormat.Png;
@@ -664,7 +675,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
             using(Graphics G = Graphics.FromImage(img))
             {
                 SolidBrush brush = new SolidBrush(Color.FromArgb(Settings.Default.DateBackgroundTransparency, Settings.Default.DateBackgroundColor));
-                string formattedDate = date.ToString("dd.MM.yyyy HH:mm:ss");
+                string formattedDate = date.ToString("dd.MM.yyyy - HH:mm:ss");
                 PointF bgPosition = new PointF();
                 GraphicsPath GP = new GraphicsPath();
 
