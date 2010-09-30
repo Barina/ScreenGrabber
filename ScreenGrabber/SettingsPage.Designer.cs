@@ -34,6 +34,7 @@
             treeNode1});
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Global Key & File path");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Grabber options");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Facebook");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.globalGroupBox = new System.Windows.Forms.GroupBox();
             this.saveSnapsCheckBox = new System.Windows.Forms.CheckBox();
@@ -60,10 +61,12 @@
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.browseButton = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.timeLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.sumNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.secNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.hoursNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.minNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.grabberGroupBox = new System.Windows.Forms.GroupBox();
@@ -76,6 +79,17 @@
             this.setBoundsButton = new System.Windows.Forms.Button();
             this.mainTreeView = new System.Windows.Forms.TreeView();
             this.masterPanel = new System.Windows.Forms.Panel();
+            this.facebookGroupBox = new System.Windows.Forms.GroupBox();
+            this.ProfilePictureBox = new System.Windows.Forms.PictureBox();
+            this.facebookProgressBarEx = new ProgressODoom.ProgressBarEx();
+            this.gradientBackgroundPainter1 = new ProgressODoom.GradientBackgroundPainter();
+            this.styledBorderPainter1 = new ProgressODoom.StyledBorderPainter();
+            this.javaProgressPainter1 = new ProgressODoom.JavaProgressPainter();
+            this.statusLabel = new System.Windows.Forms.Label();
+            this.authorizeButton = new System.Windows.Forms.Button();
+            this.userNameTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.dateStampGroupBox = new System.Windows.Forms.GroupBox();
             this.colorButton = new System.Windows.Forms.Button();
             this.opacityLabel = new System.Windows.Forms.Label();
@@ -102,9 +116,12 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sumNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minNumericUpDown)).BeginInit();
             this.grabberGroupBox.SuspendLayout();
             this.masterPanel.SuspendLayout();
+            this.facebookGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).BeginInit();
             this.dateStampGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dateStampPreviewPictureBox)).BeginInit();
             this.positionGroupBox.SuspendLayout();
@@ -139,9 +156,9 @@
             this.saveSnapsCheckBox.TabIndex = 34;
             this.saveSnapsCheckBox.Text = "Save every snap to database.";
             this.saveSnapsCheckBox.UseVisualStyleBackColor = true;
-            this.saveSnapsCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.saveSnapsCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.saveSnapsCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.saveSnapsCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.saveSnapsCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // groupBox2
             // 
@@ -174,9 +191,9 @@
             this.closeToTrayCheckBox.TabIndex = 20;
             this.closeToTrayCheckBox.Text = "Close minimize to system tray.";
             this.closeToTrayCheckBox.UseVisualStyleBackColor = true;
-            this.closeToTrayCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.closeToTrayCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.closeToTrayCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.closeToTrayCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.closeToTrayCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // startupCheckBox
             // 
@@ -187,9 +204,9 @@
             this.startupCheckBox.TabIndex = 19;
             this.startupCheckBox.Text = "Run at StartUp.";
             this.startupCheckBox.UseVisualStyleBackColor = true;
-            this.startupCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.startupCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.startupCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.startupCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.startupCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // autoCaptureCheckBox
             // 
@@ -200,9 +217,9 @@
             this.autoCaptureCheckBox.TabIndex = 15;
             this.autoCaptureCheckBox.Text = "Auto capture.";
             this.autoCaptureCheckBox.UseVisualStyleBackColor = true;
-            this.autoCaptureCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.autoCaptureCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.autoCaptureCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.autoCaptureCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.autoCaptureCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // shortCutButton
             // 
@@ -212,9 +229,9 @@
             this.shortCutButton.TabIndex = 31;
             this.shortCutButton.Text = "Mannage Shortcuts";
             this.shortCutButton.UseVisualStyleBackColor = true;
-            this.shortCutButton.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             this.shortCutButton.Click += new System.EventHandler(this.shortCutButton_Click);
             this.shortCutButton.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.shortCutButton.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // minimizedCheckBox
             // 
@@ -225,9 +242,9 @@
             this.minimizedCheckBox.TabIndex = 16;
             this.minimizedCheckBox.Text = "Start minimized.";
             this.minimizedCheckBox.UseVisualStyleBackColor = true;
-            this.minimizedCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.minimizedCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.minimizedCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.minimizedCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.minimizedCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // stickyCheckBox
             // 
@@ -240,9 +257,9 @@
             this.stickyCheckBox.TabIndex = 18;
             this.stickyCheckBox.Text = "Stick to edges.";
             this.stickyCheckBox.UseVisualStyleBackColor = true;
-            this.stickyCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.stickyCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.stickyCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.stickyCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.stickyCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // saveDateCheckBox
             // 
@@ -264,9 +281,9 @@
             this.autoInitiaterCheckBox.TabIndex = 30;
             this.autoInitiaterCheckBox.Text = "Initiate auto grabber on startup.";
             this.autoInitiaterCheckBox.UseVisualStyleBackColor = true;
-            this.autoInitiaterCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.autoInitiaterCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.autoInitiaterCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.autoInitiaterCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.autoInitiaterCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // autoSaveCheckBox
             // 
@@ -279,9 +296,9 @@
             this.autoSaveCheckBox.TabIndex = 14;
             this.autoSaveCheckBox.Text = "When using Global Hot-Key save the snap automatically to the disc.";
             this.autoSaveCheckBox.UseVisualStyleBackColor = true;
-            this.autoSaveCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.autoSaveCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.autoSaveCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.autoSaveCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.autoSaveCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // overwriteCheckBox
             // 
@@ -292,9 +309,9 @@
             this.overwriteCheckBox.TabIndex = 17;
             this.overwriteCheckBox.Text = "Overwrite if file exists.";
             this.overwriteCheckBox.UseVisualStyleBackColor = true;
-            this.overwriteCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            this.overwriteCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.overwriteCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.overwriteCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.overwriteCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // globalKeyGroupBox
             // 
@@ -415,11 +432,13 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.timeLabel);
             this.groupBox5.Controls.Add(this.label2);
             this.groupBox5.Controls.Add(this.autoInitiaterCheckBox);
             this.groupBox5.Controls.Add(this.sumNumericUpDown);
             this.groupBox5.Controls.Add(this.label4);
             this.groupBox5.Controls.Add(this.secNumericUpDown);
+            this.groupBox5.Controls.Add(this.hoursNumericUpDown);
             this.groupBox5.Controls.Add(this.minNumericUpDown);
             this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Location = new System.Drawing.Point(6, 94);
@@ -428,6 +447,15 @@
             this.groupBox5.TabIndex = 34;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Auto Grabber";
+            // 
+            // timeLabel
+            // 
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.Location = new System.Drawing.Point(217, 39);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(95, 13);
+            this.timeLabel.TabIndex = 31;
+            this.timeLabel.Text = "(00 days 00:00:00)";
             // 
             // label2
             // 
@@ -456,7 +484,6 @@
             0,
             0,
             0});
-            this.sumNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
             // 
             // label4
             // 
@@ -469,7 +496,7 @@
             // 
             // secNumericUpDown
             // 
-            this.secNumericUpDown.Location = new System.Drawing.Point(148, 37);
+            this.secNumericUpDown.Location = new System.Drawing.Point(178, 37);
             this.secNumericUpDown.Maximum = new decimal(new int[] {
             59,
             0,
@@ -483,11 +510,22 @@
             0,
             0,
             0});
-            this.secNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
+            // 
+            // hoursNumericUpDown
+            // 
+            this.hoursNumericUpDown.Location = new System.Drawing.Point(93, 37);
+            this.hoursNumericUpDown.Maximum = new decimal(new int[] {
+            744,
+            0,
+            0,
+            0});
+            this.hoursNumericUpDown.Name = "hoursNumericUpDown";
+            this.hoursNumericUpDown.Size = new System.Drawing.Size(40, 20);
+            this.hoursNumericUpDown.TabIndex = 3;
             // 
             // minNumericUpDown
             // 
-            this.minNumericUpDown.Location = new System.Drawing.Point(87, 37);
+            this.minNumericUpDown.Location = new System.Drawing.Point(139, 37);
             this.minNumericUpDown.Maximum = new decimal(new int[] {
             24,
             0,
@@ -496,16 +534,15 @@
             this.minNumericUpDown.Name = "minNumericUpDown";
             this.minNumericUpDown.Size = new System.Drawing.Size(33, 20);
             this.minNumericUpDown.TabIndex = 3;
-            this.minNumericUpDown.ValueChanged += new System.EventHandler(this.NumericUpDown_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(207, 13);
+            this.label1.Size = new System.Drawing.Size(81, 13);
             this.label1.TabIndex = 26;
-            this.label1.Text = "Take picture in:              Min               Sec.";
+            this.label1.Text = "Take picture in:";
             // 
             // grabberGroupBox
             // 
@@ -618,10 +655,13 @@
             treeNode3.Text = "Global Key & File path";
             treeNode4.Name = "GrabberNode";
             treeNode4.Text = "Grabber options";
+            treeNode5.Name = "FacebookNode";
+            treeNode5.Text = "Facebook";
             this.mainTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode2,
             treeNode3,
-            treeNode4});
+            treeNode4,
+            treeNode5});
             this.mainTreeView.Size = new System.Drawing.Size(144, 219);
             this.mainTreeView.TabIndex = 22;
             this.mainTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.mainTreeView_AfterSelect);
@@ -633,6 +673,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.masterPanel.BackColor = System.Drawing.SystemColors.Control;
             this.masterPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.masterPanel.Controls.Add(this.facebookGroupBox);
             this.masterPanel.Controls.Add(this.dateStampGroupBox);
             this.masterPanel.Controls.Add(this.cancelButton);
             this.masterPanel.Controls.Add(this.applyButton);
@@ -643,8 +684,127 @@
             this.masterPanel.Controls.Add(this.grabberGroupBox);
             this.masterPanel.Location = new System.Drawing.Point(4, 4);
             this.masterPanel.Name = "masterPanel";
-            this.masterPanel.Size = new System.Drawing.Size(941, 488);
+            this.masterPanel.Size = new System.Drawing.Size(941, 834);
             this.masterPanel.TabIndex = 36;
+            // 
+            // facebookGroupBox
+            // 
+            this.facebookGroupBox.Controls.Add(this.ProfilePictureBox);
+            this.facebookGroupBox.Controls.Add(this.facebookProgressBarEx);
+            this.facebookGroupBox.Controls.Add(this.statusLabel);
+            this.facebookGroupBox.Controls.Add(this.authorizeButton);
+            this.facebookGroupBox.Controls.Add(this.userNameTextBox);
+            this.facebookGroupBox.Controls.Add(this.label7);
+            this.facebookGroupBox.Controls.Add(this.label6);
+            this.facebookGroupBox.Location = new System.Drawing.Point(296, 487);
+            this.facebookGroupBox.Name = "facebookGroupBox";
+            this.facebookGroupBox.Size = new System.Drawing.Size(372, 219);
+            this.facebookGroupBox.TabIndex = 39;
+            this.facebookGroupBox.TabStop = false;
+            this.facebookGroupBox.Text = "Facebook";
+            this.facebookGroupBox.Visible = false;
+            // 
+            // ProfilePictureBox
+            // 
+            this.ProfilePictureBox.Location = new System.Drawing.Point(243, 78);
+            this.ProfilePictureBox.Name = "ProfilePictureBox";
+            this.ProfilePictureBox.Size = new System.Drawing.Size(123, 112);
+            this.ProfilePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ProfilePictureBox.TabIndex = 8;
+            this.ProfilePictureBox.TabStop = false;
+            // 
+            // facebookProgressBarEx
+            // 
+            this.facebookProgressBarEx.BackgroundPainter = this.gradientBackgroundPainter1;
+            this.facebookProgressBarEx.BorderPainter = this.styledBorderPainter1;
+            this.facebookProgressBarEx.Location = new System.Drawing.Point(6, 196);
+            this.facebookProgressBarEx.MarqueePercentage = 20;
+            this.facebookProgressBarEx.MarqueeSpeed = 10;
+            this.facebookProgressBarEx.MarqueeStep = 1;
+            this.facebookProgressBarEx.Maximum = 100;
+            this.facebookProgressBarEx.Minimum = 0;
+            this.facebookProgressBarEx.Name = "facebookProgressBarEx";
+            this.facebookProgressBarEx.ProgressPadding = 0;
+            this.facebookProgressBarEx.ProgressPainter = this.javaProgressPainter1;
+            this.facebookProgressBarEx.ProgressType = ProgressODoom.ProgressType.MarqueeWrap;
+            this.facebookProgressBarEx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.facebookProgressBarEx.ShowPercentage = false;
+            this.facebookProgressBarEx.Size = new System.Drawing.Size(360, 17);
+            this.facebookProgressBarEx.TabIndex = 7;
+            this.facebookProgressBarEx.Text = "Authorizing...";
+            this.facebookProgressBarEx.Value = 20;
+            this.facebookProgressBarEx.Visible = false;
+            // 
+            // gradientBackgroundPainter1
+            // 
+            this.gradientBackgroundPainter1.BottomColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.gradientBackgroundPainter1.GlossPainter = null;
+            this.gradientBackgroundPainter1.TopColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            // 
+            // styledBorderPainter1
+            // 
+            this.styledBorderPainter1.Border3D = System.Windows.Forms.Border3DStyle.SunkenOuter;
+            // 
+            // javaProgressPainter1
+            // 
+            this.javaProgressPainter1.Color = System.Drawing.Color.RoyalBlue;
+            this.javaProgressPainter1.GlossPainter = null;
+            this.javaProgressPainter1.ProgressBorderPainter = null;
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Location = new System.Drawing.Point(6, 86);
+            this.statusLabel.MaximumSize = new System.Drawing.Size(300, 0);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(35, 13);
+            this.statusLabel.TabIndex = 6;
+            this.statusLabel.Text = "status";
+            this.statusLabel.Visible = false;
+            // 
+            // authorizeButton
+            // 
+            this.authorizeButton.BackgroundImage = global::ScreenGrabber.Properties.Resources.FacebookAuthenticationButton;
+            this.authorizeButton.FlatAppearance.BorderSize = 0;
+            this.authorizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.authorizeButton.Location = new System.Drawing.Point(9, 125);
+            this.authorizeButton.Margin = new System.Windows.Forms.Padding(0);
+            this.authorizeButton.Name = "authorizeButton";
+            this.authorizeButton.Size = new System.Drawing.Size(154, 22);
+            this.authorizeButton.TabIndex = 5;
+            this.authorizeButton.UseVisualStyleBackColor = true;
+            this.authorizeButton.Click += new System.EventHandler(this.authorizeButton_Click);
+            this.authorizeButton.MouseEnter += new System.EventHandler(this.authorizeButton_MouseEnter);
+            this.authorizeButton.MouseLeave += new System.EventHandler(this.authorizeButton_MouseLeave);
+            // 
+            // userNameTextBox
+            // 
+            this.userNameTextBox.BackColor = System.Drawing.Color.White;
+            this.userNameTextBox.Location = new System.Drawing.Point(73, 52);
+            this.userNameTextBox.Name = "userNameTextBox";
+            this.userNameTextBox.ReadOnly = true;
+            this.userNameTextBox.Size = new System.Drawing.Size(293, 20);
+            this.userNameTextBox.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 55);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(61, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "User name:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 16);
+            this.label6.MaximumSize = new System.Drawing.Size(370, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(346, 26);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "You can publish your snaps (Via SnapsExplorer) to Facebook using you account deta" +
+                "ils. to do this please Authorize ScreenGrabber:";
             // 
             // dateStampGroupBox
             // 
@@ -821,7 +981,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(949, 496);
+            this.ClientSize = new System.Drawing.Size(949, 842);
             this.Controls.Add(this.masterPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -831,9 +991,9 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
-            this.Load += new System.EventHandler(this.SettingsPage_Load);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ScreenGrabberSettings_FormClosed);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScreenGrabberSettings_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ScreenGrabberSettings_FormClosed);
+            this.Load += new System.EventHandler(this.SettingsPage_Load);
             this.globalGroupBox.ResumeLayout(false);
             this.globalGroupBox.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -846,10 +1006,14 @@
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sumNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hoursNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.minNumericUpDown)).EndInit();
             this.grabberGroupBox.ResumeLayout(false);
             this.grabberGroupBox.PerformLayout();
             this.masterPanel.ResumeLayout(false);
+            this.facebookGroupBox.ResumeLayout(false);
+            this.facebookGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).EndInit();
             this.dateStampGroupBox.ResumeLayout(false);
             this.dateStampGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dateStampPreviewPictureBox)).EndInit();
@@ -922,5 +1086,18 @@
         private System.Windows.Forms.Label opacityLabel;
         private System.Windows.Forms.TrackBar opacityTrackBar;
         private System.Windows.Forms.CheckBox tryDXCheckBox;
+        private System.Windows.Forms.GroupBox facebookGroupBox;
+        private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Button authorizeButton;
+        private System.Windows.Forms.TextBox userNameTextBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private ProgressODoom.GradientBackgroundPainter gradientBackgroundPainter1;
+        private ProgressODoom.ProgressBarEx facebookProgressBarEx;
+        private ProgressODoom.StyledBorderPainter styledBorderPainter1;
+        private ProgressODoom.JavaProgressPainter javaProgressPainter1;
+        private System.Windows.Forms.PictureBox ProfilePictureBox;
+        private System.Windows.Forms.Label timeLabel;
+        private System.Windows.Forms.NumericUpDown hoursNumericUpDown;
     }
 }

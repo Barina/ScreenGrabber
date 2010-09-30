@@ -8,6 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using ScreenGrabber.Properties;
 using System.Threading;
+using Facebook;
+using Facebook.Components;
+using Facebook.Exceptions;
+using Facebook.Entity;
 
 namespace ScreenGrabber
 {
@@ -418,6 +422,45 @@ namespace ScreenGrabber
         {
             Program.main.updateStatus();
             Close();
+        }
+
+        private void postToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Settings.Default.FacebookService == null || Settings.Default.FacebookUser == null)
+                {
+                    try
+                    {
+                        FacebookService service = new FacebookService();
+                        service.IsDesktopApplication = true;
+                        service.ApplicationKey = "00d36cfe480479a5982206e2c5b1cfb7";
+                        service.Secret = "d9a50c892615569bf5e24d3aeeef38d5";
+                        Settings.Default.FacebookService = service;
+
+                        User me = service.GetUserInfo();
+                        if (me != null)
+                            Settings.Default.FacebookUser = me;
+                        else
+                            throw new UnauthorizedAccessException("Authorization faild.. please try again.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error");
+                        Settings.Default.FacebookUser = null;
+                        Settings.Default.FacebookService = null;
+                        return;
+                    }
+                    Settings.Default.Save();
+                }
+
+                int[] imageIDs = new int[snapsDataGridView.SelectedRows.Count];
+                for (int i = 0; i < imageIDs.Length; i++)
+                    imageIDs[i] = (int)snapsDataGridView.SelectedRows[i].Cells[0].Value;
+
+                new FacebookUploader(Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap((int)snapsDataGridView.CurrentRow.Cells[0].Value)), imageIDs).ShowDialog();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void bindingNavigatorSaveSnap_Click(object sender, EventArgs e)

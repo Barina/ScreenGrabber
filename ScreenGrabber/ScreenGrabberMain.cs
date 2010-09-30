@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using ScreenGrabber.Properties;
+using Stoppers;
 
 namespace ScreenGrabber
 {
@@ -30,6 +31,7 @@ namespace ScreenGrabber
         bool autoGrabberInitiated;
         private static int userBitmaps;
         public SnapsExplorer explorer;
+        Stopper counter;
         #endregion
 
         #region global hot key components
@@ -188,12 +190,19 @@ namespace ScreenGrabber
         public void timeTakeButtonToolTipSetter()
         {
             string time = "";
-            if(Settings.Default.Minutes < 10)
+
+            if (Settings.Default.Counter.Days > 0)
+                time += Settings.Default.Counter.Days + (Settings.Default.Counter.Days == 1 ? " Day and " : " Days and ");
+            if (Settings.Default.Counter.Hours < 10)
                 time += "0";
-            time += Settings.Default.Minutes + ":";
-            if(Settings.Default.Seconds < 10)
+            time += Settings.Default.Counter.Hours + ":";
+            if (Settings.Default.Counter.Minutes < 10)
                 time += "0";
-            time += Settings.Default.Seconds;
+            time += Settings.Default.Counter.Minutes + ":";
+            if (Settings.Default.Counter.Seconds < 10)
+                time += "0";
+            time += Settings.Default.Counter.Seconds;
+
             if(Settings.Default.PictureSum == 0)
                 toolTip.SetToolTip(timeTakeButton, "Will grab a snapshot of your screen in " + time + " over and over until you click here again.");
             else
@@ -475,9 +484,39 @@ namespace ScreenGrabber
                     break;
 
                 case "timeTakeButton": // initiate auto grabber 
-                    if(snapTimer.Enabled)
+                    if (counter == null || !counter.Enabled)
                     {
-                        snapTimer.Stop();
+                        if (!Program.isLegalExt(addDateToPath(Settings.Default.Path)))
+                        {
+                            MessageBox.Show("Currently supporting only '.png', '.bmp' or '.jpg'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        hideButton.PerformClick();
+                        activated = false;
+                        Settings.Default.SaveDate = true;
+                        if (repeat = Settings.Default.PictureSum == 0)
+                        {
+                            autoGrabberProgressBarEx.ProgressType = ProgressODoom.ProgressType.MarqueeBounce;
+                            autoGrabberProgressBarEx.MarqueeStart();
+                        }
+                        else
+                            autoGrabberProgressBarEx.Maximum = 1 + (int)Settings.Default.PictureSum;
+
+                        sum = Settings.Default.PictureSum;
+
+                        autoGrabberInitiated = true;
+                        takeButton.Enabled = false;
+                        grabWebButton.Enabled = false;
+
+                        counter = new Stopper(Settings.Default.Counter,500);
+                        counter.Tick += new EventHandler(counter_Tick);
+                        counter.StopperDone += new EventHandler(counter_StopperDone);
+                        counter.Stopped += new EventHandler(counter_Stopped);
+                        counter.Start();
+                    }
+                    else
+                    {
+                        counter.Stop();
                         autoGrabberInitiated = false;
                         takeButton.Enabled = true;
                         grabWebButton.Enabled = true;
@@ -487,39 +526,11 @@ namespace ScreenGrabber
                         notifyIcon.BalloonTipClicked += new EventHandler(notifyIcon_BalloonTipClicked);
                         timeTakeButton.Text = "Initiate AutoGrabber!";
                         timeTakeLabel.Text = "Auto grabber interval.";
-                        toolTip.SetToolTip(timeTakeButton, "Grab a snap in " + Settings.Default.Seconds + " seconds.");
-                        if(autoGrabberProgressBarEx.ProgressType == ProgressODoom.ProgressType.MarqueeBounce)
+                        toolTip.SetToolTip(timeTakeButton, "Grab a snap in " + Stopper.ToString(Settings.Default.Counter) + ".");
+                        if (autoGrabberProgressBarEx.ProgressType == ProgressODoom.ProgressType.MarqueeBounce)
                             autoGrabberProgressBarEx.MarqueeStop();
                         autoGrabberProgressBarEx.ProgressType = ProgressODoom.ProgressType.Smooth;
                         autoGrabberProgressBarEx.Value = 0;
-                    }
-                    else
-                    {
-                        if(!Program.isLegalExt(addDateToPath(Settings.Default.Path)))
-                        {
-                            MessageBox.Show("Currently supporting only '.png', '.bmp' or '.jpg'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                        hideButton.PerformClick();
-                        activated = false;
-                        Settings.Default.SaveDate = true;
-                        if(repeat = Settings.Default.PictureSum == 0)
-                        {
-                            autoGrabberProgressBarEx.ProgressType = ProgressODoom.ProgressType.MarqueeBounce;
-                            autoGrabberProgressBarEx.MarqueeStart();
-                        }
-                        else
-                            autoGrabberProgressBarEx.Maximum = 1 + (int)Settings.Default.PictureSum;
-
-                        min = Settings.Default.Minutes;
-                        sec = Settings.Default.Seconds;
-                        sum = Settings.Default.PictureSum;
-
-                        autoGrabberInitiated = true;
-                        takeButton.Enabled = false;
-                        grabWebButton.Enabled = false;
-
-                        snapTimer.Start();
                     }
                     break;
 
@@ -650,65 +661,73 @@ namespace ScreenGrabber
             Settings.Default.CustomBounds = customCheckBox.Checked;
         }
 
-        private void snapTimer_Tick(object sender, EventArgs e)
+        void counter_Tick(object sender, EventArgs e)
         {
-            if(sec == 0)
-                if(min == 0)
-                {
-                    if(sum > 0)
-                        sum--;
-                    if(autoGrabberProgressBarEx.ProgressType == ProgressODoom.ProgressType.Smooth)
-                        autoGrabberProgressBarEx.Value++;
+            timeTakeButton.Text = counter.TimeLeftString;
+            toolTip.SetToolTip(timeTakeButton, timeTakeButton.Text + " - Click to stop.");
 
-                    grabScreen();
-                    Program.saveToFile(addDateToPath(Settings.Default.Path), Program.lastSnap);
+            timeTakeLabel.Text = "Time left until next snap: " + counter.TimeLeftString + ".";
 
-                    if(sum > 0 || repeat)
-                    {
-                        min = Settings.Default.Minutes;
-                        sec = Settings.Default.Seconds;
-                    }
-                    else
-                    {
-                        snapTimer.Stop();
-                        autoGrabberInitiated = false;
-                        takeButton.Enabled = true;
-                        grabWebButton.Enabled = true;
-                        timeTakeButton.Text = "Initiate AutoGrabber!";
-                        timeTakeLabel.Text = "Auto grabber interval.";
-                        toolTip.SetToolTip(timeTakeButton, "Grab a snap in " + Settings.Default.Minutes + " Minutes and " + Settings.Default.Seconds + " Seconds.");
-                        autoGrabberProgressBarEx.MarqueeStop();
-                        autoGrabberProgressBarEx.ProgressType = ProgressODoom.ProgressType.Smooth;
-                        autoGrabberProgressBarEx.Value = 0;
-                        notifyIcon.ShowBalloonTip(1250, "Operation done.", "All snapshots saved successfuly at '" +
-                            Directory.GetParent(Settings.Default.Path) + "'." + Environment.NewLine + "Click to open.", ToolTipIcon.Info);
-                        notifyIcon.BalloonTipClicked += new EventHandler(notifyIcon_BalloonTipClicked);
-                        restoreFromTray();
-                        return;
-                    }
-                }
-                else
-                {
-                    min--;
-                    sec = 59;
-                }
+            if (!repeat)
+            {
+                TimeSpan ts = new TimeSpan((int)(Settings.Default.Counter.Days * sum + counter.DaysLeft), (int)(Settings.Default.Counter.Hours * sum+counter.HoursLeft),
+                    (int)(Settings.Default.Counter.Minutes * sum+counter.MinutesLeft), (int)(Settings.Default.Counter.Seconds * sum+counter.SecondsLeft));
+                timeTakeLabel.Text = "Snaps left: " + sum + ". " + timeTakeLabel.Text + " Time left: " + Stopper.ToString(ts)+".";
+            }
+        }
+
+        void counter_StopperDone(object sender, EventArgs e)
+        {
+            if (sum > 0 || repeat)
+            {
+                if (sum >= 0)
+                    sum--;
+
+                if (autoGrabberProgressBarEx.ProgressType == ProgressODoom.ProgressType.Smooth)
+                    autoGrabberProgressBarEx.Value++;
+
+                grabScreen();
+                Program.saveToFile(addDateToPath(Settings.Default.Path), Program.lastSnap);
+
+                counter = new Stopper(Settings.Default.Counter,500);
+                counter.Tick += counter_Tick;
+                counter.StopperDone += counter_StopperDone;
+                counter.Stopped += counter_Stopped;
+                counter.Start();
+            }
             else
-                sec--;
+            {
+                autoGrabberInitiated = false;
+                takeButton.Enabled = true;
+                grabWebButton.Enabled = true;
+                timeTakeButton.Text = "Initiate AutoGrabber!";
+                timeTakeLabel.Text = "Auto grabber interval.";
+                toolTip.SetToolTip(timeTakeButton, "Grab a snap in " +Stopper.ToString(Settings.Default.Counter)+ ".");
+                autoGrabberProgressBarEx.MarqueeStop();
+                autoGrabberProgressBarEx.ProgressType = ProgressODoom.ProgressType.Smooth;
+                autoGrabberProgressBarEx.Value = 0;
+                notifyIcon.ShowBalloonTip(1250, "Operation done.", "All snapshots saved successfuly at '" +
+                    Directory.GetParent(Settings.Default.Path) + "'." + Environment.NewLine + "Click to open.", ToolTipIcon.Info);
+                notifyIcon.BalloonTipClicked += new EventHandler(notifyIcon_BalloonTipClicked);
+                restoreFromTray();
+            }
+        }
 
-            string time = "";
-            if(min < 10)
-                time += "0";
-            time += min + ":";
-            if(sec < 10)
-                time += "0";
-            time += sec;
-            timeTakeButton.Text = "[" + time + "]";
-            toolTip.SetToolTip(timeTakeButton, time + " - Click to stop.");
-
-            timeTakeLabel.Text = "";
-            if(!repeat)
-                timeTakeLabel.Text += "Snaps left: " + sum + ". ";
-            timeTakeLabel.Text += "Time left until next snap: " + time + ".";
+        void counter_Stopped(object sender, EventArgs e)
+        {
+            autoGrabberInitiated = false;
+            takeButton.Enabled = true;
+            grabWebButton.Enabled = true;
+            timeTakeButton.Text = "Initiate AutoGrabber!";
+            timeTakeLabel.Text = "Auto grabber interval.";
+            toolTip.SetToolTip(timeTakeButton, "Grab a snap in " + Stopper.ToString(Settings.Default.Counter) + ".");
+            autoGrabberProgressBarEx.MarqueeStop();
+            autoGrabberProgressBarEx.ProgressType = ProgressODoom.ProgressType.Smooth;
+            autoGrabberProgressBarEx.Value = 0;
+            notifyIcon.ShowBalloonTip(1250, "Operation cancelled.", "All snapshots(if any) saved successfuly at '" +
+                Directory.GetParent(Settings.Default.Path) + "'." + Environment.NewLine + "Click to open.", ToolTipIcon.Info);
+            notifyIcon.BalloonTipClicked += new EventHandler(notifyIcon_BalloonTipClicked);
+            restoreFromTray();
         }
 
         public void timer1_Tick(object sender, EventArgs e)
@@ -722,7 +741,7 @@ namespace ScreenGrabber
             {
                 DialogResult dr = MessageBox.Show("Next time you launch ScreenGrabber it will take " +
                     (Settings.Default.PictureSum == 0 ? "snaps continuously" : Settings.Default.PictureSum + " snaps") +
-                    " every " + Settings.Default.Minutes + " minutes and " + Settings.Default.Seconds + " seconds.\nIs that okay?",
+                    " every " +Stopper.ToString(Settings.Default.Counter)+ ".\nIs that okay?",
                     "Please confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                 if(e.Cancel = dr == DialogResult.Cancel)

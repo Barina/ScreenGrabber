@@ -38,14 +38,8 @@
     <Setting Name="grabberSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
-    <Setting Name="Minutes" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="PictureSum" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="Seconds" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="Location" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">-1, -1</Value>
@@ -90,6 +84,15 @@
     </Setting>
     <Setting Name="TryDXFirst" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FacebookService" Type="Facebook.Components.FacebookService" Scope="User">
+      <Value Profile="(Default)">null</Value>
+    </Setting>
+    <Setting Name="FacebookUser" Type="Facebook.Entity.User" Scope="User">
+      <Value Profile="(Default)">null</Value>
+    </Setting>
+    <Setting Name="Counter" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:20:00</Value>
     </Setting>
   </Settings>
 </SettingsFile>

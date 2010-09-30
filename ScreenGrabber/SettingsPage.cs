@@ -9,6 +9,12 @@ using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using ScreenGrabber.Properties;
+using Facebook;
+using Facebook.Components;
+using Facebook.Exceptions;
+using Facebook.Entity;
+using System.Windows.Media.Imaging;
+using System.Collections.ObjectModel;
 
 namespace ScreenGrabber
 {
@@ -20,6 +26,8 @@ namespace ScreenGrabber
         Point tempLocation;
         Size tempSize;
         Corner datePosition;
+        FacebookService service;
+        User me;
         #endregion
 
         /// <summary>
@@ -40,9 +48,17 @@ namespace ScreenGrabber
             autoSaveCheckBox.Checked = Settings.Default.autoSave;
             overwriteCheckBox.Checked = Settings.Default.Overwrite;
             minimizedCheckBox.Checked = Settings.Default.Minimized;
-            minNumericUpDown.Value = Settings.Default.Minutes;
-            secNumericUpDown.Value = Settings.Default.Seconds;
+
             sumNumericUpDown.Value = Settings.Default.PictureSum;
+            hoursNumericUpDown.Value = Settings.Default.Counter.Hours + (Settings.Default.Counter.Days * 24);
+            minNumericUpDown.Value = Settings.Default.Counter.Minutes;
+            secNumericUpDown.Value = Settings.Default.Counter.Seconds;
+
+            sumNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            hoursNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            minNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+            secNumericUpDown.ValueChanged += NumericUpDown_ValueChanged;
+
             autoInitiaterCheckBox.Checked = Settings.Default.AutoInitiater;
             closeToTrayCheckBox.Checked = Settings.Default.CloseToTray;
             stickyCheckBox.Checked = Settings.Default.Sticky;
@@ -51,8 +67,8 @@ namespace ScreenGrabber
             saveSnapsCheckBox.Checked = Settings.Default.SaveSnaps;
             tryDXCheckBox.Checked = Settings.Default.TryDXFirst;
             tryDXCheckBox.CheckedChanged += CheckBox_CheckedChanged;
-            
-            if(saveDateCheckBox.Checked = Settings.Default.SaveDate)
+
+            if (saveDateCheckBox.Checked = Settings.Default.SaveDate)
             {
                 opacityTrackBar.Enabled = true;
                 positionGroupBox.Enabled = true;
@@ -65,11 +81,12 @@ namespace ScreenGrabber
             fontDialog.Color = Settings.Default.DateColor;
             opacityTrackBar.Value = Settings.Default.DateBackgroundTransparency;
             opacityLabel.Text = "Background opacity: " + Settings.Default.DateBackgroundTransparency + " (" + (opacityTrackBar.Value * 100 / 255) + "%)";
+            timeLabel.Text = "(" + Stoppers.Stopper.ToString(Settings.Default.Counter) + ")";
 
             tempLocation = Settings.Default.grabberPosition;
             tempSize = Settings.Default.grabberSize;
 
-            switch(Program.main.modifier)
+            switch (Program.main.modifier)
             {
                 case 1:
                     MODComboBox.Text = "Alt";
@@ -82,7 +99,7 @@ namespace ScreenGrabber
                     break;
             }
 
-            switch(datePosition)
+            switch (datePosition)
             {
                 case Corner.UpLeft:
                     upLeftRadioButton.Checked = true;
@@ -100,7 +117,8 @@ namespace ScreenGrabber
             try
             {
                 hotKeyTextBox.Text = Program.main.key.ToString();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             positionLabel.Text = "Location: X=" + Program.grabberPosition.X + ",Y=" + Program.grabberPosition.Y;
             sizeLabel.Text = "Size: " + Program.grabberSize.Width + "x" + Program.grabberSize.Height;
@@ -108,6 +126,12 @@ namespace ScreenGrabber
             dateStampPreviewPictureBox.Image = Program.DrawDateOnImage(Resources.dateStampPreviewBox, DateTime.Now);
 
             mainTreeView.ExpandAll();
+
+            globalGroupBox.Location = new Point(158, 8);
+            dateStampGroupBox.Location = globalGroupBox.Location;
+            globalKeyGroupBox.Location = globalGroupBox.Location;
+            grabberGroupBox.Location = globalGroupBox.Location;
+            facebookGroupBox.Location = globalGroupBox.Location;
         }
 
         #region Events.
@@ -115,6 +139,24 @@ namespace ScreenGrabber
         {
             Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
             pathTextBox.TextChanged += pathTextBox_TextChanged;
+
+            try
+            {
+                if (Settings.Default.FacebookService != null)
+                {
+                    service = Settings.Default.FacebookService;
+                    if (Settings.Default.FacebookUser != null)
+                    {
+                        me = Settings.Default.FacebookUser;
+                        userNameTextBox.Text = me.Name;
+                        ProfilePictureBox.Image = me.Picture;
+                        ProfilePictureBox.BorderStyle = BorderStyle.FixedSingle;
+                        statusLabel.Text = "Authorized.";
+                        statusLabel.Visible = true;
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void mainTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -129,9 +171,9 @@ namespace ScreenGrabber
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            if(!Directory.GetParent(pathTextBox.Text).Exists)
+            if (!Directory.GetParent(pathTextBox.Text).Exists)
             {
-                if(!(MessageBox.Show("No such File or Directory '" + Directory.GetParent(pathTextBox.Text).FullName + "'.\nDo you want to create it?", "Path not exist.", 
+                if (!(MessageBox.Show("No such File or Directory '" + Directory.GetParent(pathTextBox.Text).FullName + "'.\nDo you want to create it?", "Path not exist.",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK))
                     return;
                 Directory.CreateDirectory(Directory.GetParent(pathTextBox.Text).ToString());
@@ -148,7 +190,7 @@ namespace ScreenGrabber
 
         private void setBoundsButton_Click(object sender, EventArgs e)
         {
-            if(new BoundsSetter().ShowDialog() == DialogResult.OK)
+            if (new BoundsSetter().ShowDialog() == DialogResult.OK)
             {
                 customCheckBox.Checked = true;
                 positionLabel.Text = "Location: X=" + Program.grabberPosition.X + ",Y=" + Program.grabberPosition.Y;
@@ -158,7 +200,7 @@ namespace ScreenGrabber
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            if(saveFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Settings.Default.Path = saveFileDialog.FileName;
                 Settings.Default.Save();
@@ -169,7 +211,7 @@ namespace ScreenGrabber
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure you want to reset custom bounds?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to reset custom bounds?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 Program.grabberPosition = new Point(0, 0);
                 Program.grabberSize = Screen.PrimaryScreen.Bounds.Size;
@@ -183,7 +225,7 @@ namespace ScreenGrabber
 
         private void newSetterButton_Click(object sender, EventArgs e)
         {
-            if(new NewerSetBounds().ShowDialog() == DialogResult.OK)
+            if (new NewerSetBounds().ShowDialog() == DialogResult.OK)
             {
                 customCheckBox.Checked = true;
                 Program.main.updatePreview(tempLocation, tempSize);
@@ -207,26 +249,26 @@ namespace ScreenGrabber
         {
             try
             {
-                if(fontDialog.ShowDialog() == DialogResult.OK)
+                if (fontDialog.ShowDialog() == DialogResult.OK)
                 {
                     Settings.Default.DateFont = fontDialog.Font;
                     Settings.Default.DateColor = fontDialog.Color;
                     dateStampPreviewPictureBox.Image = Program.DrawDateOnImage(Resources.dateStampPreviewBox, DateTime.Now);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void colorButton_Click(object sender, EventArgs e)
         {
-            if(colorDialog.ShowDialog() == DialogResult.OK)
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 Settings.Default.DateBackgroundColor = colorDialog.Color;
                 dateStampPreviewPictureBox.Image = Program.DrawDateOnImage(Resources.dateStampPreviewBox, DateTime.Now);
             }
         }
-        
+
         private void pathTextBox_TextChanged(object sender, EventArgs e)
         {
             Settings.Default.Path = pathTextBox.Text;
@@ -240,41 +282,36 @@ namespace ScreenGrabber
 
         private void NumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if(minNumericUpDown.Value == 0 && secNumericUpDown.Value < 1)
-                secNumericUpDown.Value = 1;
-            string tip = "Set time to take picture to " + minNumericUpDown.Value + " minut" + (minNumericUpDown.Value == 1 ? "" : "s") 
-                + " and " + secNumericUpDown.Value + " second" + (secNumericUpDown.Value == 1 ? "." : "s.");
-            toolTip.SetToolTip(secNumericUpDown, minNumericUpDown.Value != 0 ? tip : (secNumericUpDown.Value + " second" 
-                + (secNumericUpDown.Value == 1 ? "." : "s.")));
-            toolTip.SetToolTip(minNumericUpDown, minNumericUpDown.Value != 0 ? tip : "Represents minutes.");
-            Program.main.timeTakeButtonToolTipSetter();
-            switch((sender as NumericUpDown).Name)
+            if (hoursNumericUpDown.Value == 0 && minNumericUpDown.Value == 0 && secNumericUpDown.Value < 1)
             {
-                case "minNumericUpDown":
-                    Settings.Default.Minutes = minNumericUpDown.Value;
-                    break;
-                case "secNumericUpDown":
-                    Settings.Default.Seconds = secNumericUpDown.Value;
-                    break;
-                case "sumNumericUpDown":
-                    if(sumNumericUpDown.Value == 0)
-                        Program.main.timeTakeButtonToolTipSetter();
-                    Settings.Default.PictureSum = sumNumericUpDown.Value;
-                    break;
+                secNumericUpDown.Value = 1;
+                return;
             }
+
+            Settings.Default.PictureSum = sumNumericUpDown.Value;
+            Settings.Default.Counter = new TimeSpan((int)hoursNumericUpDown.Value, (int)minNumericUpDown.Value, (int)secNumericUpDown.Value);
+            timeLabel.Text = "(" + Stoppers.Stopper.ToString(Settings.Default.Counter) + ")";
+
+            string tip = "Set time to take picture to " + timeLabel.Text + ".";
+            toolTip.SetToolTip(secNumericUpDown, minNumericUpDown.Value != 0 && hoursNumericUpDown.Value != 0 ? tip : (secNumericUpDown.Value + " second"
+                + (secNumericUpDown.Value == 1 ? "." : "s.")));
+            toolTip.SetToolTip(minNumericUpDown, minNumericUpDown.Value != 0 && hoursNumericUpDown.Value != 0 ? tip : "Represents minutes.");
+            toolTip.SetToolTip(hoursNumericUpDown, minNumericUpDown.Value != 0 && hoursNumericUpDown.Value != 0 ? tip : "48 hours means 2 days.");
+
+            Program.main.timeTakeButtonToolTipSetter();
         }
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox cb = sender as CheckBox;
 
-            switch(cb.Name)
+            switch (cb.Name)
             {
                 case "startupCheckBox":
-                    if(startupCheckBox.Checked)
+                    if (startupCheckBox.Checked)
                     {
-                        if(rkApp.GetValue("ScreenGrabber") == null)
-                            if(MessageBox.Show("That will add '" + Application.ExecutablePath + "' to Registry.", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                        if (rkApp.GetValue("ScreenGrabber") == null)
+                            if (MessageBox.Show("That will add '" + Application.ExecutablePath + "' to Registry.", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                             {
                                 try
                                 {
@@ -305,10 +342,10 @@ namespace ScreenGrabber
                 case "stickyCheckBox":
                     Settings.Default.Sticky = cb.Checked;
                     break;
-                    
+
                 case "tryDXCheckBox":
-                    if(tryDXCheckBox.Checked)
-                        if(MessageBox.Show("In this mode ScreenGrabber will try to snap using DirectX with default values.\nIf failed will take a normal grab screen with user parameters." +
+                    if (tryDXCheckBox.Checked)
+                        if (MessageBox.Show("In this mode ScreenGrabber will try to snap using DirectX with default values.\nIf failed will take a normal grab screen with user parameters." +
                             "\nNot recomended. May also work on desktop. May retrieve black snaps.\nAre you sure you want to use DirectX?", "Are you sure?",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                             tryDXCheckBox.Checked = false;
@@ -316,7 +353,7 @@ namespace ScreenGrabber
                     break;
 
                 case "saveSnapsCheckBox":
-                    Settings.Default.SaveSnaps = saveSnapsCheckBox.Checked; 
+                    Settings.Default.SaveSnaps = saveSnapsCheckBox.Checked;
                     break;
 
                 case "autoCaptureCheckBox":
@@ -356,13 +393,13 @@ namespace ScreenGrabber
 
         private void positionRadioButton_CheckedChanged(object sender, EventArgs e)
         {
-            if(upLeftRadioButton.Checked)
+            if (upLeftRadioButton.Checked)
                 datePosition = Corner.UpLeft;
-            if(upRightRadioButton.Checked)
+            if (upRightRadioButton.Checked)
                 datePosition = Corner.UpRight;
-            if(bottomLeftRadioButton.Checked)
+            if (bottomLeftRadioButton.Checked)
                 datePosition = Corner.BottomLeft;
-            if(bottomRightRadioButton.Checked)
+            if (bottomRightRadioButton.Checked)
                 datePosition = Corner.BottomRight;
             Settings.Default.DatePosition = (byte)datePosition;
             dateStampPreviewPictureBox.Image = Program.DrawDateOnImage(Resources.dateStampPreviewBox, DateTime.Now);
@@ -379,7 +416,7 @@ namespace ScreenGrabber
             {
                 hotKeyTextBox.Text = Program.main.key.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
@@ -393,7 +430,7 @@ namespace ScreenGrabber
             try
             {
                 Button btn = sender as Button;
-                if(btn.Name == "shortCutButton")
+                if (btn.Name == "shortCutButton")
                 {
                     detailsLabel.Text = "Create short cuts on Desktop(or any other place you want) for grabbing the screen or launch the program.";
                     detailsLabel.Visible = true;
@@ -409,22 +446,22 @@ namespace ScreenGrabber
         {
             detailsLabel.Visible = false;
         }
-        
+
         private void opacityTrackBar_Scroll(object sender, EventArgs e)
         {
-            opacityLabel.Text = "Background opacity: " + (Settings.Default.DateBackgroundTransparency = (byte)opacityTrackBar.Value) + " (" + (opacityTrackBar.Value*100/255) + "%)";
+            opacityLabel.Text = "Background opacity: " + (Settings.Default.DateBackgroundTransparency = (byte)opacityTrackBar.Value) + " (" + (opacityTrackBar.Value * 100 / 255) + "%)";
             dateStampPreviewPictureBox.Image = Program.DrawDateOnImage(Resources.dateStampPreviewBox, DateTime.Now);
         }
 
         private void ScreenGrabberSettings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(!applySettings())
+            if (!applySettings())
                 e.Cancel = true;
         }
 
         private void ScreenGrabberSettings_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if(saveAll)
+            if (saveAll)
                 Settings.Default.Save();
             else
                 Settings.Default.Reload();
@@ -437,35 +474,42 @@ namespace ScreenGrabber
         /// </summary>
         void selectChange()
         {
-            switch(mainTreeView.SelectedNode.Name)
+            switch (mainTreeView.SelectedNode.Name)
             {
                 case "GlobalNode":
-                    globalGroupBox.Location = new Point(158, 8);
                     globalGroupBox.Visible = true;
                     globalKeyGroupBox.Visible = false;
                     grabberGroupBox.Visible = false;
                     dateStampGroupBox.Visible = false;
+                    facebookGroupBox.Visible = false;
                     break;
                 case "DateStampNode":
-                    dateStampGroupBox.Location = new Point(158, 8);
                     dateStampGroupBox.Visible = true;
                     globalGroupBox.Visible = false;
                     globalKeyGroupBox.Visible = false;
                     grabberGroupBox.Visible = false;
+                    facebookGroupBox.Visible = false;
                     break;
                 case "KeyNode":
-                    globalKeyGroupBox.Location = new Point(158, 8);
                     globalGroupBox.Visible = false;
                     globalKeyGroupBox.Visible = true;
                     grabberGroupBox.Visible = false;
                     dateStampGroupBox.Visible = false;
+                    facebookGroupBox.Visible = false;
                     break;
                 case "GrabberNode":
-                    grabberGroupBox.Location = new Point(158, 8);
                     globalGroupBox.Visible = false;
                     globalKeyGroupBox.Visible = false;
                     grabberGroupBox.Visible = true;
                     dateStampGroupBox.Visible = false;
+                    facebookGroupBox.Visible = false;
+                    break;
+                case "FacebookNode":
+                    globalGroupBox.Visible = false;
+                    globalKeyGroupBox.Visible = false;
+                    grabberGroupBox.Visible = false;
+                    dateStampGroupBox.Visible = false;
+                    facebookGroupBox.Visible = true;
                     break;
             }
         }
@@ -479,13 +523,13 @@ namespace ScreenGrabber
             {
                 Program.main.hotKeyLabel.Text = "Global hot key: ";
                 Program.main.hotKeyLabel.Visible = false;
-                if(MODComboBox.SelectedItem == null)
+                if (MODComboBox.SelectedItem == null)
                 {
                     MessageBox.Show("Please select modifier.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     hotKeyLabel.Visible = false;
                     return;
                 }
-                if(Program.main.key == Keys.None)
+                if (Program.main.key == Keys.None)
                 {
                     MessageBox.Show("Please select a key.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     hotKeyLabel.Visible = false;
@@ -494,19 +538,19 @@ namespace ScreenGrabber
 
                 Program.main.UnregisterGlobalHotKey();
 
-                if(MODComboBox.SelectedItem.ToString() == "Alt")
+                if (MODComboBox.SelectedItem.ToString() == "Alt")
                 {
                     hotKeyLabel.Text = "Alt + ";
                     Program.main.modifier = 1;
                 }
                 else
-                    if(MODComboBox.SelectedItem.ToString() == "Control")
+                    if (MODComboBox.SelectedItem.ToString() == "Control")
                     {
                         hotKeyLabel.Text = "CTRL + ";
                         Program.main.modifier = 2;
                     }
                     else
-                        if(MODComboBox.SelectedItem.ToString() == "Shift")
+                        if (MODComboBox.SelectedItem.ToString() == "Shift")
                         {
                             hotKeyLabel.Text = "Shift + ";
                             Program.main.modifier = 4;
@@ -521,7 +565,7 @@ namespace ScreenGrabber
                 Settings.Default.Modifier = Program.main.modifier;
                 Settings.Default.Key = Program.main.key;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
@@ -531,40 +575,40 @@ namespace ScreenGrabber
         /// <param name="cb">The changed checkbox.</param>
         void CheckBoxLabelChanged(CheckBox cb)
         {
-            switch(cb.Name)
+            switch (cb.Name)
             {
                 case "autoCaptureCheckBox":
-                    if(autoCaptureCheckBox.Checked)
+                    if (autoCaptureCheckBox.Checked)
                         detailsLabel.Text = "Everytime the program gain focus, it wil grab a snap.";
                     else
                         detailsLabel.Text = "A silent load of the program.(saves resources)";
                     break;
                 case "stickyCheckBox":
-                    if(stickyCheckBox.Checked)
+                    if (stickyCheckBox.Checked)
                         detailsLabel.Text = "Main windows get sticked to the edges of the screen.";
                     else
                         detailsLabel.Text = "Check this if you want the main screen to sticked to screen edges.";
                     break;
                 case "startupCheckBox":
-                    if(startupCheckBox.Checked)
+                    if (startupCheckBox.Checked)
                         detailsLabel.Text = "The program will start with Windows.";
                     else
                         detailsLabel.Text = "Check this if you want ScreenGrabber to load with Windows.";
                     break;
                 case "minimizedCheckBox":
-                    if(minimizedCheckBox.Checked)
+                    if (minimizedCheckBox.Checked)
                         detailsLabel.Text = "The program will start minimized.";
                     else
                         detailsLabel.Text = "The program will start regullary.";
                     break;
                 case "closeToTrayCheckBox":
-                    if(closeToTrayCheckBox.Checked)
+                    if (closeToTrayCheckBox.Checked)
                         detailsLabel.Text = "The X button in the top right corner will minimize the program to the system tray.";
                     else
                         detailsLabel.Text = "The X button in the top right corner will shut down ScreenGrabber.";
                     break;
                 case "saveSnapsCheckBox":
-                    if(saveSnapsCheckBox.Checked)
+                    if (saveSnapsCheckBox.Checked)
                         detailsLabel.Text = "Every snap will saved in the database.";
                     else
                         detailsLabel.Text = "Only snaps you save in the disk will saved in the database.";
@@ -593,13 +637,74 @@ namespace ScreenGrabber
                 applyButton.Enabled = false;
                 return true;
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 MessageBox.Show("Couldn't save!\n\n" + exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
         #endregion
+
+        private void authorizeButton_Click(object sender, EventArgs e)
+        {
+            userNameTextBox.Enabled = false;
+            authorizeButton.Enabled = false;
+            facebookProgressBarEx.MarqueeStart();
+            facebookProgressBarEx.Visible = true;
+
+            try
+            {
+                if (service == null)
+                {
+                    service = new FacebookService();
+                    service.IsDesktopApplication = true;
+                    service.ApplicationKey = "00d36cfe480479a5982206e2c5b1cfb7";
+                    service.Secret = "d9a50c892615569bf5e24d3aeeef38d5";
+                    Settings.Default.FacebookService = service;
+                }
+                me = service.GetUserInfo();
+                if (me != null)
+                {
+                    Settings.Default.FacebookUser = me;
+                    userNameTextBox.Text = me.Name;
+                    ProfilePictureBox.Image = me.Picture;
+                    ProfilePictureBox.BorderStyle = BorderStyle.FixedSingle;
+                    statusLabel.Text = "Authorized.";
+                    statusLabel.Visible = true;
+                    saveAll = true;
+                }
+                else
+                {
+                    statusLabel.Text = "Authorization faild.. please try again.";
+                    statusLabel.Visible = true;
+                    Settings.Default.FacebookUser = null;
+                    Settings.Default.FacebookService = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                statusLabel.Text = "Authorization faild.. please try again.";
+                statusLabel.Visible = true;
+                Settings.Default.FacebookUser = null;
+                Settings.Default.FacebookService = null;
+            }
+
+            facebookProgressBarEx.MarqueeStop();
+            facebookProgressBarEx.Visible = false;
+            userNameTextBox.Enabled = true;
+            authorizeButton.Enabled = true;
+        }
+
+        private void authorizeButton_MouseEnter(object sender, EventArgs e)
+        {
+            authorizeButton.BackgroundImage = Resources.FacebookAuthenticationButtonHighlighted;
+        }
+
+        private void authorizeButton_MouseLeave(object sender, EventArgs e)
+        {
+            authorizeButton.BackgroundImage = Resources.FacebookAuthenticationButton;
+        }
     }
 
     enum Corner { UpLeft = 0, UpRight = 1, BottomLeft = 2, BottomRight = 3 }

@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using mshtml;
-using SlimDX.Direct3D9;
+using D3D9 = SlimDX.Direct3D9;
 using ScreenGrabber.Properties;
 using SHDocVw;
 
@@ -25,7 +25,7 @@ namespace ScreenGrabber
         static extern IntPtr SetActiveWindow(IntPtr hWnd);
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
+        
         public static ScreenGrabberMain main;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ScreenGrabber
             //try
             //{
                 Application.SetCompatibleTextRenderingDefault(false);
-
+            
                 try
                 {
                     // ----------------> database connection <-----------------------//
@@ -259,50 +259,70 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 return false;
             lock(SnapLocker)
             {
-                busyTimer.Start();
-
-                if(bmp != null)
+                try
                 {
-                    bmp.Dispose();
-                    bmp = null;
+                    using(GraphicsPath gp = new GraphicsPath())
+                    {
+                        busyTimer.Start();
+
+                        if(bmp != null)
+                        {
+                            bmp.Dispose();
+                            bmp = null;
+                        }
+
+                        D3D9.Direct3D direct3d = new SlimDX.Direct3D9.Direct3D();
+                        D3D9.AdapterInformation adapter = direct3d.Adapters.DefaultAdapter;
+
+                        D3D9.PresentParameters parameters = new SlimDX.Direct3D9.PresentParameters();
+                        parameters.BackBufferFormat = adapter.CurrentDisplayMode.Format;
+                        parameters.BackBufferHeight = adapter.CurrentDisplayMode.Height;
+                        parameters.BackBufferWidth = adapter.CurrentDisplayMode.Width;
+                        parameters.Multisample = SlimDX.Direct3D9.MultisampleType.None;
+                        parameters.SwapEffect = SlimDX.Direct3D9.SwapEffect.Discard;
+                        parameters.PresentationInterval = SlimDX.Direct3D9.PresentInterval.Default;
+                        parameters.FullScreenRefreshRateInHertz = 0;
+
+                        D3D9.Device device = new D3D9.Device(direct3d, adapter.Adapter, D3D9.DeviceType.Hardware,
+                            parameters.DeviceWindowHandle, D3D9.CreateFlags.SoftwareVertexProcessing, parameters);
+
+                        D3D9.Surface surface = D3D9.Surface.CreateOffscreenPlain(device, adapter.CurrentDisplayMode.Width,
+                            adapter.CurrentDisplayMode.Height, D3D9.Format.A8R8G8B8, D3D9.Pool.SystemMemory);
+
+                        device.BeginScene();
+                        device.EndScene();
+                        //device.GetFrontBufferData(0, surface);
+
+                        surface = device.GetBackBuffer(0, 0);
+                        D3D9.Surface.ToFile(surface, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\screenshot.bmp", D3D9.ImageFileFormat.Bmp);                        
+
+                        Rectangle region = new Rectangle(0, 0, adapter.CurrentDisplayMode.Width, adapter.CurrentDisplayMode.Height);
+                        bmp = new Bitmap(D3D9.Surface.ToStream(surface, D3D9.ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
+                        surface.Dispose();
+
+                        device.Present();
+
+                        using(Graphics g = Graphics.FromImage(bmp))
+                        {
+                            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+                            System.Drawing.Font font = new System.Drawing.Font(FontFamily.GenericSansSerif, 18);
+                            gp.AddString("Rendered using DirectX.", font.FontFamily, (int)font.Style, font.Size, new Point(10, 10), StringFormat.GenericDefault);
+                            g.DrawPath(new Pen(Brushes.Black, 5), gp);
+                            g.FillPath(Brushes.White, gp);
+                        }
+
+                        snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID);
+
+                        bmp.Dispose();
+
+                        return true;
+                    }
                 }
-
-                Direct3D direct3d = new SlimDX.Direct3D9.Direct3D();
-                AdapterInformation adapter = direct3d.Adapters.DefaultAdapter;
-
-                PresentParameters parameters = new SlimDX.Direct3D9.PresentParameters();
-                parameters.BackBufferFormat = adapter.CurrentDisplayMode.Format;
-                parameters.BackBufferHeight = adapter.CurrentDisplayMode.Height;
-                parameters.BackBufferWidth = adapter.CurrentDisplayMode.Width;
-                parameters.Multisample = SlimDX.Direct3D9.MultisampleType.None;
-                parameters.SwapEffect = SlimDX.Direct3D9.SwapEffect.Discard;
-                parameters.PresentationInterval = SlimDX.Direct3D9.PresentInterval.Default;
-                parameters.FullScreenRefreshRateInHertz = 0;
-
-                Device device = new Device(direct3d, adapter.Adapter, DeviceType.Hardware, parameters.DeviceWindowHandle, CreateFlags.SoftwareVertexProcessing, parameters);
-
-                Surface surface = Surface.CreateOffscreenPlain(device, adapter.CurrentDisplayMode.Width, adapter.CurrentDisplayMode.Height, Format.A8R8G8B8, Pool.SystemMemory);
-
-                device.GetFrontBufferData(0, surface);
-
-                Rectangle region = new Rectangle(0, 0, adapter.CurrentDisplayMode.Width, adapter.CurrentDisplayMode.Height);
-
-                bmp = new Bitmap(Surface.ToStream(surface, ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
-
-                using(Graphics g = Graphics.FromImage(bmp)){
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    GraphicsPath gp = new GraphicsPath();
-                    System.Drawing.Font font = new System.Drawing.Font(FontFamily.GenericSansSerif,18);                    
-                    gp.AddString("Rendered using DirectX.",font.FontFamily,(int)font.Style,font.Size,new Point(10,10),StringFormat.GenericDefault);
-                    g.DrawPath(new Pen(Brushes.Black,5),gp);
-                    g.FillPath(Brushes.White,gp);
+                catch
+                {
+                    return false;
                 }
-
-                snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID);
-
-                bmp.Dispose();
-
-                return true;
             }
         }
 
@@ -543,39 +563,40 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
         /// <returns>Returns the path that was used to save the image, or 'failed' message</returns>
         static public string saveToFile(string filePath, Snap currentSnap)
         {
-            if(currentSnap == null)
+            if (currentSnap == null)
             {
                 MessageBox.Show("Please press 'Grab screen' button.", "Nothing to save", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return null;
             }
 
-            if(!isLegalExt(filePath))
+            if (!isLegalExt(filePath))
             {
                 MessageBox.Show("Currently supporting only '.png', '.bmp' or '.jpeg'.");
                 return null;
             }
 
-            if(!Directory.GetParent(filePath).Exists)
+            if (!Directory.GetParent(filePath).Exists)
                 Directory.CreateDirectory(Directory.GetParent(filePath).FullName);
-            if(Settings.Default.Overwrite || !System.IO.File.Exists(filePath)) //If file does not exist - it will be saved normally            
-                if(performSave(filePath, currentSnap))
+            if (Settings.Default.Overwrite || !System.IO.File.Exists(filePath)) //If file does not exist - it will be saved normally            
+            {
+                if (performSave(filePath, currentSnap))
                     return filePath;
-
+            }
             else //Otherwise if does exist - it will be save with additional of [number] symbol to the filename
             {
-                if(System.IO.File.Exists(filePath)) //just another check if the file is exist to be sure
+                if (System.IO.File.Exists(filePath)) //just another check if the file is exist to be sure
                 {
                     int num = 2;
                     string fullFilePath = Path.GetDirectoryName(filePath) + "\\" + Path.GetFileNameWithoutExtension(filePath);
                     string ext = Path.GetExtension(filePath);
                     string tempPath = "";
-                    while(true) //A method for adding/changing number to the real filename
+                    while (true) //A method for adding/changing number to the real filename
                     {
                         tempPath = fullFilePath + " [" + num + "]" + ext;
                         num++;
-                        if(!File.Exists(tempPath)) // checking if the new filename path is exist
+                        if (!File.Exists(tempPath)) // checking if the new filename path is exist
                         {
-                            if(performSave(tempPath, currentSnap))
+                            if (performSave(tempPath, currentSnap))
                                 return tempPath;
                             break;
                         }
@@ -713,6 +734,10 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                     new PointF(bgPosition.X+3, bgPosition.Y+2), StringFormat.GenericDefault);
 
                 G.SmoothingMode = SmoothingMode.None;
+
+                if((int)Settings.Default.DateBackgroundTransparency >120)
+                G.FillRectangle(new SolidBrush(Color.FromArgb((int)Settings.Default.DateBackgroundTransparency-120,Color.Black)),
+                    bgPosition.X+3, bgPosition.Y+4, textRect.Width + 10, textRect.Height + 10);
 
                 G.DrawRectangle(new Pen(brush), bgPosition.X, bgPosition.Y, textRect.Width + 9, textRect.Height+10);
                 G.DrawRectangle(new Pen(brush), bgPosition.X, bgPosition.Y, textRect.Width + 9, textRect.Height+10);

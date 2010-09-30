@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ScreenGrabber</RootNamespace>
     <AssemblyName>ScreenGrabber</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>2B9D6A4A24D4E0F7EDDFB20D88BAC56B77A705C3</ManifestCertificateThumbprint>
     <ManifestKeyFile>ScreenGrabber_TemporaryKey.pfx</ManifestKeyFile>
@@ -24,6 +24,10 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <StartupObject>ScreenGrabber.Program</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -39,8 +43,8 @@
     <PublisherName>Roy Barina</PublisherName>
     <SuiteName>Barina</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>87</ApplicationRevision>
-    <ApplicationVersion>9.40.120.%2a</ApplicationVersion>
+    <ApplicationRevision>91</ApplicationRevision>
+    <ApplicationVersion>10.48.326.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -80,9 +84,19 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook, Version=1.3.2755.21601, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\DLL's\Facebook\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.Controls">
+      <HintPath>..\..\..\DLL's\Facebook\Facebook.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook.WebControls">
+      <HintPath>..\..\..\DLL's\Facebook\Facebook.WebControls.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.IWshRuntimeLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Interop.IWshRuntimeLibrary.dll</HintPath>
+      <HintPath>..\..\..\..\Visual Studio 2008\Interop.IWshRuntimeLibrary.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -90,7 +104,7 @@
     </Reference>
     <Reference Include="ProgressODoom, Version=1.0.3305.25240, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ProgressODoom_demo\ProgressODoom.dll</HintPath>
+      <HintPath>..\..\..\..\Visual Studio 2008\Projects\ScreenGrabber\ScreenGrabber\publish\Application Files\ScreenGrabber_9_40_120_86\ProgressODoom.dll</HintPath>
     </Reference>
     <Reference Include="SlimDX, Version=2.0.10.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
@@ -129,6 +143,12 @@
     <Compile Include="BoundsSetter.Designer.cs">
       <DependentUpon>BoundsSetter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FacebookConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FacebookConnect.Designer.cs">
+      <DependentUpon>FacebookConnect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\ExplorerSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -161,6 +181,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BoundsSetter.resx">
       <DependentUpon>BoundsSetter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FacebookConnect.resx">
+      <DependentUpon>FacebookConnect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Preview.resx">
       <DependentUpon>Preview.cs</DependentUpon>
@@ -199,6 +222,7 @@
     <Compile Include="NewerSetBounds.Designer.cs">
       <DependentUpon>NewerSetBounds.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="SettingsPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,7 +257,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -258,7 +282,7 @@
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
       <Visible>False</Visible>
-      <ProductName>SQL Server Compact 3.5</ProductName>
+      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
@@ -334,6 +358,9 @@
     <None Include="Resources\ScreenGrabber.ico" />
     <None Include="Resources\Monitor.png" />
     <None Include="Resources\dateStampPreviewBox.jpg" />
+    <None Include="Resources\FacebookAuthenticationButtonHighlighted.png" />
+    <None Include="Resources\FacebookAuthenticationButton.png" />
+    <None Include="Resources\FacebookUploadButton.png" />
     <Content Include="SnapsDatabase.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -355,6 +382,12 @@
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Stopper\Stopper\Stopper.csproj">
+      <Project>{8C0D47AE-A85D-40C3-BA3A-794B4B7AE37F}</Project>
+      <Name>Stopper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

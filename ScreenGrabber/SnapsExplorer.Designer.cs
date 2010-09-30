@@ -93,6 +93,7 @@
             this.bindingNavigatorRefresh = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorPreview = new System.Windows.Forms.ToolStripButton();
             this.closeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.uploadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.viewSplitContainer = new System.Windows.Forms.SplitContainer();
             this.accountsTableAdapter = new ScreenGrabber.SnapsDatabaseDataSetTableAdapters.AccountsTableAdapter();
             this.snapsTableAdapter = new ScreenGrabber.SnapsDatabaseDataSetTableAdapters.SnapsTableAdapter();
@@ -108,6 +109,7 @@
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator)).BeginInit();
             this.bindingNavigator.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewSplitContainer)).BeginInit();
             this.viewSplitContainer.Panel1.SuspendLayout();
             this.viewSplitContainer.Panel2.SuspendLayout();
             this.viewSplitContainer.SuspendLayout();
@@ -168,7 +170,7 @@
             this.snapsDataGridView.RowTemplate.ReadOnly = true;
             this.snapsDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.snapsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.snapsDataGridView.Size = new System.Drawing.Size(740, 260);
+            this.snapsDataGridView.Size = new System.Drawing.Size(780, 260);
             this.snapsDataGridView.TabIndex = 6;
             this.snapsDataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.snapsDataGridView_CellMouseDoubleClick);
             this.snapsDataGridView.SelectionChanged += new System.EventHandler(this.snapsDataGridView_SelectionChanged);
@@ -373,7 +375,7 @@
             this.previewPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewPictureBox.Location = new System.Drawing.Point(0, 0);
             this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.Size = new System.Drawing.Size(740, 232);
+            this.previewPictureBox.Size = new System.Drawing.Size(780, 232);
             this.previewPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.previewPictureBox.TabIndex = 4;
             this.previewPictureBox.TabStop = false;
@@ -435,16 +437,16 @@
             this.snapDeletionBackgroundWorker.WorkerReportsProgress = true;
             this.snapDeletionBackgroundWorker.WorkerSupportsCancellation = true;
             this.snapDeletionBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.snapDeletionBackgroundWorker_DoWork);
-            this.snapDeletionBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.snapDeletionBackgroundWorker_RunWorkerCompleted);
             this.snapDeletionBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.snapDeletionBackgroundWorker_ProgressChanged);
+            this.snapDeletionBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.snapDeletionBackgroundWorker_RunWorkerCompleted);
             // 
             // snapSavingBackgroundWorker
             // 
             this.snapSavingBackgroundWorker.WorkerReportsProgress = true;
             this.snapSavingBackgroundWorker.WorkerSupportsCancellation = true;
             this.snapSavingBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.snapSavingBackgroundWorker_DoWork);
-            this.snapSavingBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.snapSavingBackgroundWorker_RunWorkerCompleted);
             this.snapSavingBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.snapSavingBackgroundWorker_ProgressChanged);
+            this.snapSavingBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.snapSavingBackgroundWorker_RunWorkerCompleted);
             // 
             // saveFileDialog
             // 
@@ -459,16 +461,16 @@
             this.savingAllBackgroundWorker.WorkerReportsProgress = true;
             this.savingAllBackgroundWorker.WorkerSupportsCancellation = true;
             this.savingAllBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.savingAllBackgroundWorker_DoWork);
-            this.savingAllBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.snapSavingBackgroundWorker_RunWorkerCompleted);
             this.savingAllBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.snapSavingBackgroundWorker_ProgressChanged);
+            this.savingAllBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.snapSavingBackgroundWorker_RunWorkerCompleted);
             // 
             // openPreviewBackgroundWorker
             // 
             this.openPreviewBackgroundWorker.WorkerReportsProgress = true;
             this.openPreviewBackgroundWorker.WorkerSupportsCancellation = true;
             this.openPreviewBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.openPreviewBackgroundWorker_DoWork);
-            this.openPreviewBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.openPreviewBackgroundWorker_RunWorkerCompleted);
             this.openPreviewBackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.openPreviewBackgroundWorker_ProgressChanged);
+            this.openPreviewBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.openPreviewBackgroundWorker_RunWorkerCompleted);
             // 
             // statusStrip
             // 
@@ -479,7 +481,7 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 527);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(740, 22);
+            this.statusStrip.Size = new System.Drawing.Size(780, 22);
             this.statusStrip.TabIndex = 9;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -492,7 +494,7 @@
             // messageToolStripStatusLabel
             // 
             this.messageToolStripStatusLabel.Name = "messageToolStripStatusLabel";
-            this.messageToolStripStatusLabel.Size = new System.Drawing.Size(362, 17);
+            this.messageToolStripStatusLabel.Size = new System.Drawing.Size(382, 17);
             this.messageToolStripStatusLabel.Spring = true;
             this.messageToolStripStatusLabel.Text = "status";
             this.messageToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -501,7 +503,7 @@
             // snapsCounterToolStripStatusLabel
             // 
             this.snapsCounterToolStripStatusLabel.Name = "snapsCounterToolStripStatusLabel";
-            this.snapsCounterToolStripStatusLabel.Size = new System.Drawing.Size(725, 17);
+            this.snapsCounterToolStripStatusLabel.Size = new System.Drawing.Size(765, 17);
             this.snapsCounterToolStripStatusLabel.Spring = true;
             this.snapsCounterToolStripStatusLabel.Text = "counter";
             this.snapsCounterToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -532,7 +534,8 @@
             this.toolStripSeparator3,
             this.bindingNavigatorRefresh,
             this.bindingNavigatorPreview,
-            this.closeToolStripButton});
+            this.closeToolStripButton,
+            this.uploadToolStripButton});
             this.bindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.bindingNavigator.MoveFirstItem = null;
             this.bindingNavigator.MoveLastItem = null;
@@ -541,7 +544,7 @@
             this.bindingNavigator.Name = "bindingNavigator";
             this.bindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
             this.bindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.bindingNavigator.Size = new System.Drawing.Size(740, 31);
+            this.bindingNavigator.Size = new System.Drawing.Size(780, 31);
             this.bindingNavigator.TabIndex = 14;
             this.bindingNavigator.Text = "bindingNavigator";
             // 
@@ -701,6 +704,15 @@
             this.closeToolStripButton.ToolTipText = "Close explorer.";
             this.closeToolStripButton.Click += new System.EventHandler(this.closeToolStripButton_Click);
             // 
+            // uploadToolStripButton
+            // 
+            this.uploadToolStripButton.Image = global::ScreenGrabber.Properties.Resources.FacebookUploadButton;
+            this.uploadToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.uploadToolStripButton.Name = "uploadToolStripButton";
+            this.uploadToolStripButton.Size = new System.Drawing.Size(141, 28);
+            this.uploadToolStripButton.Text = "Upload to Facebook";
+            this.uploadToolStripButton.Click += new System.EventHandler(this.postToolStripButton_Click);
+            // 
             // viewSplitContainer
             // 
             this.viewSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -716,7 +728,7 @@
             // viewSplitContainer.Panel2
             // 
             this.viewSplitContainer.Panel2.Controls.Add(this.previewPictureBox);
-            this.viewSplitContainer.Size = new System.Drawing.Size(740, 496);
+            this.viewSplitContainer.Size = new System.Drawing.Size(780, 496);
             this.viewSplitContainer.SplitterDistance = 260;
             this.viewSplitContainer.TabIndex = 15;
             // 
@@ -741,7 +753,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(740, 549);
+            this.ClientSize = new System.Drawing.Size(780, 549);
             this.Controls.Add(this.viewSplitContainer);
             this.Controls.Add(this.bindingNavigator);
             this.Controls.Add(this.statusStrip);
@@ -751,10 +763,10 @@
             this.Name = "SnapsExplorer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Snaps Explorer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SnapsExplorer_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SnapsExplorer_FormClosed);
             this.Load += new System.EventHandler(this.SnapsExplorer_Load);
             this.SizeChanged += new System.EventHandler(this.SnapsExplorer_SizeChanged);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SnapsExplorer_FormClosed);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SnapsExplorer_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.snapsDataGridView)).EndInit();
             this.columnsContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fullTableBindingSource)).EndInit();
@@ -769,6 +781,7 @@
             this.bindingNavigator.PerformLayout();
             this.viewSplitContainer.Panel1.ResumeLayout(false);
             this.viewSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.viewSplitContainer)).EndInit();
             this.viewSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.accountsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -843,5 +856,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewImageColumn snapDataGridViewImageColumn;
         private System.Windows.Forms.ToolStripComboBox accountToolStripComboBox;
+        private System.Windows.Forms.ToolStripButton uploadToolStripButton;
     }
 }

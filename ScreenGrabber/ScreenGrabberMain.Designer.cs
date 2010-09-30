@@ -35,6 +35,7 @@
             this.showWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.boundsSetterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.saveButton = new System.Windows.Forms.Button();
@@ -52,7 +53,6 @@
             this.grabWebButton = new System.Windows.Forms.Button();
             this.positionTimer = new System.Windows.Forms.Timer(this.components);
             this.onLoadBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.snapTimer = new System.Windows.Forms.Timer(this.components);
             this.snapsDatabaseDataSet = new ScreenGrabber.SnapsDatabaseDataSet();
             this.accountsTableAdapter = new ScreenGrabber.SnapsDatabaseDataSetTableAdapters.AccountsTableAdapter();
             this.snapsTableAdapter = new ScreenGrabber.SnapsDatabaseDataSetTableAdapters.SnapsTableAdapter();
@@ -73,7 +73,6 @@
             this.plainBorderPainter = new ProgressODoom.PlainBorderPainter();
             this.stripedProgressPainter = new ProgressODoom.StripedProgressPainter();
             this.gradientGlossPainter = new ProgressODoom.GradientGlossPainter();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.notifyContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).BeginInit();
             this.previewContextMenuStrip.SuspendLayout();
@@ -99,13 +98,13 @@
             this.exitToolStripMenuItem});
             this.notifyContextMenuStrip.Name = "contextMenuStrip1";
             this.notifyContextMenuStrip.ShowImageMargin = false;
-            this.notifyContextMenuStrip.Size = new System.Drawing.Size(128, 120);
+            this.notifyContextMenuStrip.Size = new System.Drawing.Size(123, 98);
             // 
             // showWindowToolStripMenuItem
             // 
             this.showWindowToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.showWindowToolStripMenuItem.Name = "showWindowToolStripMenuItem";
-            this.showWindowToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.showWindowToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.showWindowToolStripMenuItem.Text = "Show/Hide";
             this.showWindowToolStripMenuItem.Click += new System.EventHandler(this.showWindowToolStripMenuItem_Click);
             // 
@@ -113,7 +112,7 @@
             // 
             this.boundsSetterToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.boundsSetterToolStripMenuItem.Name = "boundsSetterToolStripMenuItem";
-            this.boundsSetterToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.boundsSetterToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.boundsSetterToolStripMenuItem.Text = "Bounds Setter";
             this.boundsSetterToolStripMenuItem.Click += new System.EventHandler(this.boundsSetterToolStripMenuItem_Click);
             // 
@@ -121,15 +120,20 @@
             // 
             this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(119, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -225,9 +229,9 @@
             this.minimizeButton.TabStop = false;
             this.toolTip.SetToolTip(this.minimizeButton, "Minimize this Window.");
             this.minimizeButton.UseVisualStyleBackColor = false;
-            this.minimizeButton.MouseLeave += new System.EventHandler(this.minimizeButton_MouseLeave);
             this.minimizeButton.Click += new System.EventHandler(this.Buttons_Click);
             this.minimizeButton.MouseEnter += new System.EventHandler(this.minimizeButton_MouseEnter);
+            this.minimizeButton.MouseLeave += new System.EventHandler(this.minimizeButton_MouseLeave);
             // 
             // closeButton
             // 
@@ -244,9 +248,9 @@
             this.closeButton.TabStop = false;
             this.toolTip.SetToolTip(this.closeButton, "Close the program.");
             this.closeButton.UseVisualStyleBackColor = false;
-            this.closeButton.MouseLeave += new System.EventHandler(this.closeButton_MouseLeave);
             this.closeButton.Click += new System.EventHandler(this.Buttons_Click);
             this.closeButton.MouseEnter += new System.EventHandler(this.closeButton_MouseEnter);
+            this.closeButton.MouseLeave += new System.EventHandler(this.closeButton_MouseLeave);
             // 
             // previewPictureBox
             // 
@@ -358,11 +362,6 @@
             // onLoadBackgroundWorker
             // 
             this.onLoadBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
-            // snapTimer
-            // 
-            this.snapTimer.Interval = 1000;
-            this.snapTimer.Tick += new System.EventHandler(this.snapTimer_Tick);
             // 
             // snapsDatabaseDataSet
             // 
@@ -617,11 +616,6 @@
             this.gradientGlossPainter.Style = ProgressODoom.GlossStyle.Top;
             this.gradientGlossPainter.Successor = null;
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
-            // 
             // ScreenGrabberMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -665,12 +659,12 @@
             this.Name = "ScreenGrabberMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ScreenGrabber";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.masterPanel_MouseUp);
             this.Activated += new System.EventHandler(this.Form1_Activated);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.masterPanel_MouseDown);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScreenGrabberMain_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.masterPanel_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.masterPanel_MouseUp);
             this.notifyContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.previewPictureBox)).EndInit();
             this.previewContextMenuStrip.ResumeLayout(false);
@@ -686,7 +680,6 @@
         private System.Windows.Forms.ToolStripMenuItem showWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker onLoadBackgroundWorker;
-        private System.Windows.Forms.Timer snapTimer;
         private System.Windows.Forms.ContextMenuStrip previewContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enlargeToolStripMenuItem;
