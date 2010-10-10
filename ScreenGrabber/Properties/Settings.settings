@@ -86,13 +86,16 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="FacebookService" Type="Facebook.Components.FacebookService" Scope="User">
-      <Value Profile="(Default)">null</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="FacebookUser" Type="Facebook.Entity.User" Scope="User">
       <Value Profile="(Default)">null</Value>
     </Setting>
     <Setting Name="Counter" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:20:00</Value>
+    </Setting>
+    <Setting Name="CommentEditorPopUp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

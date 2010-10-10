@@ -652,6 +652,8 @@ namespace ScreenGrabber {
             
             private global::System.Data.DataColumn columnAccountID;
             
+            private global::System.Data.DataColumn columnComment;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SnapsDataTable() {
@@ -719,6 +721,14 @@ namespace ScreenGrabber {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CommentColumn {
+                get {
+                    return this.columnComment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -754,13 +764,14 @@ namespace ScreenGrabber {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SnapsRow AddSnapsRow(byte[] Snap, System.DateTime DateTime, AccountsRow parentAccountsRowByAccounts_Snaps) {
+            public SnapsRow AddSnapsRow(byte[] Snap, System.DateTime DateTime, AccountsRow parentAccountsRowByAccounts_Snaps, string Comment) {
                 SnapsRow rowSnapsRow = ((SnapsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Snap,
                         DateTime,
-                        null};
+                        null,
+                        Comment};
                 if ((parentAccountsRowByAccounts_Snaps != null)) {
                     columnValuesArray[3] = parentAccountsRowByAccounts_Snaps[0];
                 }
@@ -797,6 +808,7 @@ namespace ScreenGrabber {
                 this.columnSnap = base.Columns["Snap"];
                 this.columnDateTime = base.Columns["DateTime"];
                 this.columnAccountID = base.Columns["AccountID"];
+                this.columnComment = base.Columns["Comment"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -810,6 +822,8 @@ namespace ScreenGrabber {
                 base.Columns.Add(this.columnDateTime);
                 this.columnAccountID = new global::System.Data.DataColumn("AccountID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAccountID);
+                this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnComment);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID}, true));
                 this.columnID.AutoIncrement = true;
@@ -821,6 +835,7 @@ namespace ScreenGrabber {
                 this.columnSnap.AllowDBNull = false;
                 this.columnDateTime.AllowDBNull = false;
                 this.columnAccountID.AllowDBNull = false;
+                this.columnComment.MaxLength = 460;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -966,6 +981,8 @@ namespace ScreenGrabber {
             
             private global::System.Data.DataColumn columnSnap;
             
+            private global::System.Data.DataColumn columnComment;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FullTableDataTable() {
@@ -1049,6 +1066,14 @@ namespace ScreenGrabber {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CommentColumn {
+                get {
+                    return this.columnComment;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1084,7 +1109,7 @@ namespace ScreenGrabber {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FullTableRow AddFullTableRow(int ID, int OwnerID, int AccountID, System.DateTime DateTime, string AccountName, byte[] Snap) {
+            public FullTableRow AddFullTableRow(int ID, int OwnerID, int AccountID, System.DateTime DateTime, string AccountName, byte[] Snap, string Comment) {
                 FullTableRow rowFullTableRow = ((FullTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ID,
@@ -1092,7 +1117,8 @@ namespace ScreenGrabber {
                         AccountID,
                         DateTime,
                         AccountName,
-                        Snap};
+                        Snap,
+                        Comment};
                 rowFullTableRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFullTableRow);
                 return rowFullTableRow;
@@ -1121,6 +1147,7 @@ namespace ScreenGrabber {
                 this.columnDateTime = base.Columns["DateTime"];
                 this.columnAccountName = base.Columns["AccountName"];
                 this.columnSnap = base.Columns["Snap"];
+                this.columnComment = base.Columns["Comment"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1138,6 +1165,8 @@ namespace ScreenGrabber {
                 base.Columns.Add(this.columnAccountName);
                 this.columnSnap = new global::System.Data.DataColumn("Snap", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSnap);
+                this.columnComment = new global::System.Data.DataColumn("Comment", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnComment);
                 this.columnID.ReadOnly = true;
                 this.columnOwnerID.ReadOnly = true;
                 this.columnAccountID.ReadOnly = true;
@@ -1145,6 +1174,8 @@ namespace ScreenGrabber {
                 this.columnAccountName.ReadOnly = true;
                 this.columnAccountName.MaxLength = 20;
                 this.columnSnap.ReadOnly = true;
+                this.columnComment.ReadOnly = true;
+                this.columnComment.MaxLength = 460;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1379,6 +1410,22 @@ namespace ScreenGrabber {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Comment {
+                get {
+                    try {
+                        return ((string)(this[this.tableSnaps.CommentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'Snaps\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSnaps.CommentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public AccountsRow AccountsRow {
                 get {
                     return ((AccountsRow)(this.GetParentRow(this.Table.ParentRelations["Accounts_Snaps"])));
@@ -1397,6 +1444,18 @@ namespace ScreenGrabber {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["Accounts_Snaps1"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCommentNull() {
+                return this.IsNull(this.tableSnaps.CommentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCommentNull() {
+                this[this.tableSnaps.CommentColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -1512,6 +1571,22 @@ namespace ScreenGrabber {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Comment {
+                get {
+                    try {
+                        return ((string)(this[this.tableFullTable.CommentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Comment\' in table \'FullTable\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFullTable.CommentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsIDNull() {
                 return this.IsNull(this.tableFullTable.IDColumn);
             }
@@ -1580,6 +1655,18 @@ namespace ScreenGrabber {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetSnapNull() {
                 this[this.tableFullTable.SnapColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCommentNull() {
+                return this.IsNull(this.tableFullTable.CommentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCommentNull() {
+                this[this.tableFullTable.CommentColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2271,28 +2358,34 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("Snap", "Snap");
             tableMapping.ColumnMappings.Add("DateTime", "DateTime");
             tableMapping.ColumnMappings.Add("AccountID", "AccountID");
+            tableMapping.ColumnMappings.Add("Comment", "Comment");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Snaps] WHERE (([ID] = @p1))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Snaps] WHERE (([ID] = @p1) AND ([DateTime] = @p2))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, null));
             this._adapter.InsertCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID]) VALUES (@p1, @p2, @p3)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID], [Comment]) VALUES (@p1, @p2" +
+                ", @p3, @p4)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Image, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Snap", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, null));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "AccountID", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Comment", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [Snaps] SET [Snap] = @p1, [DateTime] = @p2, [AccountID] = @p3 WHERE (([ID]" +
-                " = @p4))";
+            this._adapter.UpdateCommand.CommandText = "UPDATE [Snaps] SET [Snap] = @p1, [DateTime] = @p2, [AccountID] = @p3, [Comment] =" +
+                " @p4 WHERE (([ID] = @p5) AND ([DateTime] = @p6))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p1", global::System.Data.SqlDbType.Image, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Snap", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p2", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, null));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p3", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "AccountID", global::System.Data.DataRowVersion.Current, null));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Comment", global::System.Data.DataRowVersion.Current, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p5", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Original, null));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@p6", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "DateTime", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2305,10 +2398,10 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[7];
+            this._commandCollection = new global::System.Data.SqlServerCe.SqlCeCommand[9];
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT [ID], [Snap], [DateTime], [AccountID] FROM [Snaps]";
+            this._commandCollection[0].CommandText = "SELECT [ID], [Snap], [DateTime], [AccountID], [Comment] FROM [Snaps]";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[1].Connection = this.Connection;
@@ -2322,27 +2415,41 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@ID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Original, null));
             this._commandCollection[3] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT        DateTime\r\nFROM            Snaps\r\nWHERE        (ID = @ID)";
+            this._commandCollection[3].CommandText = "SELECT        Comment\r\nFROM            Snaps\r\nWHERE        (ID = @SnapID)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@ID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@SnapID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[4] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = "SELECT        Snap\r\nFROM            Snaps\r\nWHERE        (ID = @ID)";
+            this._commandCollection[4].CommandText = "SELECT        DateTime\r\nFROM            Snaps\r\nWHERE        (ID = @ID)";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@ID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[5] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = "SELECT        Snap\r\nFROM            Snaps\r\nWHERE        (AccountID = @AccountID)";
+            this._commandCollection[5].CommandText = "SELECT        Snap\r\nFROM            Snaps\r\nWHERE        (ID = @ID)";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@AccountID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "AccountID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@ID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[6] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = "INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID]) VALUES (@Snap, @DateTime, @" +
-                "AccountID)";
+            this._commandCollection[6].CommandText = "SELECT AccountID, Comment, DateTime, ID, Snap FROM Snaps WHERE (AccountID = @Acco" +
+                "untID)";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@Snap", global::System.Data.SqlDbType.Image, 2147483647, global::System.Data.ParameterDirection.Input, true, 0, 0, "Snap", global::System.Data.DataRowVersion.Current, null));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@DateTime", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, true, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, null));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@AccountID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "AccountID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[7] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[7].Connection = this.Connection;
+            this._commandCollection[7].CommandText = "INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID], [Comment]) VALUES (@Snap, @" +
+                "DateTime, @AccountID, @Comment)";
+            this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@Snap", global::System.Data.SqlDbType.Image, 0, global::System.Data.ParameterDirection.Input, true, 0, 0, "Snap", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@DateTime", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, true, 0, 0, "DateTime", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@AccountID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "AccountID", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@Comment", global::System.Data.SqlDbType.NVarChar, 460, global::System.Data.ParameterDirection.Input, true, 0, 0, "Comment", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[8] = new global::System.Data.SqlServerCe.SqlCeCommand();
+            this._commandCollection[8].Connection = this.Connection;
+            this._commandCollection[8].CommandText = "UPDATE       Snaps\r\nSET                Comment = @Comment\r\nWHERE        (ID = @Sn" +
+                "apID)";
+            this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@Comment", global::System.Data.SqlDbType.NVarChar, 460, global::System.Data.ParameterDirection.Input, true, 0, 0, "Comment", global::System.Data.DataRowVersion.Current, null));
+            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlServerCe.SqlCeParameter("@SnapID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, true, 0, 0, "ID", global::System.Data.DataRowVersion.Original, null));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2374,7 +2481,7 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual SnapsDatabaseDataSet.SnapsDataTable GetSnapsByAccountID(int AccountID) {
-            this.Adapter.SelectCommand = this.CommandCollection[5];
+            this.Adapter.SelectCommand = this.CommandCollection[6];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(AccountID));
             SnapsDatabaseDataSet.SnapsDataTable dataTable = new SnapsDatabaseDataSet.SnapsDataTable();
             this.Adapter.Fill(dataTable);
@@ -2414,8 +2521,9 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int p1) {
+        public virtual int Delete(int p1, System.DateTime p2) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(p1));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(p2));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2436,7 +2544,7 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(byte[] p1, System.DateTime p2, int p3) {
+        public virtual int Insert(byte[] p1, System.DateTime p2, int p3, string p4) {
             if ((p1 == null)) {
                 throw new global::System.ArgumentNullException("p1");
             }
@@ -2445,6 +2553,12 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             }
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(p2));
             this.Adapter.InsertCommand.Parameters[2].Value = ((int)(p3));
+            if ((p4 == null)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(p4));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2465,7 +2579,7 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(byte[] p1, System.DateTime p2, int p3, int p4) {
+        public virtual int Update(byte[] p1, System.DateTime p2, int p3, string p4, int p5, System.DateTime p6) {
             if ((p1 == null)) {
                 throw new global::System.ArgumentNullException("p1");
             }
@@ -2474,7 +2588,14 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             }
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(p2));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(p3));
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(p4));
+            if ((p4 == null)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(p4));
+            }
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(p5));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(p6));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2542,8 +2663,37 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual global::System.Nullable<global::System.DateTime> GetDateBySnapID(int ID) {
+        public virtual object GetCommentBySnapID(int SnapID) {
             global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[3];
+            command.Parameters[0].Value = ((int)(SnapID));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual global::System.Nullable<global::System.DateTime> GetDateBySnapID(int ID) {
+            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[4];
             command.Parameters[0].Value = ((int)(ID));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -2572,7 +2722,7 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual object GetSnap(int ID) {
-            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[4];
+            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[5];
             command.Parameters[0].Value = ((int)(ID));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -2601,8 +2751,8 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual int InsertSnap(byte[] Snap, System.DateTime DateTime, int AccountID) {
-            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[6];
+        public virtual int InsertSnap(byte[] Snap, System.DateTime DateTime, int AccountID, string Comment) {
+            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[7];
             if ((Snap == null)) {
                 throw new global::System.ArgumentNullException("Snap");
             }
@@ -2611,6 +2761,42 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             }
             command.Parameters[1].Value = ((System.DateTime)(DateTime));
             command.Parameters[2].Value = ((int)(AccountID));
+            if ((Comment == null)) {
+                command.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[3].Value = ((string)(Comment));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
+        public virtual int UpdateComment(string Comment, int SnapID) {
+            global::System.Data.SqlServerCe.SqlCeCommand command = this.CommandCollection[8];
+            if ((Comment == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(Comment));
+            }
+            command.Parameters[1].Value = ((int)(SnapID));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
             if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -2756,6 +2942,7 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("DateTime", "DateTime");
             tableMapping.ColumnMappings.Add("AccountName", "AccountName");
             tableMapping.ColumnMappings.Add("Snap", "Snap");
+            tableMapping.ColumnMappings.Add("Comment", "Comment");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2773,8 +2960,9 @@ namespace ScreenGrabber.SnapsDatabaseDataSetTableAdapters {
             this._commandCollection[0] = new global::System.Data.SqlServerCe.SqlCeCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        Snaps.ID, Snaps.AccountID AS OwnerID, Accounts.AccountID, Snaps.Dat" +
-                "eTime, Accounts.AccountName, Snaps.Snap\r\nFROM            Accounts INNER JOIN\r\n  " +
-                "                       Snaps ON Accounts.AccountID = Snaps.AccountID";
+                "eTime, Accounts.AccountName, Snaps.Comment, Snaps.Snap\r\nFROM            Accounts" +
+                " INNER JOIN\r\n                         Snaps ON Accounts.AccountID = Snaps.Accoun" +
+                "tID";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

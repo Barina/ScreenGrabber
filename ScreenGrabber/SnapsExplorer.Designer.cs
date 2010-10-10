@@ -39,11 +39,13 @@
             this.accountIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accountNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Comment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.snapDataGridViewImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.columnsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.madeByToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.snapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.commentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.verticalViewPreviewBoxOnTheSideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -93,6 +95,7 @@
             this.bindingNavigatorRefresh = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorPreview = new System.Windows.Forms.ToolStripButton();
             this.closeToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.editCommentToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.uploadToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.viewSplitContainer = new System.Windows.Forms.SplitContainer();
             this.accountsTableAdapter = new ScreenGrabber.SnapsDatabaseDataSetTableAdapters.AccountsTableAdapter();
@@ -109,7 +112,6 @@
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator)).BeginInit();
             this.bindingNavigator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.viewSplitContainer)).BeginInit();
             this.viewSplitContainer.Panel1.SuspendLayout();
             this.viewSplitContainer.Panel2.SuspendLayout();
             this.viewSplitContainer.SuspendLayout();
@@ -140,6 +142,7 @@
             this.accountIDDataGridViewTextBoxColumn,
             this.accountNameDataGridViewTextBoxColumn,
             this.dataGridViewTextBoxColumn1,
+            this.Comment,
             this.snapDataGridViewImageColumn});
             this.snapsDataGridView.ContextMenuStrip = this.columnsContextMenuStrip;
             this.snapsDataGridView.DataSource = this.fullTableBindingSource;
@@ -170,18 +173,20 @@
             this.snapsDataGridView.RowTemplate.ReadOnly = true;
             this.snapsDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.snapsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.snapsDataGridView.Size = new System.Drawing.Size(780, 260);
+            this.snapsDataGridView.Size = new System.Drawing.Size(889, 260);
             this.snapsDataGridView.TabIndex = 6;
             this.snapsDataGridView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.snapsDataGridView_CellMouseDoubleClick);
             this.snapsDataGridView.SelectionChanged += new System.EventHandler(this.snapsDataGridView_SelectionChanged);
             // 
             // iDDataGridViewTextBoxColumn
             // 
+            this.iDDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
             this.iDDataGridViewTextBoxColumn.FillWeight = 5.868913F;
             this.iDDataGridViewTextBoxColumn.HeaderText = "Snap ID";
             this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
             this.iDDataGridViewTextBoxColumn.ReadOnly = true;
+            this.iDDataGridViewTextBoxColumn.Width = 71;
             // 
             // ownerIDDataGridViewTextBoxColumn
             // 
@@ -201,19 +206,31 @@
             // 
             // accountNameDataGridViewTextBoxColumn
             // 
+            this.accountNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.accountNameDataGridViewTextBoxColumn.DataPropertyName = "AccountName";
             this.accountNameDataGridViewTextBoxColumn.FillWeight = 7.27464F;
             this.accountNameDataGridViewTextBoxColumn.HeaderText = "Made By";
             this.accountNameDataGridViewTextBoxColumn.Name = "accountNameDataGridViewTextBoxColumn";
             this.accountNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.accountNameDataGridViewTextBoxColumn.Width = 74;
             // 
             // dataGridViewTextBoxColumn1
             // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "DateTime";
             this.dataGridViewTextBoxColumn1.FillWeight = 17.3133F;
             this.dataGridViewTextBoxColumn1.HeaderText = "Date";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 55;
+            // 
+            // Comment
+            // 
+            this.Comment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Comment.DataPropertyName = "Comment";
+            this.Comment.HeaderText = "Comment";
+            this.Comment.Name = "Comment";
+            this.Comment.ReadOnly = true;
             // 
             // snapDataGridViewImageColumn
             // 
@@ -233,10 +250,11 @@
             this.madeByToolStripMenuItem,
             this.dateToolStripMenuItem,
             this.snapToolStripMenuItem,
+            this.commentToolStripMenuItem,
             this.toolStripSeparator6,
             this.verticalViewPreviewBoxOnTheSideToolStripMenuItem});
             this.columnsContextMenuStrip.Name = "columnsContextMenuStrip";
-            this.columnsContextMenuStrip.Size = new System.Drawing.Size(277, 98);
+            this.columnsContextMenuStrip.Size = new System.Drawing.Size(277, 120);
             // 
             // madeByToolStripMenuItem
             // 
@@ -267,6 +285,16 @@
             this.snapToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.snapToolStripMenuItem.Text = "Snap (Not recomended)";
             this.snapToolStripMenuItem.CheckedChanged += new System.EventHandler(this.snapIDToolStripMenuItem_CheckedChanged);
+            // 
+            // commentToolStripMenuItem
+            // 
+            this.commentToolStripMenuItem.Checked = true;
+            this.commentToolStripMenuItem.CheckOnClick = true;
+            this.commentToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.commentToolStripMenuItem.Name = "commentToolStripMenuItem";
+            this.commentToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.commentToolStripMenuItem.Text = "Comment";
+            this.commentToolStripMenuItem.CheckedChanged += new System.EventHandler(this.snapIDToolStripMenuItem_CheckedChanged);
             // 
             // toolStripSeparator6
             // 
@@ -375,7 +403,7 @@
             this.previewPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewPictureBox.Location = new System.Drawing.Point(0, 0);
             this.previewPictureBox.Name = "previewPictureBox";
-            this.previewPictureBox.Size = new System.Drawing.Size(780, 232);
+            this.previewPictureBox.Size = new System.Drawing.Size(889, 232);
             this.previewPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.previewPictureBox.TabIndex = 4;
             this.previewPictureBox.TabStop = false;
@@ -481,7 +509,7 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 527);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(780, 22);
+            this.statusStrip.Size = new System.Drawing.Size(889, 22);
             this.statusStrip.TabIndex = 9;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -494,7 +522,7 @@
             // messageToolStripStatusLabel
             // 
             this.messageToolStripStatusLabel.Name = "messageToolStripStatusLabel";
-            this.messageToolStripStatusLabel.Size = new System.Drawing.Size(382, 17);
+            this.messageToolStripStatusLabel.Size = new System.Drawing.Size(437, 17);
             this.messageToolStripStatusLabel.Spring = true;
             this.messageToolStripStatusLabel.Text = "status";
             this.messageToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -503,7 +531,7 @@
             // snapsCounterToolStripStatusLabel
             // 
             this.snapsCounterToolStripStatusLabel.Name = "snapsCounterToolStripStatusLabel";
-            this.snapsCounterToolStripStatusLabel.Size = new System.Drawing.Size(765, 17);
+            this.snapsCounterToolStripStatusLabel.Size = new System.Drawing.Size(874, 17);
             this.snapsCounterToolStripStatusLabel.Spring = true;
             this.snapsCounterToolStripStatusLabel.Text = "counter";
             this.snapsCounterToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -535,6 +563,7 @@
             this.bindingNavigatorRefresh,
             this.bindingNavigatorPreview,
             this.closeToolStripButton,
+            this.editCommentToolStripButton,
             this.uploadToolStripButton});
             this.bindingNavigator.Location = new System.Drawing.Point(0, 0);
             this.bindingNavigator.MoveFirstItem = null;
@@ -544,7 +573,7 @@
             this.bindingNavigator.Name = "bindingNavigator";
             this.bindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
             this.bindingNavigator.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.bindingNavigator.Size = new System.Drawing.Size(780, 31);
+            this.bindingNavigator.Size = new System.Drawing.Size(889, 31);
             this.bindingNavigator.TabIndex = 14;
             this.bindingNavigator.Text = "bindingNavigator";
             // 
@@ -704,8 +733,19 @@
             this.closeToolStripButton.ToolTipText = "Close explorer.";
             this.closeToolStripButton.Click += new System.EventHandler(this.closeToolStripButton_Click);
             // 
+            // editCommentToolStripButton
+            // 
+            this.editCommentToolStripButton.Enabled = false;
+            this.editCommentToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("editCommentToolStripButton.Image")));
+            this.editCommentToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editCommentToolStripButton.Name = "editCommentToolStripButton";
+            this.editCommentToolStripButton.Size = new System.Drawing.Size(110, 28);
+            this.editCommentToolStripButton.Text = "Edit comment";
+            this.editCommentToolStripButton.Click += new System.EventHandler(this.editCommentToolStripButton_Click);
+            // 
             // uploadToolStripButton
             // 
+            this.uploadToolStripButton.Enabled = false;
             this.uploadToolStripButton.Image = global::ScreenGrabber.Properties.Resources.FacebookUploadButton;
             this.uploadToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.uploadToolStripButton.Name = "uploadToolStripButton";
@@ -728,7 +768,7 @@
             // viewSplitContainer.Panel2
             // 
             this.viewSplitContainer.Panel2.Controls.Add(this.previewPictureBox);
-            this.viewSplitContainer.Size = new System.Drawing.Size(780, 496);
+            this.viewSplitContainer.Size = new System.Drawing.Size(889, 496);
             this.viewSplitContainer.SplitterDistance = 260;
             this.viewSplitContainer.TabIndex = 15;
             // 
@@ -753,7 +793,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(780, 549);
+            this.ClientSize = new System.Drawing.Size(889, 549);
             this.Controls.Add(this.viewSplitContainer);
             this.Controls.Add(this.bindingNavigator);
             this.Controls.Add(this.statusStrip);
@@ -781,7 +821,6 @@
             this.bindingNavigator.PerformLayout();
             this.viewSplitContainer.Panel1.ResumeLayout(false);
             this.viewSplitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.viewSplitContainer)).EndInit();
             this.viewSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.accountsBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -849,13 +888,16 @@
         private System.Windows.Forms.ToolStripMenuItem snapToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem verticalViewPreviewBoxOnTheSideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox accountToolStripComboBox;
+        private System.Windows.Forms.ToolStripButton uploadToolStripButton;
+        private System.Windows.Forms.ToolStripMenuItem commentToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn iDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ownerIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn accountIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn accountNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Comment;
         private System.Windows.Forms.DataGridViewImageColumn snapDataGridViewImageColumn;
-        private System.Windows.Forms.ToolStripComboBox accountToolStripComboBox;
-        private System.Windows.Forms.ToolStripButton uploadToolStripButton;
+        private System.Windows.Forms.ToolStripButton editCommentToolStripButton;
     }
 }

@@ -26,7 +26,18 @@ namespace ScreenGrabber
         public Preview(Image img, DateTime date)
         {
             InitializeComponent();
-            Snap snap = new Snap(img, Program.GetExt(Settings.Default.Path), date, Settings.Default.AccountID);
+            Snap snap = new Snap(img, Program.GetExt(Settings.Default.Path), date, Settings.Default.AccountID, null);
+            preparingImageBackgroundWorker.RunWorkerAsync(snap);
+        }
+
+        /// <summary>
+        /// Show a 100% image preview.
+        /// </summary>
+        /// <param name="img">The image to be shown.</param>
+        /// <param name="date">Image snapped date.</param>
+        public Preview(Snap snap)
+        {
+            InitializeComponent();
             preparingImageBackgroundWorker.RunWorkerAsync(snap);
         }
 

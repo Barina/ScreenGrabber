@@ -84,7 +84,7 @@ namespace ScreenGrabber
                     snapSavingBackgroundWorker.ReportProgress(((a + 1) * 100 / value), "Saving snap ID: " + snapID + " to '" + Settings.Default.Path + "' ...");
                     Image snap = Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap(snapID));
                     DateTime date = (DateTime)snapsTableAdapter.GetDateBySnapID(snapID);
-                    Program.saveToFile(Settings.Default.Path, new Snap(snap, Program.GetExt(Settings.Default.Path), date, snapID));
+                    Program.saveToFile(Settings.Default.Path, new Snap(snap, Program.GetExt(Settings.Default.Path), date, snapID, null));
                 }
             }
             catch(Exception exc)
@@ -123,7 +123,7 @@ namespace ScreenGrabber
                     foreach(var snap in snaps)
                     {
                         savingAllBackgroundWorker.ReportProgress(((a + 1) * 100 / value), "Saving snap ID: " + snap.ID + " to '" + Settings.Default.Path + "' ...");
-                        Program.saveToFile(Settings.Default.Path, new Snap(Snap.byteArrayToImage(snap.Snap), Program.GetExt(Settings.Default.Path), snap.DateTime, snap.AccountID));// Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap(snap.ID)));
+                        Program.saveToFile(Settings.Default.Path, new Snap(Snap.byteArrayToImage(snap.Snap), Program.GetExt(Settings.Default.Path), snap.DateTime, snap.AccountID, null));// Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap(snap.ID)));
                     }
                 }
             }
@@ -222,7 +222,7 @@ namespace ScreenGrabber
         /// </summary>
         private void checkList()
         {
-            if(snapsDataGridView.RowCount == 0)
+            if(snapsDataGridView.RowCount <= 0)
             {
                 bindingNavigatorSaveSnap.Enabled = false;
                 bindingNavigatorDeleteSnap.Enabled = false;
@@ -231,6 +231,8 @@ namespace ScreenGrabber
                 bindingNavigatorPreview.Enabled = false;
                 RefreshPreview();
                 previewContextMenuStrip.Enabled = false;
+                uploadToolStripButton.Enabled = false;
+                editCommentToolStripButton.Enabled = false;
                 previewContextMenuStrip.Items["saveToDiscPreviewToolStripMenuItem"].Enabled = false;
                 previewContextMenuStrip.Items["deleteFromDBPreviewToolStripMenuItem"].Enabled = false;
                 previewContextMenuStrip.Items["enlargePreviewToolStripMenuItem"].Enabled = false;
@@ -242,6 +244,8 @@ namespace ScreenGrabber
                 bindingNavigatorSaveAllSnaps.Enabled = true;
                 bindingNavigatorDeleteAllSnaps.Enabled = true;
                 bindingNavigatorPreview.Enabled = true;
+                uploadToolStripButton.Enabled = true;
+                editCommentToolStripButton.Enabled = true;
                 if(snapsDataGridView.SelectedRows.Count > 0)
                 {
                     previewContextMenuStrip.Enabled = true;
@@ -328,6 +332,9 @@ namespace ScreenGrabber
                     break;
                 case "snapToolStripMenuItem":
                     snapsDataGridView.Columns["snapDataGridViewImageColumn"].Visible = tsmi.Checked;
+                    break;
+                case "commentToolStripMenuItem":
+                    snapsDataGridView.Columns["Comment"].Visible = tsmi.Checked;
                     break;
                 case "verticalViewPreviewBoxOnTheSideToolStripMenuItem":
                     if(verticalViewPreviewBoxOnTheSideToolStripMenuItem.Checked)
@@ -460,7 +467,7 @@ namespace ScreenGrabber
 
                 new FacebookUploader(Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap((int)snapsDataGridView.CurrentRow.Cells[0].Value)), imageIDs).ShowDialog();
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.Message+"\n\n"+ex.StackTrace); }
         }
 
         private void bindingNavigatorSaveSnap_Click(object sender, EventArgs e)
@@ -558,5 +565,17 @@ namespace ScreenGrabber
             Program.main.explorer = null;
         }
         #endregion
+
+        private void editCommentToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (snapsDataGridView.SelectedRows.Count > 0)
+            {
+                snapsTableAdapter.UpdateComment(
+                Program.GetComment(Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap((int)snapsDataGridView.CurrentRow.Cells[0].Value)),
+                (string)snapsTableAdapter.GetCommentBySnapID((int)snapsDataGridView.CurrentRow.Cells[0].Value)),
+                (int)snapsDataGridView.CurrentRow.Cells[0].Value);
+                refreshList();
+            }
+        }
     }
 }

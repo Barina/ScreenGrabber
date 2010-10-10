@@ -152,7 +152,7 @@ namespace ScreenGrabber
                 {
                     Process.Start(@"http://blogs.msdn.com/b/stevelasker/archive/2008/08/07/sql-server-compact-3-5-sp1-released.aspx");
                     Process.Start(@"http://www.microsoft.com/downloads/details.aspx?FamilyID=dc614aee-7e1c-4881-9c32-3a6ce53384d9&displaylang=en#filelist");
-                    MessageBox.Show(@"To run ScreenGrabber your system must have the folowing components:
+                    MessageBox.Show(@"To run ScreenGrabber your system must have the following components:
 Microsoft .NET Framework 3.5.
 Get it here:
 http://blogs.msdn.com/b/stevelasker/archive/2008/08/07/sql-server-compact-3-5-sp1-released.aspx
@@ -193,14 +193,14 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
         /// <returns>If success.</returns>
         public static bool grabScreen()
         {
-            if(busyTimer.Enabled)
+            if (busyTimer.Enabled)
                 return false;
 
-            lock(SnapLocker)
+            lock (SnapLocker)
             {
                 busyTimer.Start();
 
-                if(bmp != null)
+                if (bmp != null)
                 {
                     bmp.Dispose();
                     bmp = null;
@@ -213,13 +213,13 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 Graphics G;
                 Point Pt = new Point(0, 0);
 
-                if(!Settings.Default.CustomBounds)
+                if (!Settings.Default.CustomBounds)
                     bmp = new Bitmap(Width, Height);
                 else
                 {
-                    if(grabberSize.Width <= 0)
+                    if (grabberSize.Width <= 0)
                         grabberSize.Width = Width;
-                    if(grabberSize.Height <= 0)
+                    if (grabberSize.Height <= 0)
                         grabberSize.Height = Height;
                     bmp = new Bitmap(grabberSize.Width, grabberSize.Height);
                     Pt = grabberPosition;
@@ -231,22 +231,53 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 G.InterpolationMode = InterpolationMode.HighQualityBilinear;
                 G.CopyFromScreen(Pt.X, Pt.Y, 0, 0, new Size(bmp.Width, bmp.Height));
 
-                snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID);
+                string comment = null;
+                if (Settings.Default.CommentEditorPopUp)
+                    comment = GetComment(bmp);
+
+                snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, comment);
 
                 G.Dispose();
                 bmp.Dispose();
 
-                if(tempOperation)
+                if (tempOperation)
                 {
                     try
                     {
-                        if(Settings.Default.SaveSnaps)
-                            tableAdapterManager.SnapsTableAdapter.InsertSnap(snap.BmpAsByteArray, snap.Date, snap.AccountID);
+                        if (Settings.Default.SaveSnaps)
+                            tableAdapterManager.SnapsTableAdapter.InsertSnap(snap.BmpAsByteArray, snap.Date, snap.AccountID, snap.Comment);
                     }
                     catch { }
-                }                    
+                }
             }
             return true;
+        }
+
+        /// <summary>
+        /// This function will ask the user to input a comment.
+        /// </summary>
+        /// <param name="image">The snap you want to insert a comment.</param>
+        /// <returns>The new comment.</returns>
+        public static string GetComment(Image image)
+        {
+            return GetComment(image, "");
+        }
+
+        /// <summary>
+        /// This function will ask the user to input a comment.
+        /// </summary>
+        /// <param name="image">The snap you want to insert a comment.</param>
+        /// <param name="comment">Old comment.</param>
+        /// <returns>The new comment.</returns>
+        public static string GetComment(Image image, string comment)
+        {
+            CommentEditor CE = new CommentEditor(image,comment);
+            if (CE.ShowDialog() == DialogResult.OK)
+                if (CE.Comment == "")
+                    return null;
+                else
+                    return CE.Comment;
+            return null;
         }
 
         /// <summary>
@@ -312,7 +343,11 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                             g.FillPath(Brushes.White, gp);
                         }
 
-                        snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID);
+                        string comment = null;
+                        if (Settings.Default.CommentEditorPopUp)
+                            comment = GetComment(bmp);
+
+                        snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, comment);
 
                         bmp.Dispose();
 
@@ -485,7 +520,11 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                         ++myPageWidth;
                     }
 
-                    snap = new Snap(bm2, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID);
+                    string comment = null;
+                    if (Settings.Default.CommentEditorPopUp)
+                        comment = GetComment(bmp);
+
+                    snap = new Snap(bm2, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, comment);
                     lastSnap = snap;
                     main.refreshPreview();
                     if(Settings.Default.SaveSnaps)
@@ -545,7 +584,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                     {
                         try
                         {
-                            tableAdapterManager.SnapsTableAdapter.InsertSnap(snap.BmpAsByteArray, snap.Date, snap.AccountID);
+                            tableAdapterManager.SnapsTableAdapter.InsertSnap(snap.BmpAsByteArray, snap.Date, snap.AccountID, snap.Comment);
                         }
                         catch(Exception Ex)
                         {

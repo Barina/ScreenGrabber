@@ -9,7 +9,7 @@
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="AccountsTableAdapter" GeneratorDataComponentClassName="AccountsTableAdapter" Name="Accounts" UserDataComponentName="AccountsTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [Accounts] WHERE (([AccountID] = @p1) AND ([AccountName] = @p2))</CommandText>
@@ -50,7 +50,7 @@
               <Mapping SourceColumn="AccountName" DataSetColumn="AccountName" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy1" GeneratorSourceName="GetAccountNames" Modifier="Public" Name="GetAccountNames" QueryType="Scalar" ScalarCallRetval="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetAccountNames">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy1" GeneratorSourceName="GetAccountNames" Modifier="Public" Name="GetAccountNames" QueryType="Scalar" ScalarCallRetval="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="GetAccountNames">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        AccountName
@@ -59,7 +59,7 @@ FROM            Accounts</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetIDByAccountName" Modifier="Public" Name="GetIDByAccountName" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="GetIDByAccountName">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetIDByAccountName" Modifier="Public" Name="GetIDByAccountName" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="GetIDByAccountName">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        AccountID
@@ -71,7 +71,7 @@ WHERE        (AccountName = @AccountName)</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy3" GeneratorSourceName="GetNameByAccountID" Modifier="Public" Name="GetNameByAccountID" QueryType="Scalar" ScalarCallRetval="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="GetNameByAccountID">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Accounts" DbObjectType="Table" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy3" GeneratorSourceName="GetNameByAccountID" Modifier="Public" Name="GetNameByAccountID" QueryType="Scalar" ScalarCallRetval="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="GetNameByAccountID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        AccountName
@@ -83,7 +83,7 @@ WHERE        (AccountID = @AccountID)</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertAccount" Modifier="Public" Name="InsertAccount" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="InsertAccount">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertAccount" Modifier="Public" Name="InsertAccount" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="InsertAccount">
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>INSERT INTO [Accounts] ([AccountName]) VALUES (@AccountName)</CommandText>
@@ -97,39 +97,43 @@ WHERE        (AccountID = @AccountID)</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SnapsTableAdapter" GeneratorDataComponentClassName="SnapsTableAdapter" Name="Snaps" UserDataComponentName="SnapsTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>DELETE FROM [Snaps] WHERE (([ID] = @p1))</CommandText>
+                    <CommandText>DELETE FROM [Snaps] WHERE (([ID] = @p1) AND ([DateTime] = @p2))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@p1" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@p2" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DateTime" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
                 </DeleteCommand>
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID]) VALUES (@p1, @p2, @p3)</CommandText>
+                    <CommandText>INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID], [Comment]) VALUES (@p1, @p2, @p3, @p4)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Binary" Direction="Input" ParameterName="@p1" Precision="0" ProviderType="Image" Scale="0" Size="0" SourceColumn="Snap" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@p2" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DateTime" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@p3" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AccountID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@p4" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Comment" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
                 <SelectCommand>
-                  <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT [ID], [Snap], [DateTime], [AccountID] FROM [Snaps]</CommandText>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT [ID], [Snap], [DateTime], [AccountID], [Comment] FROM [Snaps]</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>UPDATE [Snaps] SET [Snap] = @p1, [DateTime] = @p2, [AccountID] = @p3 WHERE (([ID] = @p4))</CommandText>
+                    <CommandText>UPDATE [Snaps] SET [Snap] = @p1, [DateTime] = @p2, [AccountID] = @p3, [Comment] = @p4 WHERE (([ID] = @p5) AND ([DateTime] = @p6))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Binary" Direction="Input" ParameterName="@p1" Precision="0" ProviderType="Image" Scale="0" Size="0" SourceColumn="Snap" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@p2" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DateTime" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@p3" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AccountID" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@p4" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@p4" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Comment" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@p5" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="DateTime" Direction="Input" ParameterName="@p6" Precision="0" ProviderType="DateTime" Scale="0" Size="0" SourceColumn="DateTime" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
                 </UpdateCommand>
@@ -140,9 +144,10 @@ WHERE        (AccountID = @AccountID)</CommandText>
               <Mapping SourceColumn="Snap" DataSetColumn="Snap" />
               <Mapping SourceColumn="DateTime" DataSetColumn="DateTime" />
               <Mapping SourceColumn="AccountID" DataSetColumn="AccountID" />
+              <Mapping SourceColumn="Comment" DataSetColumn="Comment" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy3" GeneratorSourceName="DeleteAllByAccountID" Modifier="Public" Name="DeleteAllByAccountID" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteAllByAccountID">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy3" GeneratorSourceName="DeleteAllByAccountID" Modifier="Public" Name="DeleteAllByAccountID" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteAllByAccountID">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM Snaps
@@ -153,7 +158,7 @@ WHERE        (AccountID = @AccountID)</CommandText>
                   </DbCommand>
                 </DeleteCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteSnap" Modifier="Public" Name="DeleteSnap" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="DeleteSnap">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteSnap" Modifier="Public" Name="DeleteSnap" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="DeleteSnap">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM [Snaps] WHERE (([ID] = @ID))</CommandText>
@@ -163,7 +168,19 @@ WHERE        (AccountID = @AccountID)</CommandText>
                   </DbCommand>
                 </DeleteCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetDateBySnapID" Modifier="Public" Name="GetDateBySnapID" QueryType="Scalar" ScalarCallRetval="System.DateTime, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy4" UserSourceName="GetDateBySnapID">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetCommentBySnapID" Modifier="Public" Name="GetCommentBySnapID" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy6" UserSourceName="GetCommentBySnapID">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Comment
+FROM            Snaps
+WHERE        (ID = @SnapID)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="SnapID" ColumnName="ID" DataSourceName="Snaps" DataTypeServer="int(4)" DbType="Int32" Direction="Input" ParameterName="@SnapID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetDateBySnapID" Modifier="Public" Name="GetDateBySnapID" QueryType="Scalar" ScalarCallRetval="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="GetDateBySnapID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        DateTime
@@ -175,7 +192,7 @@ WHERE        (ID = @ID)</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetSnap" Modifier="Public" Name="GetSnap" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy2" UserSourceName="GetSnap">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="GetSnap" Modifier="Public" Name="GetSnap" QueryType="Scalar" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="GetSnap">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT        Snap
@@ -187,38 +204,50 @@ WHERE        (ID = @ID)</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetSnapsByAccountID" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetSnapsByAccountID" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetSnapsByAccountID" UserSourceName="GetSnapsByAccountID">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="Snaps" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetSnapsByAccountID" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetSnapsByAccountID" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetSnapsByAccountID" UserSourceName="GetSnapsByAccountID">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT        Snap
-FROM            Snaps
-WHERE        (AccountID = @AccountID)</CommandText>
+                    <CommandText>SELECT AccountID, Comment, DateTime, ID, Snap FROM Snaps WHERE (AccountID = @AccountID)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="AccountID" ColumnName="AccountID" DataSourceName="Snaps" DataTypeServer="int(4)" DbType="Int32" Direction="Input" ParameterName="@AccountID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="AccountID" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertSnap" Modifier="Public" Name="InsertSnap" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy3" UserSourceName="InsertSnap">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="InsertSnap" Modifier="Public" Name="InsertSnap" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy4" UserSourceName="InsertSnap">
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID]) VALUES (@Snap, @DateTime, @AccountID)</CommandText>
+                    <CommandText>INSERT INTO [Snaps] ([Snap], [DateTime], [AccountID], [Comment]) VALUES (@Snap, @DateTime, @AccountID, @Comment)</CommandText>
                     <Parameters>
-                      <Parameter AllowDbNull="false" AutogeneratedName="Snap" ColumnName="Snap" DataSourceName="Snaps" DataTypeServer="image" DbType="Binary" Direction="Input" ParameterName="@Snap" Precision="0" ProviderType="Image" Scale="0" Size="2147483647" SourceColumn="Snap" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Snap" ColumnName="Snap" DataSourceName="Snaps" DataTypeServer="image" DbType="Binary" Direction="Input" ParameterName="@Snap" Precision="0" ProviderType="Image" Scale="0" Size="0" SourceColumn="Snap" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="DateTime" ColumnName="DateTime" DataSourceName="Snaps" DataTypeServer="datetime(8)" DbType="DateTime" Direction="Input" ParameterName="@DateTime" Precision="0" ProviderType="DateTime" Scale="0" Size="8" SourceColumn="DateTime" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="AccountID" ColumnName="AccountID" DataSourceName="Snaps" DataTypeServer="int(4)" DbType="Int32" Direction="Input" ParameterName="@AccountID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="AccountID" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="Comment" ColumnName="Comment" DataSourceName="Snaps" DataTypeServer="nvarchar(460)" DbType="String" Direction="Input" ParameterName="@Comment" Precision="0" ProviderType="NVarChar" Scale="0" Size="460" SourceColumn="Comment" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
                   </DbCommand>
                 </InsertCommand>
+              </DbSource>
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="UpdateComment" Modifier="Public" Name="UpdateComment" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy5" UserSourceName="UpdateComment">
+                <UpdateCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>UPDATE       Snaps
+SET                Comment = @Comment
+WHERE        (ID = @SnapID)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="true" AutogeneratedName="Comment" ColumnName="Comment" DataSourceName="Snaps" DataTypeServer="nvarchar(460)" DbType="String" Direction="Input" ParameterName="@Comment" Precision="0" ProviderType="NVarChar" Scale="0" Size="460" SourceColumn="Comment" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="SnapID" ColumnName="ID" DataSourceName="Snaps" DataTypeServer="int(4)" DbType="Int32" Direction="Input" ParameterName="@SnapID" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="ID" SourceColumnNullMapping="false" SourceVersion="Original" />
+                    </Parameters>
+                  </DbCommand>
+                </UpdateCommand>
               </DbSource>
             </Sources>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="FullTableTableAdapter" GeneratorDataComponentClassName="FullTableTableAdapter" Name="FullTable" UserDataComponentName="FullTableTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="Database1ConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT        Snaps.ID, Snaps.AccountID AS OwnerID, Accounts.AccountID, Snaps.DateTime, Accounts.AccountName, Snaps.Snap
+                    <CommandText>SELECT        Snaps.ID, Snaps.AccountID AS OwnerID, Accounts.AccountID, Snaps.DateTime, Accounts.AccountName, Snaps.Comment, Snaps.Snap
 FROM            Accounts INNER JOIN
                          Snaps ON Accounts.AccountID = Snaps.AccountID</CommandText>
                     <Parameters />
@@ -233,6 +262,7 @@ FROM            Accounts INNER JOIN
               <Mapping SourceColumn="DateTime" DataSetColumn="DateTime" />
               <Mapping SourceColumn="AccountName" DataSetColumn="AccountName" />
               <Mapping SourceColumn="Snap" DataSetColumn="Snap" />
+              <Mapping SourceColumn="Comment" DataSetColumn="Comment" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -241,14 +271,14 @@ FROM            Accounts INNER JOIN
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="SnapsDatabaseDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="SnapsDatabaseDataSet" msprop:Generator_DataSetName="SnapsDatabaseDataSet" msprop:EnableTableAdapterManager="True">
+  <xs:element name="SnapsDatabaseDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="SnapsDatabaseDataSet" msprop:Generator_UserDSName="SnapsDatabaseDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Accounts" msprop:Generator_UserTableName="Accounts" msprop:Generator_RowDeletedName="AccountsRowDeleted" msprop:Generator_RowChangedName="AccountsRowChanged" msprop:Generator_RowClassName="AccountsRow" msprop:Generator_RowChangingName="AccountsRowChanging" msprop:Generator_RowEvArgName="AccountsRowChangeEvent" msprop:Generator_RowEvHandlerName="AccountsRowChangeEventHandler" msprop:Generator_TableClassName="AccountsDataTable" msprop:Generator_TableVarName="tableAccounts" msprop:Generator_RowDeletingName="AccountsRowDeleting" msprop:Generator_TablePropName="Accounts">
+        <xs:element name="Accounts" msprop:Generator_UserTableName="Accounts" msprop:Generator_RowEvArgName="AccountsRowChangeEvent" msprop:Generator_TableVarName="tableAccounts" msprop:Generator_TablePropName="Accounts" msprop:Generator_RowDeletingName="AccountsRowDeleting" msprop:Generator_RowChangingName="AccountsRowChanging" msprop:Generator_RowDeletedName="AccountsRowDeleted" msprop:Generator_TableClassName="AccountsDataTable" msprop:Generator_RowChangedName="AccountsRowChanged" msprop:Generator_RowEvHandlerName="AccountsRowChangeEventHandler" msprop:Generator_RowClassName="AccountsRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="AccountID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_UserColumnName="AccountID" msprop:Generator_ColumnPropNameInRow="AccountID" msprop:Generator_ColumnVarNameInTable="columnAccountID" msprop:Generator_ColumnPropNameInTable="AccountIDColumn" type="xs:int" />
-              <xs:element name="AccountName" msprop:Generator_UserColumnName="AccountName" msprop:Generator_ColumnPropNameInRow="AccountName" msprop:Generator_ColumnVarNameInTable="columnAccountName" msprop:Generator_ColumnPropNameInTable="AccountNameColumn">
+              <xs:element name="AccountID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnAccountID" msprop:Generator_ColumnPropNameInRow="AccountID" msprop:Generator_ColumnPropNameInTable="AccountIDColumn" msprop:Generator_UserColumnName="AccountID" type="xs:int" />
+              <xs:element name="AccountName" msprop:Generator_ColumnVarNameInTable="columnAccountName" msprop:Generator_ColumnPropNameInRow="AccountName" msprop:Generator_ColumnPropNameInTable="AccountNameColumn" msprop:Generator_UserColumnName="AccountName">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="20" />
@@ -258,31 +288,45 @@ FROM            Accounts INNER JOIN
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Snaps" msprop:Generator_UserTableName="Snaps" msprop:Generator_RowDeletedName="SnapsRowDeleted" msprop:Generator_RowChangedName="SnapsRowChanged" msprop:Generator_RowClassName="SnapsRow" msprop:Generator_RowChangingName="SnapsRowChanging" msprop:Generator_RowEvArgName="SnapsRowChangeEvent" msprop:Generator_RowEvHandlerName="SnapsRowChangeEventHandler" msprop:Generator_TableClassName="SnapsDataTable" msprop:Generator_TableVarName="tableSnaps" msprop:Generator_RowDeletingName="SnapsRowDeleting" msprop:Generator_TablePropName="Snaps">
+        <xs:element name="Snaps" msprop:Generator_UserTableName="Snaps" msprop:Generator_RowEvArgName="SnapsRowChangeEvent" msprop:Generator_TableVarName="tableSnaps" msprop:Generator_TablePropName="Snaps" msprop:Generator_RowDeletingName="SnapsRowDeleting" msprop:Generator_RowChangingName="SnapsRowChanging" msprop:Generator_RowDeletedName="SnapsRowDeleted" msprop:Generator_TableClassName="SnapsDataTable" msprop:Generator_RowChangedName="SnapsRowChanged" msprop:Generator_RowEvHandlerName="SnapsRowChangeEventHandler" msprop:Generator_RowClassName="SnapsRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInTable="IDColumn" type="xs:int" />
-              <xs:element name="Snap" msprop:Generator_UserColumnName="Snap" msprop:Generator_ColumnPropNameInRow="Snap" msprop:Generator_ColumnVarNameInTable="columnSnap" msprop:Generator_ColumnPropNameInTable="SnapColumn" type="xs:base64Binary" />
-              <xs:element name="DateTime" msprop:Generator_UserColumnName="DateTime" msprop:Generator_ColumnPropNameInRow="DateTime" msprop:Generator_ColumnVarNameInTable="columnDateTime" msprop:Generator_ColumnPropNameInTable="DateTimeColumn" type="xs:dateTime" />
-              <xs:element name="AccountID" msprop:Generator_UserColumnName="AccountID" msprop:Generator_ColumnPropNameInRow="AccountID" msprop:Generator_ColumnVarNameInTable="columnAccountID" msprop:Generator_ColumnPropNameInTable="AccountIDColumn" type="xs:int" />
+              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="Snap" msprop:Generator_ColumnVarNameInTable="columnSnap" msprop:Generator_ColumnPropNameInRow="Snap" msprop:Generator_ColumnPropNameInTable="SnapColumn" msprop:Generator_UserColumnName="Snap" type="xs:base64Binary" />
+              <xs:element name="DateTime" msprop:Generator_ColumnVarNameInTable="columnDateTime" msprop:Generator_ColumnPropNameInRow="DateTime" msprop:Generator_ColumnPropNameInTable="DateTimeColumn" msprop:Generator_UserColumnName="DateTime" type="xs:dateTime" />
+              <xs:element name="AccountID" msprop:Generator_ColumnVarNameInTable="columnAccountID" msprop:Generator_ColumnPropNameInRow="AccountID" msprop:Generator_ColumnPropNameInTable="AccountIDColumn" msprop:Generator_UserColumnName="AccountID" type="xs:int" />
+              <xs:element name="Comment" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="460" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="FullTable" msprop:Generator_UserTableName="FullTable" msprop:Generator_RowDeletedName="FullTableRowDeleted" msprop:Generator_RowChangedName="FullTableRowChanged" msprop:Generator_RowClassName="FullTableRow" msprop:Generator_RowChangingName="FullTableRowChanging" msprop:Generator_RowEvArgName="FullTableRowChangeEvent" msprop:Generator_RowEvHandlerName="FullTableRowChangeEventHandler" msprop:Generator_TableClassName="FullTableDataTable" msprop:Generator_TableVarName="tableFullTable" msprop:Generator_RowDeletingName="FullTableRowDeleting" msprop:Generator_TablePropName="FullTable">
+        <xs:element name="FullTable" msprop:Generator_UserTableName="FullTable" msprop:Generator_RowEvArgName="FullTableRowChangeEvent" msprop:Generator_TableVarName="tableFullTable" msprop:Generator_TablePropName="FullTable" msprop:Generator_RowDeletingName="FullTableRowDeleting" msprop:Generator_RowChangingName="FullTableRowChanging" msprop:Generator_RowDeletedName="FullTableRowDeleted" msprop:Generator_TableClassName="FullTableDataTable" msprop:Generator_RowChangedName="FullTableRowChanged" msprop:Generator_RowEvHandlerName="FullTableRowChangeEventHandler" msprop:Generator_RowClassName="FullTableRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:ReadOnly="true" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInTable="IDColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="OwnerID" msdata:ReadOnly="true" msprop:Generator_UserColumnName="OwnerID" msprop:Generator_ColumnPropNameInRow="OwnerID" msprop:Generator_ColumnVarNameInTable="columnOwnerID" msprop:Generator_ColumnPropNameInTable="OwnerIDColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="AccountID" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AccountID" msprop:Generator_ColumnPropNameInRow="AccountID" msprop:Generator_ColumnVarNameInTable="columnAccountID" msprop:Generator_ColumnPropNameInTable="AccountIDColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="DateTime" msdata:ReadOnly="true" msprop:Generator_UserColumnName="DateTime" msprop:Generator_ColumnPropNameInRow="DateTime" msprop:Generator_ColumnVarNameInTable="columnDateTime" msprop:Generator_ColumnPropNameInTable="DateTimeColumn" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="AccountName" msdata:ReadOnly="true" msprop:Generator_UserColumnName="AccountName" msprop:Generator_ColumnPropNameInRow="AccountName" msprop:Generator_ColumnVarNameInTable="columnAccountName" msprop:Generator_ColumnPropNameInTable="AccountNameColumn" minOccurs="0">
+              <xs:element name="ID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="OwnerID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnOwnerID" msprop:Generator_ColumnPropNameInRow="OwnerID" msprop:Generator_ColumnPropNameInTable="OwnerIDColumn" msprop:Generator_UserColumnName="OwnerID" type="xs:int" minOccurs="0" />
+              <xs:element name="AccountID" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAccountID" msprop:Generator_ColumnPropNameInRow="AccountID" msprop:Generator_ColumnPropNameInTable="AccountIDColumn" msprop:Generator_UserColumnName="AccountID" type="xs:int" minOccurs="0" />
+              <xs:element name="DateTime" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDateTime" msprop:Generator_ColumnPropNameInRow="DateTime" msprop:Generator_ColumnPropNameInTable="DateTimeColumn" msprop:Generator_UserColumnName="DateTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AccountName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnAccountName" msprop:Generator_ColumnPropNameInRow="AccountName" msprop:Generator_ColumnPropNameInTable="AccountNameColumn" msprop:Generator_UserColumnName="AccountName" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="20" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Snap" msdata:ReadOnly="true" msprop:Generator_UserColumnName="Snap" msprop:Generator_ColumnPropNameInRow="Snap" msprop:Generator_ColumnVarNameInTable="columnSnap" msprop:Generator_ColumnPropNameInTable="SnapColumn" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="Snap" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSnap" msprop:Generator_ColumnPropNameInRow="Snap" msprop:Generator_ColumnPropNameInTable="SnapColumn" msprop:Generator_UserColumnName="Snap" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="Comment" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnComment" msprop:Generator_ColumnPropNameInRow="Comment" msprop:Generator_ColumnPropNameInTable="CommentColumn" msprop:Generator_UserColumnName="Comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="460" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -303,8 +347,8 @@ FROM            Accounts INNER JOIN
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="Accounts_Snaps" msdata:parent="Accounts" msdata:child="Snaps" msdata:parentkey="AccountID" msdata:childkey="AccountID" msprop:Generator_UserRelationName="Accounts_Snaps" msprop:Generator_RelationVarName="relationAccounts_Snaps" msprop:Generator_UserChildTable="Snaps" msprop:Generator_UserParentTable="Accounts" msprop:Generator_ParentPropName="AccountsRow" msprop:Generator_ChildPropName="GetSnapsRows" />
-      <msdata:Relationship name="Accounts_Snaps1" msdata:parent="FullTable" msdata:child="Snaps" msdata:parentkey="AccountID" msdata:childkey="AccountID" msprop:Generator_UserRelationName="Accounts_Snaps1" msprop:Generator_RelationVarName="relationAccounts_Snaps1" msprop:Generator_UserChildTable="Snaps" msprop:Generator_UserParentTable="FullTable" msprop:Generator_ParentPropName="FullTableRow" msprop:Generator_ChildPropName="GetSnapsRows" />
+      <msdata:Relationship name="Accounts_Snaps" msdata:parent="Accounts" msdata:child="Snaps" msdata:parentkey="AccountID" msdata:childkey="AccountID" msprop:Generator_UserChildTable="Snaps" msprop:Generator_ChildPropName="GetSnapsRows" msprop:Generator_UserParentTable="Accounts" msprop:Generator_UserRelationName="Accounts_Snaps" msprop:Generator_RelationVarName="relationAccounts_Snaps" msprop:Generator_ParentPropName="AccountsRow" />
+      <msdata:Relationship name="Accounts_Snaps1" msdata:parent="FullTable" msdata:child="Snaps" msdata:parentkey="AccountID" msdata:childkey="AccountID" msprop:Generator_UserChildTable="Snaps" msprop:Generator_ChildPropName="GetSnapsRows" msprop:Generator_UserParentTable="FullTable" msprop:Generator_UserRelationName="Accounts_Snaps1" msprop:Generator_RelationVarName="relationAccounts_Snaps1" msprop:Generator_ParentPropName="FullTableRow" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

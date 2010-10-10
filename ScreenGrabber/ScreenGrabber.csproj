@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ScreenGrabber</RootNamespace>
     <AssemblyName>ScreenGrabber</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ManifestCertificateThumbprint>2B9D6A4A24D4E0F7EDDFB20D88BAC56B77A705C3</ManifestCertificateThumbprint>
     <ManifestKeyFile>ScreenGrabber_TemporaryKey.pfx</ManifestKeyFile>
@@ -28,6 +28,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -44,7 +45,7 @@
     <SuiteName>Barina</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>91</ApplicationRevision>
-    <ApplicationVersion>10.48.326.%2a</ApplicationVersion>
+    <ApplicationVersion>10.52.400.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -143,6 +144,12 @@
     <Compile Include="BoundsSetter.Designer.cs">
       <DependentUpon>BoundsSetter.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommentEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommentEditor.Designer.cs">
+      <DependentUpon>CommentEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="FacebookConnect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,6 +188,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BoundsSetter.resx">
       <DependentUpon>BoundsSetter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommentEditor.resx">
+      <DependentUpon>CommentEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FacebookConnect.resx">
       <DependentUpon>FacebookConnect.cs</DependentUpon>
@@ -236,6 +246,10 @@
       <DependentUpon>ShortCutPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Snap.cs" />
+    <Compile Include="SnapsDatabaseDataSet.cs">
+      <DependentUpon>SnapsDatabaseDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="SnapsDatabaseDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -361,6 +375,7 @@
     <None Include="Resources\FacebookAuthenticationButtonHighlighted.png" />
     <None Include="Resources\FacebookAuthenticationButton.png" />
     <None Include="Resources\FacebookUploadButton.png" />
+    <None Include="Resources\editIcon.ico" />
     <Content Include="SnapsDatabase.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

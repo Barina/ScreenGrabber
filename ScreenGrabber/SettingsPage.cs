@@ -48,6 +48,7 @@ namespace ScreenGrabber
             autoSaveCheckBox.Checked = Settings.Default.autoSave;
             overwriteCheckBox.Checked = Settings.Default.Overwrite;
             minimizedCheckBox.Checked = Settings.Default.Minimized;
+            commentPopUpCheckBox.Checked = Settings.Default.CommentEditorPopUp;
 
             sumNumericUpDown.Value = Settings.Default.PictureSum;
             hoursNumericUpDown.Value = Settings.Default.Counter.Hours + (Settings.Default.Counter.Days * 24);
@@ -142,9 +143,9 @@ namespace ScreenGrabber
 
             try
             {
-                if (Settings.Default.FacebookService != null)
-                {
-                    service = Settings.Default.FacebookService;
+                //if (Settings.Default.FacebookService != null)
+                //{
+                service = Settings.Default.FacebookService;
                     if (Settings.Default.FacebookUser != null)
                     {
                         me = Settings.Default.FacebookUser;
@@ -154,9 +155,9 @@ namespace ScreenGrabber
                         statusLabel.Text = "Authorized.";
                         statusLabel.Visible = true;
                     }
-                }
+               // }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex) { MessageBox.Show(ex.Message+"\n\n"+ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private void mainTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -387,6 +388,10 @@ namespace ScreenGrabber
                 case "overwriteCheckBox":
                     Settings.Default.Overwrite = overwriteCheckBox.Checked;
                     break;
+
+                case "commentPopUpCheckBox":
+                    Settings.Default.CommentEditorPopUp = commentPopUpCheckBox.Checked;
+                    break;
             }
             CheckBoxLabelChanged(cb);
         }
@@ -613,8 +618,14 @@ namespace ScreenGrabber
                     else
                         detailsLabel.Text = "Only snaps you save in the disk will saved in the database.";
                     break;
+                case "commentPopUpCheckBox":
+                    if(commentPopUpCheckBox.Checked)
+                        detailsLabel.Text = "After every snap the comment editor PopUp will appear.";
+                    else
+                        detailsLabel.Text = "Comment editor PopUp is off.";
+                    break;
                 default:
-                    detailsLabel.Text = "Details";
+                    detailsLabel.Visible = false;
                     return;
             }
             detailsLabel.Visible = true;
@@ -629,9 +640,13 @@ namespace ScreenGrabber
             try
             {
                 Settings.Default.Sticky = stickyCheckBox.Checked;
+                Settings.Default.CommentEditorPopUp = commentPopUpCheckBox.Checked;
                 Settings.Default.PictureSum = sumNumericUpDown.Value;
                 Settings.Default.grabberPosition = tempLocation;
                 Settings.Default.grabberSize = tempSize;
+                Settings.Default.FacebookService = service;
+                Settings.Default.FacebookUser = me;
+                Settings.Default.Save();
                 Program.main.pathLabel.Text = "Saving to: " + pathTextBox.Text;
                 Program.main.customCheckBox.Checked = customCheckBox.Checked;
                 applyButton.Enabled = false;
@@ -654,17 +669,18 @@ namespace ScreenGrabber
 
             try
             {
-                if (service == null)
-                {
+                //if (service == null)
+                //{
                     service = new FacebookService();
                     service.IsDesktopApplication = true;
                     service.ApplicationKey = "00d36cfe480479a5982206e2c5b1cfb7";
                     service.Secret = "d9a50c892615569bf5e24d3aeeef38d5";
-                    Settings.Default.FacebookService = service;
-                }
+                //}
                 me = service.GetUserInfo();
-                if (me != null)
-                {
+                //if (me != null)
+                //{
+                
+                    Settings.Default.FacebookService = service;
                     Settings.Default.FacebookUser = me;
                     userNameTextBox.Text = me.Name;
                     ProfilePictureBox.Image = me.Picture;
@@ -672,14 +688,14 @@ namespace ScreenGrabber
                     statusLabel.Text = "Authorized.";
                     statusLabel.Visible = true;
                     saveAll = true;
-                }
-                else
-                {
-                    statusLabel.Text = "Authorization faild.. please try again.";
-                    statusLabel.Visible = true;
-                    Settings.Default.FacebookUser = null;
-                    Settings.Default.FacebookService = null;
-                }
+                //}
+                //else
+                //{
+                //    statusLabel.Text = "Authorization faild.. please try again.";
+                //    statusLabel.Visible = true;
+                //    Settings.Default.FacebookUser = null;
+                //    Settings.Default.FacebookService = null;
+                //}
             }
             catch (Exception ex)
             {

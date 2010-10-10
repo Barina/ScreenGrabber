@@ -29,23 +29,24 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Date Stamp");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Global settings", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Global Key & File path");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Grabber options");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Facebook");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Date Stamp");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Global settings", new System.Windows.Forms.TreeNode[] {
+            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Global Key & File path");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Grabber options");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Facebook");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.globalGroupBox = new System.Windows.Forms.GroupBox();
             this.saveSnapsCheckBox = new System.Windows.Forms.CheckBox();
+            this.closeToTrayCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.detailsLabel = new System.Windows.Forms.Label();
-            this.closeToTrayCheckBox = new System.Windows.Forms.CheckBox();
+            this.commentPopUpCheckBox = new System.Windows.Forms.CheckBox();
             this.startupCheckBox = new System.Windows.Forms.CheckBox();
-            this.autoCaptureCheckBox = new System.Windows.Forms.CheckBox();
             this.shortCutButton = new System.Windows.Forms.Button();
-            this.minimizedCheckBox = new System.Windows.Forms.CheckBox();
+            this.autoCaptureCheckBox = new System.Windows.Forms.CheckBox();
             this.stickyCheckBox = new System.Windows.Forms.CheckBox();
+            this.minimizedCheckBox = new System.Windows.Forms.CheckBox();
             this.saveDateCheckBox = new System.Windows.Forms.CheckBox();
             this.autoInitiaterCheckBox = new System.Windows.Forms.CheckBox();
             this.autoSaveCheckBox = new System.Windows.Forms.CheckBox();
@@ -131,13 +132,14 @@
             // globalGroupBox
             // 
             this.globalGroupBox.Controls.Add(this.saveSnapsCheckBox);
-            this.globalGroupBox.Controls.Add(this.groupBox2);
             this.globalGroupBox.Controls.Add(this.closeToTrayCheckBox);
+            this.globalGroupBox.Controls.Add(this.groupBox2);
+            this.globalGroupBox.Controls.Add(this.commentPopUpCheckBox);
             this.globalGroupBox.Controls.Add(this.startupCheckBox);
-            this.globalGroupBox.Controls.Add(this.autoCaptureCheckBox);
             this.globalGroupBox.Controls.Add(this.shortCutButton);
-            this.globalGroupBox.Controls.Add(this.minimizedCheckBox);
+            this.globalGroupBox.Controls.Add(this.autoCaptureCheckBox);
             this.globalGroupBox.Controls.Add(this.stickyCheckBox);
+            this.globalGroupBox.Controls.Add(this.minimizedCheckBox);
             this.globalGroupBox.Location = new System.Drawing.Point(158, 8);
             this.globalGroupBox.Name = "globalGroupBox";
             this.globalGroupBox.Size = new System.Drawing.Size(372, 219);
@@ -159,6 +161,19 @@
             this.saveSnapsCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             this.saveSnapsCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.saveSnapsCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
+            // 
+            // closeToTrayCheckBox
+            // 
+            this.closeToTrayCheckBox.AutoSize = true;
+            this.closeToTrayCheckBox.Location = new System.Drawing.Point(6, 65);
+            this.closeToTrayCheckBox.Name = "closeToTrayCheckBox";
+            this.closeToTrayCheckBox.Size = new System.Drawing.Size(164, 17);
+            this.closeToTrayCheckBox.TabIndex = 20;
+            this.closeToTrayCheckBox.Text = "Close minimize to system tray.";
+            this.closeToTrayCheckBox.UseVisualStyleBackColor = true;
+            this.closeToTrayCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.closeToTrayCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.closeToTrayCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // groupBox2
             // 
@@ -182,23 +197,25 @@
             this.detailsLabel.Text = "details";
             this.detailsLabel.Visible = false;
             // 
-            // closeToTrayCheckBox
+            // commentPopUpCheckBox
             // 
-            this.closeToTrayCheckBox.AutoSize = true;
-            this.closeToTrayCheckBox.Location = new System.Drawing.Point(180, 65);
-            this.closeToTrayCheckBox.Name = "closeToTrayCheckBox";
-            this.closeToTrayCheckBox.Size = new System.Drawing.Size(164, 17);
-            this.closeToTrayCheckBox.TabIndex = 20;
-            this.closeToTrayCheckBox.Text = "Close minimize to system tray.";
-            this.closeToTrayCheckBox.UseVisualStyleBackColor = true;
-            this.closeToTrayCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
-            this.closeToTrayCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
-            this.closeToTrayCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
+            this.commentPopUpCheckBox.AutoSize = true;
+            this.commentPopUpCheckBox.Checked = true;
+            this.commentPopUpCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.commentPopUpCheckBox.Location = new System.Drawing.Point(6, 42);
+            this.commentPopUpCheckBox.Name = "commentPopUpCheckBox";
+            this.commentPopUpCheckBox.Size = new System.Drawing.Size(206, 17);
+            this.commentPopUpCheckBox.TabIndex = 40;
+            this.commentPopUpCheckBox.Text = "Pop up coment editor after every snap";
+            this.commentPopUpCheckBox.UseVisualStyleBackColor = true;
+            this.commentPopUpCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.commentPopUpCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.commentPopUpCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // startupCheckBox
             // 
             this.startupCheckBox.AutoSize = true;
-            this.startupCheckBox.Location = new System.Drawing.Point(180, 19);
+            this.startupCheckBox.Location = new System.Drawing.Point(218, 19);
             this.startupCheckBox.Name = "startupCheckBox";
             this.startupCheckBox.Size = new System.Drawing.Size(100, 17);
             this.startupCheckBox.TabIndex = 19;
@@ -207,19 +224,6 @@
             this.startupCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             this.startupCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.startupCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
-            // 
-            // autoCaptureCheckBox
-            // 
-            this.autoCaptureCheckBox.AutoSize = true;
-            this.autoCaptureCheckBox.Location = new System.Drawing.Point(6, 42);
-            this.autoCaptureCheckBox.Name = "autoCaptureCheckBox";
-            this.autoCaptureCheckBox.Size = new System.Drawing.Size(90, 17);
-            this.autoCaptureCheckBox.TabIndex = 15;
-            this.autoCaptureCheckBox.Text = "Auto capture.";
-            this.autoCaptureCheckBox.UseVisualStyleBackColor = true;
-            this.autoCaptureCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
-            this.autoCaptureCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
-            this.autoCaptureCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // shortCutButton
             // 
@@ -233,25 +237,25 @@
             this.shortCutButton.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.shortCutButton.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
-            // minimizedCheckBox
+            // autoCaptureCheckBox
             // 
-            this.minimizedCheckBox.AutoSize = true;
-            this.minimizedCheckBox.Location = new System.Drawing.Point(180, 42);
-            this.minimizedCheckBox.Name = "minimizedCheckBox";
-            this.minimizedCheckBox.Size = new System.Drawing.Size(99, 17);
-            this.minimizedCheckBox.TabIndex = 16;
-            this.minimizedCheckBox.Text = "Start minimized.";
-            this.minimizedCheckBox.UseVisualStyleBackColor = true;
-            this.minimizedCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
-            this.minimizedCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
-            this.minimizedCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
+            this.autoCaptureCheckBox.AutoSize = true;
+            this.autoCaptureCheckBox.Location = new System.Drawing.Point(218, 65);
+            this.autoCaptureCheckBox.Name = "autoCaptureCheckBox";
+            this.autoCaptureCheckBox.Size = new System.Drawing.Size(90, 17);
+            this.autoCaptureCheckBox.TabIndex = 15;
+            this.autoCaptureCheckBox.Text = "Auto capture.";
+            this.autoCaptureCheckBox.UseVisualStyleBackColor = true;
+            this.autoCaptureCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.autoCaptureCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.autoCaptureCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // stickyCheckBox
             // 
             this.stickyCheckBox.AutoSize = true;
             this.stickyCheckBox.Checked = true;
             this.stickyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.stickyCheckBox.Location = new System.Drawing.Point(6, 65);
+            this.stickyCheckBox.Location = new System.Drawing.Point(218, 88);
             this.stickyCheckBox.Name = "stickyCheckBox";
             this.stickyCheckBox.Size = new System.Drawing.Size(97, 17);
             this.stickyCheckBox.TabIndex = 18;
@@ -260,6 +264,19 @@
             this.stickyCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             this.stickyCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
             this.stickyCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
+            // 
+            // minimizedCheckBox
+            // 
+            this.minimizedCheckBox.AutoSize = true;
+            this.minimizedCheckBox.Location = new System.Drawing.Point(218, 42);
+            this.minimizedCheckBox.Name = "minimizedCheckBox";
+            this.minimizedCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.minimizedCheckBox.TabIndex = 16;
+            this.minimizedCheckBox.Text = "Start minimized.";
+            this.minimizedCheckBox.UseVisualStyleBackColor = true;
+            this.minimizedCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            this.minimizedCheckBox.MouseEnter += new System.EventHandler(this.CheckBox_MouseEnter);
+            this.minimizedCheckBox.MouseLeave += new System.EventHandler(this.CheckBox_MouseLeave);
             // 
             // saveDateCheckBox
             // 
@@ -645,23 +662,23 @@
             this.mainTreeView.ForeColor = System.Drawing.Color.Black;
             this.mainTreeView.Location = new System.Drawing.Point(8, 8);
             this.mainTreeView.Name = "mainTreeView";
-            treeNode1.Name = "DateStampNode";
-            treeNode1.Text = "Date Stamp";
-            treeNode1.ToolTipText = "Edit date stamp shown on images.";
-            treeNode2.Checked = true;
-            treeNode2.Name = "GlobalNode";
-            treeNode2.Text = "Global settings";
-            treeNode3.Name = "KeyNode";
-            treeNode3.Text = "Global Key & File path";
-            treeNode4.Name = "GrabberNode";
-            treeNode4.Text = "Grabber options";
-            treeNode5.Name = "FacebookNode";
-            treeNode5.Text = "Facebook";
+            treeNode6.Name = "DateStampNode";
+            treeNode6.Text = "Date Stamp";
+            treeNode6.ToolTipText = "Edit date stamp shown on images.";
+            treeNode7.Checked = true;
+            treeNode7.Name = "GlobalNode";
+            treeNode7.Text = "Global settings";
+            treeNode8.Name = "KeyNode";
+            treeNode8.Text = "Global Key & File path";
+            treeNode9.Name = "GrabberNode";
+            treeNode9.Text = "Grabber options";
+            treeNode10.Name = "FacebookNode";
+            treeNode10.Text = "Facebook";
             this.mainTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode3,
-            treeNode4,
-            treeNode5});
+            treeNode7,
+            treeNode8,
+            treeNode9,
+            treeNode10});
             this.mainTreeView.Size = new System.Drawing.Size(144, 219);
             this.mainTreeView.TabIndex = 22;
             this.mainTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.mainTreeView_AfterSelect);
@@ -696,7 +713,7 @@
             this.facebookGroupBox.Controls.Add(this.userNameTextBox);
             this.facebookGroupBox.Controls.Add(this.label7);
             this.facebookGroupBox.Controls.Add(this.label6);
-            this.facebookGroupBox.Location = new System.Drawing.Point(296, 487);
+            this.facebookGroupBox.Location = new System.Drawing.Point(386, 487);
             this.facebookGroupBox.Name = "facebookGroupBox";
             this.facebookGroupBox.Size = new System.Drawing.Size(372, 219);
             this.facebookGroupBox.TabIndex = 39;
@@ -1099,5 +1116,6 @@
         private System.Windows.Forms.PictureBox ProfilePictureBox;
         private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.NumericUpDown hoursNumericUpDown;
+        private System.Windows.Forms.CheckBox commentPopUpCheckBox;
     }
 }

@@ -407,7 +407,7 @@ namespace ScreenGrabber
                 {
                     foreach(var s in snapRows)
                     {
-                        Program.lastSnap = new Snap(Snap.byteArrayToImage(s.Snap), ImageFormat.Png, s.DateTime, s.AccountID);
+                        Program.lastSnap = new Snap(Snap.byteArrayToImage(s.Snap), ImageFormat.Png, s.DateTime, s.AccountID, null);
                         refreshPreview();
                         return;
                     }

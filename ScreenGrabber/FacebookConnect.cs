@@ -63,12 +63,12 @@ namespace ScreenGrabber
                 Image img;
 
                 #region Saving image list to disk.
-                userState["OperationID"] = 1;
+                userState["BlocksStyle"] = true;
                 for (int i = 0; i < images.Length; i++)
                 {
                     img = Snap.byteArrayToImage((byte[])snaps.GetSnap(images[i]));
                     files[i] = new FileInfo(Program.saveToFile(directoryPath.FullName + "tempimg.jpg",
-                        new Snap(img, ImageFormat.Jpeg, (DateTime)snaps.GetDateBySnapID(images[i]), Settings.Default.AccountID)));
+                        new Snap(img, ImageFormat.Jpeg, (DateTime)snaps.GetDateBySnapID(images[i]), Settings.Default.AccountID, null)));
                     
                     userState["Image"] = img;
                     userState["Message"] = "Preparing image '"+files[i].Name+"'. "+"("+(i+1)+"/"+files.Length+")";
@@ -77,7 +77,7 @@ namespace ScreenGrabber
                 #endregion
 
                 #region Uploading the images to Facebook.
-                userState["OperationID"] = 2;
+                userState["BlocksStyle"] = false;
                 for (int i = 0; i < files.Length; i++)
                 {
                     img = Snap.byteArrayToImage((byte[])snaps.GetSnap(images[i]));
@@ -91,7 +91,7 @@ namespace ScreenGrabber
                 #region Clean up everything.
                 img = null;
                 userState["Image"] = Resources.imageEmpty;
-                userState["OperationID"] = 3;
+                userState["BlocksStyle"] = true;
                 for (int i = 0; i < files.Length; i++)
                 {
                     userState["Message"] = "Cleaning up.. delete '" + files[i].Name + "'. " + "(" + (i + 1) + "/" + files.Length + ")";
@@ -114,16 +114,10 @@ namespace ScreenGrabber
         {
             Dictionary<string, object> userState = e.UserState as Dictionary<string, object>;
 
-            switch ((int)userState["OperationID"])
-            {
-                case 1:
-                case 3:
-                    progressBar.Style = ProgressBarStyle.Blocks;
-                    break;
-                case 2:
-                    progressBar.Style = ProgressBarStyle.Marquee;
-                    break;
-            }
+            if ((bool)userState["BlocksStyle"])
+                progressBar.Style = ProgressBarStyle.Blocks;
+            else
+                progressBar.Style = ProgressBarStyle.Marquee;
 
             imagePictureBox.Image = (Image)userState["Image"];
             statusLabel.Text = (string)userState["Message"];

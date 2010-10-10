@@ -19,15 +19,17 @@ namespace ScreenGrabber
         private ImageFormat ext;
         private DateTime date;
         private int accountID;
+        public string Comment;
         #endregion
 
         // Constructor
-        public Snap(Image bmp, ImageFormat ext, DateTime Date, int AccountID)
+        public Snap(Image bmp, ImageFormat ext, DateTime Date, int AccountID, string Comment)
         {
             this.ext = ext;
             this.bmp = ImageToByteArray(bmp, ext);
             this.date = Date;
             this.accountID = AccountID;
+            this.Comment = Comment;
         }
 
         #region Properties
@@ -91,7 +93,7 @@ namespace ScreenGrabber
         /// <returns>If both are equals.</returns>
         public override bool Equals(object obj)
         {
-            var other = obj as Snap;
+            Snap other = obj as Snap;
             if(bmp == other.bmp)
                 if(date == other.date)
                     return accountID == other.accountID;

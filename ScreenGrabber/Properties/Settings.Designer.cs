@@ -335,7 +335,6 @@ namespace ScreenGrabber.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("null")]
         public global::Facebook.Components.FacebookService FacebookService {
             get {
                 return ((global::Facebook.Components.FacebookService)(this["FacebookService"]));
@@ -347,7 +346,6 @@ namespace ScreenGrabber.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("null")]
         public global::Facebook.Entity.User FacebookUser {
             get {
                 return ((global::Facebook.Entity.User)(this["FacebookUser"]));
@@ -366,6 +364,18 @@ namespace ScreenGrabber.Properties {
             }
             set {
                 this["Counter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CommentEditorPopUp {
+            get {
+                return ((bool)(this["CommentEditorPopUp"]));
+            }
+            set {
+                this["CommentEditorPopUp"] = value;
             }
         }
     }
