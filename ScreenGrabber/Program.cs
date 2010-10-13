@@ -73,6 +73,8 @@ namespace ScreenGrabber
                     {
                         tempOperation = true;
                         grabScreen();
+                        if(Settings.Default.CommentEditorPopUp)
+                            InsertNewComment(GetComment(snap.BmpAsImage));
                         if(Settings.Default.Path == "none" || Settings.Default.Path == "")
                         {
                             Settings.Default.Path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\ScreenGrabber\\Screen.png";
@@ -231,11 +233,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 G.InterpolationMode = InterpolationMode.HighQualityBilinear;
                 G.CopyFromScreen(Pt.X, Pt.Y, 0, 0, new Size(bmp.Width, bmp.Height));
 
-                string comment = null;
-                if (Settings.Default.CommentEditorPopUp)
-                    comment = GetComment(bmp);
-
-                snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, comment);
+                snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, null);
 
                 G.Dispose();
                 bmp.Dispose();
@@ -278,6 +276,42 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                 else
                     return CE.Comment;
             return null;
+        }
+
+        /// <summary>
+        /// Insert a new comment to a specific Snap in database.
+        /// </summary>
+        /// <param name="Comment">The comment you want to enter.</param>
+        /// <param name="SnapID">The ID of the Snap.</param>
+        public static void InsertNewComment(string Comment, int SnapID)
+        {
+            new Thread(insertNewComment).Start(new object[] { 
+            Comment, SnapID, tableAdapterManager.SnapsTableAdapter
+            });
+        }
+
+        private static void insertNewComment(object o)
+        {
+            var obj = o as object[];
+            string Comment = obj[0] as string;
+            int SnapID = (int)obj[1];
+            var snapsTableAdapter = obj[2] as ScreenGrabber.SnapsDatabaseDataSetTableAdapters.SnapsTableAdapter;
+            if((string)snapsTableAdapter.GetCommentBySnapID(SnapID) != Comment)
+                snapsTableAdapter.UpdateComment(Comment, SnapID);
+        }
+
+        /// <summary>
+        /// Insert a comment to the last Snap in the database.
+        /// </summary>
+        /// <param name="Comment">The comment you want to enter.</param>
+        public static void InsertNewComment(string Comment)
+        {
+            var snapRow = (from snap in tableAdapterManager.SnapsTableAdapter.GetData()
+                           where snap.AccountID == Settings.Default.AccountID
+                           orderby snap.ID descending
+                           select snap).First();
+            if (snapRow != null)
+                InsertNewComment(Comment, snapRow.ID);
         }
 
         /// <summary>
@@ -343,11 +377,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                             g.FillPath(Brushes.White, gp);
                         }
 
-                        string comment = null;
-                        if (Settings.Default.CommentEditorPopUp)
-                            comment = GetComment(bmp);
-
-                        snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, comment);
+                        snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, null);
 
                         bmp.Dispose();
 
@@ -520,11 +550,7 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                         ++myPageWidth;
                     }
 
-                    string comment = null;
-                    if (Settings.Default.CommentEditorPopUp)
-                        comment = GetComment(bmp);
-
-                    snap = new Snap(bm2, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, comment);
+                    snap = new Snap(bm2, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, null);
                     lastSnap = snap;
                     main.refreshPreview();
                     if(Settings.Default.SaveSnaps)

@@ -319,6 +319,12 @@ namespace ScreenGrabber
             {
                 if(success)
                 {
+                    if (Settings.Default.CommentEditorPopUp && (counter == null || !counter.Enabled))
+                    {
+                        string newComment = Program.GetComment(Program.lastSnap.BmpAsImage);
+                        if (newComment != Program.snap.Comment)
+                            Program.snap.Comment = newComment;
+                    }
                     Program.lastSnap = Program.snap;
                     if(Settings.Default.SaveSnaps)
                         if(Program.snap != null)
@@ -395,23 +401,24 @@ namespace ScreenGrabber
             }
             #endregion
 
-            if(Settings.Default.AutoInitiater) // if AutoInitiater is on there is no need for taking a snap on load
+            if (Settings.Default.AutoInitiater) // if AutoInitiater is on there is no need for taking a snap on load
                 timeTakeButton.PerformClick();
             else
             {
-                var snapRows = from snap in snapsTableAdapter.GetData()
-                               where snap.AccountID == Settings.Default.AccountID
-                               orderby snap.ID descending
-                               select snap;
-                if(snapRows != null)
+                try
                 {
-                    foreach(var s in snapRows)
+                    var snapRow = (from snap in snapsTableAdapter.GetData()
+                                   where snap.AccountID == Settings.Default.AccountID
+                                   orderby snap.ID descending
+                                   select snap).First();
+                    if (snapRow != null)
                     {
-                        Program.lastSnap = new Snap(Snap.byteArrayToImage(s.Snap), ImageFormat.Png, s.DateTime, s.AccountID, null);
+                        Program.lastSnap = new Snap(Snap.byteArrayToImage(snapRow.Snap), ImageFormat.Png, snapRow.DateTime, snapRow.AccountID, null);
                         refreshPreview();
                         return;
                     }
                 }
+                catch { /* Sequence can contains no elements. AKA no snaps. Thats ok... */ }
                 grabScreen(); // if snapRows are null OR empty
             }
         }

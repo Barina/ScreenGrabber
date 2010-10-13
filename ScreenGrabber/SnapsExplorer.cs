@@ -470,6 +470,21 @@ namespace ScreenGrabber
             catch (Exception ex) { MessageBox.Show(ex.Message+"\n\n"+ex.StackTrace); }
         }
 
+        private void editCommentToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (snapsDataGridView.SelectedRows.Count > 0)
+            {
+                showMessage("Wating for your new comment...", ProgressBarStyle.Marquee);
+                string comment = Program.GetComment(Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap((int)snapsDataGridView.CurrentRow.Cells[0].Value)),
+                (string)snapsTableAdapter.GetCommentBySnapID((int)snapsDataGridView.CurrentRow.Cells[0].Value));
+                int snapId = (int)snapsDataGridView.CurrentRow.Cells[0].Value;
+                Program.InsertNewComment(comment, snapId);
+                Thread.Sleep(200);
+                refreshList();
+                hideMessage();
+            }
+        }
+
         private void bindingNavigatorSaveSnap_Click(object sender, EventArgs e)
         {
             if(!snapSavingBackgroundWorker.IsBusy)
@@ -565,17 +580,5 @@ namespace ScreenGrabber
             Program.main.explorer = null;
         }
         #endregion
-
-        private void editCommentToolStripButton_Click(object sender, EventArgs e)
-        {
-            if (snapsDataGridView.SelectedRows.Count > 0)
-            {
-                snapsTableAdapter.UpdateComment(
-                Program.GetComment(Snap.byteArrayToImage((byte[])snapsTableAdapter.GetSnap((int)snapsDataGridView.CurrentRow.Cells[0].Value)),
-                (string)snapsTableAdapter.GetCommentBySnapID((int)snapsDataGridView.CurrentRow.Cells[0].Value)),
-                (int)snapsDataGridView.CurrentRow.Cells[0].Value);
-                refreshList();
-            }
-        }
     }
 }

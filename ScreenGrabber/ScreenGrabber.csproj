@@ -44,8 +44,8 @@
     <PublisherName>Roy Barina</PublisherName>
     <SuiteName>Barina</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>91</ApplicationRevision>
-    <ApplicationVersion>10.52.400.%2a</ApplicationVersion>
+    <ApplicationRevision>95</ApplicationRevision>
+    <ApplicationVersion>10.56.430.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
