@@ -86,6 +86,7 @@ namespace ScreenGrabber
 
                     if(createdNew)
                     {
+                        dxGrabber = new DXGrabber();
                         main = new ScreenGrabberMain();
                         Application.EnableVisualStyles();
                         Application.Run(main);
@@ -135,6 +136,7 @@ namespace ScreenGrabber
         public static object SnapLocker = new object();
         public static object DatabaseLocker = new object();
         public static System.Timers.Timer busyTimer;
+        public static DXGrabber dxGrabber;
         #endregion
 
         /// <summary>
@@ -248,6 +250,9 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
                     catch { }
                 }
             }
+
+
+
             return true;
         }
 
@@ -320,74 +325,103 @@ Sorry about the inconvenience.", "ScreenGrabber requirements:", MessageBoxButton
         /// <returns>If succeed.</returns>
         public static bool grabDX()//can throw exception!
         {
-            if(busyTimer.Enabled)
-                return false;
-            lock(SnapLocker)
+            try
             {
-                try
+                bmp = dxGrabber.TakeScreenshot();
+
+                //#region for testing only
+                //// First we need to determine the function address for IDirect3DDevice9
+                //D3D9.Device device;
+                //List<IntPtr> id3dDeviceFunctionAddresses = new List<IntPtr>();
+                //using (D3D9.Direct3D d3d = new D3D9.Direct3D())
+                //{
+                //    using (device = new D3D9.Device(d3d, 0, D3D9.DeviceType.Hardware, IntPtr.Zero, D3D9.CreateFlags.HardwareVertexProcessing, new D3D9.PresentParameters() { BackBufferWidth = 1, BackBufferHeight = 1 }))
+                //    {
+                //        IntPtr realPointer = device.ComPointer;
+                //        IntPtr vTable = Marshal.ReadIntPtr(realPointer);
+                //        for (int i = 0; i < 119; i++)
+                //            id3dDeviceFunctionAddresses.Add(Marshal.ReadIntPtr(vTable, i * IntPtr.Size));
+                //    }
+                //}
+                //return false;
+                //#endregion
+
+
+
+                //if(busyTimer.Enabled)
+                //    return false;
+                //lock(SnapLocker)
+                //{
+                //    try
+                //    {
+                using (GraphicsPath gp = new GraphicsPath())
                 {
-                    using(GraphicsPath gp = new GraphicsPath())
+                    //            busyTimer.Start();
+
+                    //            if(bmp != null)
+                    //            {
+                    //                bmp.Dispose();
+                    //                bmp = null;
+                    //            }
+
+                    //            D3D9.Direct3D direct3d = new SlimDX.Direct3D9.Direct3D();
+                    //            D3D9.AdapterInformation adapter = direct3d.Adapters.DefaultAdapter;
+
+                    //            D3D9.PresentParameters parameters = new SlimDX.Direct3D9.PresentParameters();
+                    //            parameters.BackBufferFormat = adapter.CurrentDisplayMode.Format;
+                    //            parameters.BackBufferHeight = adapter.CurrentDisplayMode.Height;
+                    //            parameters.BackBufferWidth = adapter.CurrentDisplayMode.Width;
+                    //            parameters.Multisample = SlimDX.Direct3D9.MultisampleType.None;
+                    //            parameters.SwapEffect = SlimDX.Direct3D9.SwapEffect.Discard;
+                    //            parameters.PresentationInterval = SlimDX.Direct3D9.PresentInterval.Default;
+                    //            parameters.FullScreenRefreshRateInHertz = 0;
+
+                    //            D3D9.Device device = new D3D9.Device(direct3d, adapter.Adapter, D3D9.DeviceType.Hardware,
+                    //                parameters.DeviceWindowHandle, D3D9.CreateFlags.SoftwareVertexProcessing, parameters);
+
+                    //            D3D9.Surface surface = D3D9.Surface.CreateOffscreenPlain(device, adapter.CurrentDisplayMode.Width,
+                    //                adapter.CurrentDisplayMode.Height, D3D9.Format.A8R8G8B8, D3D9.Pool.SystemMemory);
+
+                    //            device.BeginScene();
+                    //            device.EndScene();
+                    //            //device.GetFrontBufferData(0, surface);
+
+                    //            surface = device.GetBackBuffer(0, 0);
+                    //            D3D9.Surface.ToFile(surface, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\screenshot.bmp", D3D9.ImageFileFormat.Bmp);                        
+
+                    //            Rectangle region = new Rectangle(0, 0, adapter.CurrentDisplayMode.Width, adapter.CurrentDisplayMode.Height);
+                    //            bmp = new Bitmap(D3D9.Surface.ToStream(surface, D3D9.ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
+                    //            surface.Dispose();
+
+                    //            device.Present();
+
+                    using (Graphics g = Graphics.FromImage(bmp))
                     {
-                        busyTimer.Start();
+                        g.SmoothingMode = SmoothingMode.AntiAlias;
 
-                        if(bmp != null)
-                        {
-                            bmp.Dispose();
-                            bmp = null;
-                        }
-
-                        D3D9.Direct3D direct3d = new SlimDX.Direct3D9.Direct3D();
-                        D3D9.AdapterInformation adapter = direct3d.Adapters.DefaultAdapter;
-
-                        D3D9.PresentParameters parameters = new SlimDX.Direct3D9.PresentParameters();
-                        parameters.BackBufferFormat = adapter.CurrentDisplayMode.Format;
-                        parameters.BackBufferHeight = adapter.CurrentDisplayMode.Height;
-                        parameters.BackBufferWidth = adapter.CurrentDisplayMode.Width;
-                        parameters.Multisample = SlimDX.Direct3D9.MultisampleType.None;
-                        parameters.SwapEffect = SlimDX.Direct3D9.SwapEffect.Discard;
-                        parameters.PresentationInterval = SlimDX.Direct3D9.PresentInterval.Default;
-                        parameters.FullScreenRefreshRateInHertz = 0;
-
-                        D3D9.Device device = new D3D9.Device(direct3d, adapter.Adapter, D3D9.DeviceType.Hardware,
-                            parameters.DeviceWindowHandle, D3D9.CreateFlags.SoftwareVertexProcessing, parameters);
-
-                        D3D9.Surface surface = D3D9.Surface.CreateOffscreenPlain(device, adapter.CurrentDisplayMode.Width,
-                            adapter.CurrentDisplayMode.Height, D3D9.Format.A8R8G8B8, D3D9.Pool.SystemMemory);
-
-                        device.BeginScene();
-                        device.EndScene();
-                        //device.GetFrontBufferData(0, surface);
-
-                        surface = device.GetBackBuffer(0, 0);
-                        D3D9.Surface.ToFile(surface, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\screenshot.bmp", D3D9.ImageFileFormat.Bmp);                        
-
-                        Rectangle region = new Rectangle(0, 0, adapter.CurrentDisplayMode.Width, adapter.CurrentDisplayMode.Height);
-                        bmp = new Bitmap(D3D9.Surface.ToStream(surface, D3D9.ImageFileFormat.Bmp, new Rectangle(region.Left, region.Top, region.Width, region.Height)));
-                        surface.Dispose();
-
-                        device.Present();
-
-                        using(Graphics g = Graphics.FromImage(bmp))
-                        {
-                            g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                            System.Drawing.Font font = new System.Drawing.Font(FontFamily.GenericSansSerif, 18);
-                            gp.AddString("Rendered using DirectX.", font.FontFamily, (int)font.Style, font.Size, new Point(10, 10), StringFormat.GenericDefault);
-                            g.DrawPath(new Pen(Brushes.Black, 5), gp);
-                            g.FillPath(Brushes.White, gp);
-                        }
-
-                        snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, null);
-
-                        bmp.Dispose();
-
-                        return true;
+                        System.Drawing.Font font = new System.Drawing.Font(FontFamily.GenericSansSerif, 18);
+                        gp.AddString("Rendered using DirectX.", font.FontFamily, (int)font.Style, font.Size, new Point(10, 10), StringFormat.GenericDefault);
+                        g.DrawPath(new Pen(Brushes.Black, 5), gp);
+                        g.FillPath(Brushes.White, gp);
                     }
+
+                    snap = new Snap(bmp, GetExt(Settings.Default.Path), DateTime.Now, Settings.Default.AccountID, null);
+
+                    bmp.Dispose();
+
+                    //            return true;
+                    //        }
+                    //    }
+                    //    catch
+                    //    {
+                    //        return false;
+                    //    }
                 }
-                catch
-                {
-                    return false;
-                }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

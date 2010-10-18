@@ -44,8 +44,8 @@
     <PublisherName>Roy Barina</PublisherName>
     <SuiteName>Barina</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>95</ApplicationRevision>
-    <ApplicationVersion>10.56.430.%2a</ApplicationVersion>
+    <ApplicationRevision>96</ApplicationRevision>
+    <ApplicationVersion>10.56.433.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -85,6 +85,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyHook">
+      <HintPath>..\..\..\..\Visual Studio 2008\Direct3D9Hook_2010-03-29.2\bin\EasyHook.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook, Version=1.3.2755.21601, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\DLL's\Facebook\Facebook.dll</HintPath>
@@ -117,6 +120,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -144,6 +148,8 @@
     <Compile Include="BoundsSetter.Designer.cs">
       <DependentUpon>BoundsSetter.cs</DependentUpon>
     </Compile>
+    <Compile Include="DXGrabber.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="CommentEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -376,6 +382,8 @@
     <None Include="Resources\FacebookAuthenticationButton.png" />
     <None Include="Resources\FacebookUploadButton.png" />
     <None Include="Resources\editIcon.ico" />
+    <None Include="Resources\EasyHook32.dll" />
+    <None Include="Resources\EasyHook64.dll" />
     <Content Include="SnapsDatabase.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -399,6 +407,10 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Visual Studio 2008\Direct3D9Hook_2010-03-29.2\ScreenshotInject\ScreenshotInject.csproj">
+      <Project>{0E19B078-C22D-4C1B-81AA-BF6CA48609E0}</Project>
+      <Name>ScreenshotInject</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Stopper\Stopper\Stopper.csproj">
       <Project>{8C0D47AE-A85D-40C3-BA3A-794B4B7AE37F}</Project>
       <Name>Stopper</Name>

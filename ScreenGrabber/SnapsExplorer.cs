@@ -204,8 +204,36 @@ namespace ScreenGrabber
                     this.snapsTableAdapter.Fill(this.snapsDatabaseDataSet.Snaps);
                     this.accountsTableAdapter.Fill(this.snapsDatabaseDataSet.Accounts);
 
-                    if(snapsDataGridView.Rows.Count > 0)
+                    if (snapsDataGridView.Rows.Count > 0)
+                    {
+                        if ((int)accountToolStripComboBox.ComboBox.SelectedValue != Settings.Default.AccountID)
+                        {
+                            bindingNavigatorDeleteAllSnaps.Enabled = false;
+                            bindingNavigatorDeleteSnap.Enabled = false;
+                            bindingNavigatorSaveAllSnaps.Enabled = false;
+                            bindingNavigatorSaveSnap.Enabled = false;
+                            uploadToolStripButton.Enabled = false;
+                            editCommentToolStripButton.Enabled = false;
+                            saveToDiscToolStripMenuItem.Enabled = false;
+                            saveAllToDiscToolStripMenuItem.Enabled = false;
+                            deleteAllToolStripMenuItem.Enabled = false;
+                            deleteFromDatabaseToolStripMenuItem.Enabled = false;
+                        }
+                        else
+                        {
+                            bindingNavigatorDeleteAllSnaps.Enabled = true;
+                            bindingNavigatorDeleteSnap.Enabled = true;
+                            bindingNavigatorSaveAllSnaps.Enabled = true;
+                            bindingNavigatorSaveSnap.Enabled = true;
+                            uploadToolStripButton.Enabled = true;
+                            editCommentToolStripButton.Enabled = true;
+                            saveToDiscToolStripMenuItem.Enabled = true;
+                            saveAllToDiscToolStripMenuItem.Enabled = true;
+                            deleteAllToolStripMenuItem.Enabled = true;
+                            deleteFromDatabaseToolStripMenuItem.Enabled = true;
+                        }
                         snapsDataGridView.Rows[0].Selected = true;
+                    }
                     else
                         RefreshPreview();
                 }
@@ -297,6 +325,7 @@ namespace ScreenGrabber
             accountToolStripComboBox.ComboBox.ValueMember = "AccountID";
             accountToolStripComboBox.ComboBox.DisplayMember = "AccountName";
             accountToolStripComboBox.ComboBox.SelectedValue = Settings.Default.AccountID;
+            fullTableBindingSource.Filter = accountToolStripComboBox.ComboBox.SelectedValue + " = AccountID";
             accountToolStripComboBox.ComboBox.SelectedIndexChanged += accountToolStripComboBox_SelectedIndexChanged;
             checkList();
             refreshList();

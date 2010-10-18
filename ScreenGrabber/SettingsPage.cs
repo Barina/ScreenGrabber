@@ -15,6 +15,7 @@ using Facebook.Exceptions;
 using Facebook.Entity;
 using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace ScreenGrabber
 {
@@ -133,6 +134,7 @@ namespace ScreenGrabber
             globalKeyGroupBox.Location = globalGroupBox.Location;
             grabberGroupBox.Location = globalGroupBox.Location;
             facebookGroupBox.Location = globalGroupBox.Location;
+            directXGroupBox.Location = globalGroupBox.Location;
         }
 
         #region Events.
@@ -140,7 +142,7 @@ namespace ScreenGrabber
         {
             Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
             pathTextBox.TextChanged += pathTextBox_TextChanged;
-
+            processNameComboBox.DataSource = GetProcesseList();
             try
             {
                 //if (Settings.Default.FacebookService != null)
@@ -158,6 +160,14 @@ namespace ScreenGrabber
                // }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message+"\n\n"+ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        }
+
+        public List<string> GetProcesseList()
+        {
+            List<string> result = new List<string>();
+            foreach (Process process in Process.GetProcesses())
+                result.Add(process.ProcessName);
+            return result;
         }
 
         private void mainTreeView_AfterSelect(object sender, TreeViewEventArgs e)
@@ -487,6 +497,7 @@ namespace ScreenGrabber
                     grabberGroupBox.Visible = false;
                     dateStampGroupBox.Visible = false;
                     facebookGroupBox.Visible = false;
+                    directXGroupBox.Visible = false;
                     break;
                 case "DateStampNode":
                     dateStampGroupBox.Visible = true;
@@ -494,6 +505,7 @@ namespace ScreenGrabber
                     globalKeyGroupBox.Visible = false;
                     grabberGroupBox.Visible = false;
                     facebookGroupBox.Visible = false;
+                    directXGroupBox.Visible = false;
                     break;
                 case "KeyNode":
                     globalGroupBox.Visible = false;
@@ -501,6 +513,7 @@ namespace ScreenGrabber
                     grabberGroupBox.Visible = false;
                     dateStampGroupBox.Visible = false;
                     facebookGroupBox.Visible = false;
+                    directXGroupBox.Visible = false;
                     break;
                 case "GrabberNode":
                     globalGroupBox.Visible = false;
@@ -508,6 +521,7 @@ namespace ScreenGrabber
                     grabberGroupBox.Visible = true;
                     dateStampGroupBox.Visible = false;
                     facebookGroupBox.Visible = false;
+                    directXGroupBox.Visible = false;
                     break;
                 case "FacebookNode":
                     globalGroupBox.Visible = false;
@@ -515,6 +529,15 @@ namespace ScreenGrabber
                     grabberGroupBox.Visible = false;
                     dateStampGroupBox.Visible = false;
                     facebookGroupBox.Visible = true;
+                    directXGroupBox.Visible = false;
+                    break;
+                case "DirectXNode":                    
+                    globalGroupBox.Visible = false;
+                    globalKeyGroupBox.Visible = false;
+                    grabberGroupBox.Visible = false;
+                    dateStampGroupBox.Visible = false;
+                    facebookGroupBox.Visible = false;
+                    directXGroupBox.Visible = true;
                     break;
             }
         }
@@ -720,6 +743,22 @@ namespace ScreenGrabber
         private void authorizeButton_MouseLeave(object sender, EventArgs e)
         {
             authorizeButton.BackgroundImage = Resources.FacebookAuthenticationButton;
+        }
+
+        private void injectButton_Click(object sender, EventArgs e)
+        {
+            Program.dxGrabber.ProccessName = processNameComboBox.Text;
+            Program.dxGrabber.AutoGAC = cbAutoGAC.Checked;
+            try
+            {
+                Program.dxGrabber.Inject();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message+"\n\n"+ex.StackTrace,"Can't inject."); }
+        }
+
+        private void processNameComboBox_DropDown(object sender, EventArgs e)
+        {
+            processNameComboBox.DataSource = GetProcesseList();
         }
     }
 

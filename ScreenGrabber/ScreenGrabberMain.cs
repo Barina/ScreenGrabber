@@ -26,7 +26,7 @@ namespace ScreenGrabber
         #region global components
         Point space;
         public bool activated;
-        decimal min, sec, sum;
+        decimal sum;
         bool repeat;
         bool autoGrabberInitiated;
         private static int userBitmaps;
@@ -99,7 +99,7 @@ namespace ScreenGrabber
             const int WM_HOTKEY = 0x312;
             if(m.Msg == WM_HOTKEY)
             {
-                if(!autoGrabberInitiated)
+                if(!autoGrabberInitiated) // if AutoGrabber is off
                 {
                     grabScreen();
                     if(Settings.Default.autoSave)
@@ -309,17 +309,18 @@ namespace ScreenGrabber
                 if(Settings.Default.TryDXFirst)
                     success = Program.grabDX();
                 else
-                    throw new Exception();
+                    success = Program.grabScreen();
             }
             catch
             {
-                success = Program.grabScreen();
+                if(!success)
+                    success = Program.grabScreen();
             }
             finally
             {
                 if(success)
                 {
-                    if (Settings.Default.CommentEditorPopUp && (counter == null || !counter.Enabled))
+                    if (Settings.Default.CommentEditorPopUp && !autoGrabberInitiated)
                     {
                         string newComment = Program.GetComment(Program.lastSnap.BmpAsImage);
                         if (newComment != Program.snap.Comment)
@@ -392,10 +393,10 @@ namespace ScreenGrabber
                 string result = "Welcome back " + Environment.UserName + "! ";
                 string welcomeMsg = updateStatus();
 
-                if(userBitmaps == 0)
+                if (userBitmaps == 0)
                     result += "You dont have any snaps in the database. press the Grab key to take your new snap.";
                 else
-                    result += "You currently have " + (userBitmaps < 2 ? userBitmaps + " snap" : userBitmaps + " snaps") + " in the database.";
+                    result += "You currently have " + userBitmaps + (userBitmaps < 2 ? " snap" : " snaps") + " in the database.";
 
                 statusLabel.Text = result + welcomeMsg;
             }
@@ -405,21 +406,31 @@ namespace ScreenGrabber
                 timeTakeButton.PerformClick();
             else
             {
-                try
+                Func<SnapsDatabaseDataSet.SnapsRow> getLastSnap = new Func<SnapsDatabaseDataSet.SnapsRow>(() =>
                 {
-                    var snapRow = (from snap in snapsTableAdapter.GetData()
-                                   where snap.AccountID == Settings.Default.AccountID
-                                   orderby snap.ID descending
-                                   select snap).First();
-                    if (snapRow != null)
+                    try
                     {
-                        Program.lastSnap = new Snap(Snap.byteArrayToImage(snapRow.Snap), ImageFormat.Png, snapRow.DateTime, snapRow.AccountID, null);
-                        refreshPreview();
-                        return;
+                        return (from snap in snapsTableAdapter.GetData()
+                                where snap.AccountID == Settings.Default.AccountID
+                                orderby snap.ID descending
+                                select snap).First();
                     }
+                    catch { /* Sequence can contains no elements. AKA no snaps. Thats ok... */ }
+                    return null;
+                });
+
+                var snapRow = getLastSnap();
+
+                if (snapRow != null)
+                {
+                    Program.lastSnap = new Snap(Snap.byteArrayToImage(snapRow.Snap), ImageFormat.Png, snapRow.DateTime, snapRow.AccountID, null);
+                    refreshPreview();
+                    return;
                 }
-                catch { /* Sequence can contains no elements. AKA no snaps. Thats ok... */ }
-                grabScreen(); // if snapRows are null OR empty
+
+                grabScreen(); // if snapRows are null OR empty  
+                snapRow = getLastSnap();
+                Program.InsertNewComment((snapRow.ID == 1 ? "First" : "New") + " ScreenGrabber Snap taked by " + Environment.UserName + ".");
             }
         }
 
@@ -491,7 +502,7 @@ namespace ScreenGrabber
                     break;
 
                 case "timeTakeButton": // initiate auto grabber 
-                    if (counter == null || !counter.Enabled)
+                    if (autoGrabberInitiated = (counter == null || !counter.Enabled))
                     {
                         if (!Program.isLegalExt(addDateToPath(Settings.Default.Path)))
                         {
@@ -511,7 +522,6 @@ namespace ScreenGrabber
 
                         sum = Settings.Default.PictureSum;
 
-                        autoGrabberInitiated = true;
                         takeButton.Enabled = false;
                         grabWebButton.Enabled = false;
 
@@ -524,7 +534,6 @@ namespace ScreenGrabber
                     else
                     {
                         counter.Stop();
-                        autoGrabberInitiated = false;
                         takeButton.Enabled = true;
                         grabWebButton.Enabled = true;
                         Settings.Default.SaveDate = false;

@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Date Stamp");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Global settings", new System.Windows.Forms.TreeNode[] {
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Global Key & File path");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Grabber options");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Facebook");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Date Stamp");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Global settings", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Global Key & File path");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Grabber options");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Facebook");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("DirectX");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.globalGroupBox = new System.Windows.Forms.GroupBox();
             this.saveSnapsCheckBox = new System.Windows.Forms.CheckBox();
@@ -71,15 +72,20 @@
             this.minNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.grabberGroupBox = new System.Windows.Forms.GroupBox();
-            this.tryDXCheckBox = new System.Windows.Forms.CheckBox();
             this.newSetterButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
             this.positionLabel = new System.Windows.Forms.Label();
             this.customCheckBox = new System.Windows.Forms.CheckBox();
             this.sizeLabel = new System.Windows.Forms.Label();
             this.setBoundsButton = new System.Windows.Forms.Button();
+            this.tryDXCheckBox = new System.Windows.Forms.CheckBox();
             this.mainTreeView = new System.Windows.Forms.TreeView();
             this.masterPanel = new System.Windows.Forms.Panel();
+            this.directXGroupBox = new System.Windows.Forms.GroupBox();
+            this.injectButton = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.processNameComboBox = new System.Windows.Forms.ComboBox();
+            this.cbAutoGAC = new System.Windows.Forms.CheckBox();
             this.facebookGroupBox = new System.Windows.Forms.GroupBox();
             this.ProfilePictureBox = new System.Windows.Forms.PictureBox();
             this.facebookProgressBarEx = new ProgressODoom.ProgressBarEx();
@@ -121,6 +127,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.minNumericUpDown)).BeginInit();
             this.grabberGroupBox.SuspendLayout();
             this.masterPanel.SuspendLayout();
+            this.directXGroupBox.SuspendLayout();
             this.facebookGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).BeginInit();
             this.dateStampGroupBox.SuspendLayout();
@@ -563,7 +570,6 @@
             // 
             // grabberGroupBox
             // 
-            this.grabberGroupBox.Controls.Add(this.tryDXCheckBox);
             this.grabberGroupBox.Controls.Add(this.newSetterButton);
             this.grabberGroupBox.Controls.Add(this.resetButton);
             this.grabberGroupBox.Controls.Add(this.positionLabel);
@@ -578,19 +584,6 @@
             this.grabberGroupBox.TabStop = false;
             this.grabberGroupBox.Text = "Grabber";
             this.grabberGroupBox.Visible = false;
-            // 
-            // tryDXCheckBox
-            // 
-            this.tryDXCheckBox.AutoSize = true;
-            this.tryDXCheckBox.Location = new System.Drawing.Point(104, 45);
-            this.tryDXCheckBox.Name = "tryDXCheckBox";
-            this.tryDXCheckBox.Size = new System.Drawing.Size(129, 17);
-            this.tryDXCheckBox.TabIndex = 37;
-            this.tryDXCheckBox.Text = "Try using DirectX first.";
-            this.toolTip.SetToolTip(this.tryDXCheckBox, "ATTENTION!: Will try to snap a DirectX game with default values. if failed will t" +
-                    "ake a normal grab screen with user parameters. Not recomended. May also work on " +
-                    "desktop. May retrieve black snaps.");
-            this.tryDXCheckBox.UseVisualStyleBackColor = true;
             // 
             // newSetterButton
             // 
@@ -655,6 +648,19 @@
             this.setBoundsButton.UseVisualStyleBackColor = true;
             this.setBoundsButton.Click += new System.EventHandler(this.setBoundsButton_Click);
             // 
+            // tryDXCheckBox
+            // 
+            this.tryDXCheckBox.AutoSize = true;
+            this.tryDXCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.tryDXCheckBox.Name = "tryDXCheckBox";
+            this.tryDXCheckBox.Size = new System.Drawing.Size(129, 17);
+            this.tryDXCheckBox.TabIndex = 37;
+            this.tryDXCheckBox.Text = "Try using DirectX first.";
+            this.toolTip.SetToolTip(this.tryDXCheckBox, "ATTENTION!: Will try to snap a DirectX game with default values. if failed will t" +
+                    "ake a normal grab screen with user parameters. Not recomended. May also work on " +
+                    "desktop. May retrieve black snaps.");
+            this.tryDXCheckBox.UseVisualStyleBackColor = true;
+            // 
             // mainTreeView
             // 
             this.mainTreeView.BackColor = System.Drawing.SystemColors.Window;
@@ -662,23 +668,26 @@
             this.mainTreeView.ForeColor = System.Drawing.Color.Black;
             this.mainTreeView.Location = new System.Drawing.Point(8, 8);
             this.mainTreeView.Name = "mainTreeView";
-            treeNode6.Name = "DateStampNode";
-            treeNode6.Text = "Date Stamp";
-            treeNode6.ToolTipText = "Edit date stamp shown on images.";
-            treeNode7.Checked = true;
-            treeNode7.Name = "GlobalNode";
-            treeNode7.Text = "Global settings";
-            treeNode8.Name = "KeyNode";
-            treeNode8.Text = "Global Key & File path";
-            treeNode9.Name = "GrabberNode";
-            treeNode9.Text = "Grabber options";
-            treeNode10.Name = "FacebookNode";
-            treeNode10.Text = "Facebook";
+            treeNode1.Name = "DateStampNode";
+            treeNode1.Text = "Date Stamp";
+            treeNode1.ToolTipText = "Edit date stamp shown on images.";
+            treeNode2.Checked = true;
+            treeNode2.Name = "GlobalNode";
+            treeNode2.Text = "Global settings";
+            treeNode3.Name = "KeyNode";
+            treeNode3.Text = "Global Key & File path";
+            treeNode4.Name = "GrabberNode";
+            treeNode4.Text = "Grabber options";
+            treeNode5.Name = "FacebookNode";
+            treeNode5.Text = "Facebook";
+            treeNode6.Name = "DirectXNode";
+            treeNode6.Text = "DirectX";
             this.mainTreeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9,
-            treeNode10});
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6});
             this.mainTreeView.Size = new System.Drawing.Size(144, 219);
             this.mainTreeView.TabIndex = 22;
             this.mainTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.mainTreeView_AfterSelect);
@@ -690,6 +699,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.masterPanel.BackColor = System.Drawing.SystemColors.Control;
             this.masterPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.masterPanel.Controls.Add(this.directXGroupBox);
             this.masterPanel.Controls.Add(this.facebookGroupBox);
             this.masterPanel.Controls.Add(this.dateStampGroupBox);
             this.masterPanel.Controls.Add(this.cancelButton);
@@ -703,6 +713,62 @@
             this.masterPanel.Name = "masterPanel";
             this.masterPanel.Size = new System.Drawing.Size(941, 834);
             this.masterPanel.TabIndex = 36;
+            // 
+            // directXGroupBox
+            // 
+            this.directXGroupBox.Controls.Add(this.injectButton);
+            this.directXGroupBox.Controls.Add(this.label9);
+            this.directXGroupBox.Controls.Add(this.processNameComboBox);
+            this.directXGroupBox.Controls.Add(this.cbAutoGAC);
+            this.directXGroupBox.Controls.Add(this.tryDXCheckBox);
+            this.directXGroupBox.Location = new System.Drawing.Point(8, 487);
+            this.directXGroupBox.Name = "directXGroupBox";
+            this.directXGroupBox.Size = new System.Drawing.Size(372, 219);
+            this.directXGroupBox.TabIndex = 40;
+            this.directXGroupBox.TabStop = false;
+            this.directXGroupBox.Text = "DirectX";
+            this.directXGroupBox.Visible = false;
+            // 
+            // injectButton
+            // 
+            this.injectButton.Location = new System.Drawing.Point(291, 190);
+            this.injectButton.Name = "injectButton";
+            this.injectButton.Size = new System.Drawing.Size(75, 23);
+            this.injectButton.TabIndex = 44;
+            this.injectButton.Text = "Inject";
+            this.injectButton.UseVisualStyleBackColor = true;
+            this.injectButton.Click += new System.EventHandler(this.injectButton_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(183, 13);
+            this.label9.TabIndex = 43;
+            this.label9.Text = "EXE Name of Direct3D 9 Application:";
+            // 
+            // processNameComboBox
+            // 
+            this.processNameComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.processNameComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.processNameComboBox.FormattingEnabled = true;
+            this.processNameComboBox.Location = new System.Drawing.Point(195, 42);
+            this.processNameComboBox.Name = "processNameComboBox";
+            this.processNameComboBox.Size = new System.Drawing.Size(171, 21);
+            this.processNameComboBox.Sorted = true;
+            this.processNameComboBox.TabIndex = 41;
+            this.processNameComboBox.DropDown += new System.EventHandler(this.processNameComboBox_DropDown);
+            // 
+            // cbAutoGAC
+            // 
+            this.cbAutoGAC.AutoSize = true;
+            this.cbAutoGAC.Location = new System.Drawing.Point(6, 69);
+            this.cbAutoGAC.Name = "cbAutoGAC";
+            this.cbAutoGAC.Size = new System.Drawing.Size(179, 17);
+            this.cbAutoGAC.TabIndex = 38;
+            this.cbAutoGAC.Text = "Auto register GAC (run as admin)";
+            this.cbAutoGAC.UseVisualStyleBackColor = true;
             // 
             // facebookGroupBox
             // 
@@ -1028,6 +1094,8 @@
             this.grabberGroupBox.ResumeLayout(false);
             this.grabberGroupBox.PerformLayout();
             this.masterPanel.ResumeLayout(false);
+            this.directXGroupBox.ResumeLayout(false);
+            this.directXGroupBox.PerformLayout();
             this.facebookGroupBox.ResumeLayout(false);
             this.facebookGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProfilePictureBox)).EndInit();
@@ -1117,5 +1185,10 @@
         private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.NumericUpDown hoursNumericUpDown;
         private System.Windows.Forms.CheckBox commentPopUpCheckBox;
+        private System.Windows.Forms.GroupBox directXGroupBox;
+        private System.Windows.Forms.CheckBox cbAutoGAC;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox processNameComboBox;
+        private System.Windows.Forms.Button injectButton;
     }
 }
